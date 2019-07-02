@@ -1,9 +1,10 @@
 import React from 'react';
+import './auth.sass'
 
 function Auth() {
   return(
     <div>
-      <button className="LogInBtn">Log in</button>
+      <a href="#" className="logInBtn">Log in</a>
       <button className="signUpBtn">Sign up</button>
     </div>
   )

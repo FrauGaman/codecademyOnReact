@@ -1,8 +1,9 @@
 import React from 'react';
+import './additionally.sass'
 
 function Additionally() {
   return(
-    <div>
+    <div className="additionally">
       <button className="upgradeBtn">Upgrade to pro</button>
       <div className="searchBtn">
         <svg fill="currentColor" height="24" version="1.1" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">

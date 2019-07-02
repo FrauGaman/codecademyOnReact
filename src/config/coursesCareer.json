@@ -1,0 +1,37 @@
+{
+  "careerPath": [
+    {
+      "img": "./img/courses/course1.svg",
+      "bgColor": "#90edc5",
+      "title": "Code Foundation",
+      "descr": "Interested in learning how to code, but unsure where to start? This is the path for you!",
+      "theme": [0],
+      "language": []
+    },
+    {
+      "img": "./img/courses/course2.svg",
+      "bgColor": "#b035c9",
+      "title": "Computer Science",
+      "descr": "Looking for an introduction to the theory behind programming? Master Python while learning data structures, algorithms, and more!",
+      "theme": [0, 2],
+      "language": []
+    },
+    {
+      "img": "./img/courses/course3.svg",
+      "bgColor": "#3731b8",
+      "title": "Data Science",
+      "descr": "Learn SQL and Python and build the skills you need to query, analyze, and visualize data.",
+      "theme": [0, 3],
+      "language": []
+    },
+    {
+      "img": "./img/courses/course4.svg",
+      "bgColor": "#49a9f8",
+      "title": "Web Development",
+      "descr": "Master the languages of the web: HTML, CSS, JavaScript, and SQL. This path is great for budding front-end or back-end engineers!",
+      "theme": [0, 1],
+      "language": []
+    }
+  ]
+
+}

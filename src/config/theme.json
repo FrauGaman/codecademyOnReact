@@ -1,0 +1,29 @@
+{
+  "theme" : [
+    {
+      "id" : 0,
+      "themeName": "Full Catalog"
+    },
+    {
+      "id" : 1,
+      "themeName": "Web development"
+    },
+    {
+      "id" : 2,
+      "themeName": "Programming"
+    },
+    {
+      "id" : 3,
+      "themeName": "Data Science"
+    },
+    {
+      "id" : 4,
+      "themeName": "Partnerships"
+    },
+    {
+      "id" : 5,
+      "themeName": "Design"
+    }
+  ]
+}
+
