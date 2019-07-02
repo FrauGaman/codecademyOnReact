@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="243px" height="126px" viewBox="0 0 243 126" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Asset-BuildWebsites</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Skill-Path-Cards---Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="build-websites-img" transform="translate(-32.000000, -43.000000)">
+            <g id="Learn-how-to-build-wevbsite">
+                <g id="Asset-BuildWebsites" transform="translate(32.000000, 43.312500)">
+                    <g id="Window-Container" transform="translate(33.750000, 0.000000)">
+                        <path d="M2,124.78125 L206.3125,124.78125 C207.417069,124.78125 208.3125,123.885819 208.3125,122.78125 L208.3125,2 C208.3125,0.8954305 207.417069,-2.02906125e-16 206.3125,0 L2,-2.22044605e-16 C0.8954305,-1.91384796e-17 -1.3527075e-16,0.8954305 0,2 L0,122.78125 C1.3527075e-16,123.885819 0.8954305,124.78125 2,124.78125 Z" id="Window" fill="#A5BEFA"></path>
+                        <g id="Dots" transform="translate(5.250000, 4.687500)" fill="#141C3A">
+                            <path d="M8,4 C8,6.20915798 6.20952158,8 4.00023423,8 C1.79094689,8 0,6.20915798 0,4 C0,1.79084202 1.79094689,0 4.00023423,0 C6.20952158,0 8,1.79084202 8,4" id="Dot-2"></path>
+                            <path d="M20,4 C20,6.20915798 18.2090531,8 15.9997658,8 C13.7904784,8 12,6.20915798 12,4 C12,1.79084202 13.7904784,0 15.9997658,0 C18.2090531,0 20,1.79084202 20,4" id="Dot-1"></path>
+                            <path d="M32,4 C32,6.20915798 30.2090531,8 27.9997658,8 C25.7909469,8 24,6.20915798 24,4 C24,1.79084202 25.7909469,0 27.9997658,0 C30.2090531,0 32,1.79084202 32,4" id="Dot-3"></path>
+                        </g>
+                        <g id="Lines" transform="translate(104.250000, 37.687500)" fill="#141E3B">
+                            <path d="M7.10542736e-15,-4.4408921e-15 L79.8806598,-4.4408921e-15 L79.8806598,8.57341328 L7.10542736e-15,8.57341328 L7.10542736e-15,-4.4408921e-15 Z M-7.10542736e-15,17.53125 L79.8806598,17.53125 L79.8806598,26.1046633 L-7.10542736e-15,26.1046633 L-7.10542736e-15,17.53125 Z M7.10542736e-15,35.0625 L79.8806598,35.0625 L79.8806598,43.6359133 L7.10542736e-15,43.6359133 L7.10542736e-15,35.0625 Z" id="Combined-Shape"></path>
+                        </g>
+                    </g>
+                    <rect id="Popout" fill="#141E3B" x="0.46875" y="23.6875" width="103" height="82" rx="2"></rect>
+                    <path d="M56,84.6875 L17,84.6875 L39,40.6875 L58.5,79.6875 L70.5,55.6875 L85,84.6875 L56,84.6875 Z" id="Popout-Triangles" fill="#3069F0"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
