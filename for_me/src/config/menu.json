@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "URL": "/catalog",
+      "linkName": "Catalog"
+    },
+    {
+      "URL": "/pricing",
+      "linkName": "Pricing"
+    }
+  ]
+}
