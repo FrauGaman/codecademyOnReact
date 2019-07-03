@@ -13,11 +13,10 @@ import Language from './config/language'
 
 import './style/basic.sass'
 import './style/nav.sass'
+import SkillCourses from "./components/SkillCourses/SkillCourses";
 
 
 function App() {
-
-
   return (
     <div className="App">
       <nav>
@@ -51,8 +50,8 @@ function App() {
         <CareerCourse />
       </section>
 
-      <section className="lolo">
-        <div>Чтото пишу </div>
+      <section className="skillPath">
+        <SkillCourses />
       </section>
 
 

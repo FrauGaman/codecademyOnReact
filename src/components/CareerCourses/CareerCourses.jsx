@@ -2,18 +2,23 @@ import React from 'react'
 import Career from '../../config/coursesCareer'
 
 import Done from '../../img/done.svg'
-import ProImg from '../../img/pro.svg'
 
 import './careerCourses.sass'
 
 function CareerCourse() {
   return(
     <div>
-        <div className="careerPathTitle">
+        <div className="pathTitle">
           <h2>Career path</h2>
-          <img src={ProImg} alt=""/>
+          <a href="#">
+            <svg viewBox="0 0 32 32">
+              <use xlinkHref="#pro-icon"></use>
+            </svg>
+          </a>
         </div>
+
         <div className="careerMainDescr">Career Paths guide you through exactly what you need to learn to build a solid foundation for a career in tech.</div>
+
         <div className="careerBox">
           {Career.careerPath.map(item =>
             <div key={item.title} className="courseBox">

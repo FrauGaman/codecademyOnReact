@@ -20,7 +20,7 @@ function Filter(props) {
         <div className="filterTitle">by language</div>
         <ul className="languageLink">
           {language.map(item =>
-            <li key={item.id}><a href="#">{item.languageName},</a></li>
+            <li key={item.id}><a href="#">{item.languageName}</a></li>
           )}
         </ul>
       </div>

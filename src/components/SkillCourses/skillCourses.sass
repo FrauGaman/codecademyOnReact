@@ -1,0 +1,37 @@
+@import '../../style/variables'
+
+.skillBox
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  padding: 0px $indent
+  .courseSkillBox
+    display: flex
+    flex-direction: column
+    flex-basis: 23%
+    width: 317px
+    margin-top: 16px
+    margin-bottom: 16px
+    box-shadow: 0px 0px 6px 0px #c0c0c0
+    cursor: pointer
+    transition: all .5s
+    .courseImg
+      display: flex
+      justify-content: center
+      align-items: center
+      height: 208px
+    .skillCourseDescr
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      padding: 0 16px
+      height: 50%
+      h2
+        font-weight: 20px
+        margin-bottom: 10px
+      .skillDescr, .period
+        color: #5A5B5E
+      .period
+        padding-bottom: 16px
+        font-size: 13px
+
