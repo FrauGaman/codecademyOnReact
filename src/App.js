@@ -51,6 +51,10 @@ function App() {
         <CareerCourse />
       </section>
 
+      <section className="lolo">
+        <div>Чтото пишу </div>
+      </section>
+
 
     </div>
   );
