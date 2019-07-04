@@ -1,33 +1,35 @@
 import React from 'react';
 import './filter.sass'
 
+import { Link } from "react-router-dom"
+
 function Filter(props) {
   const {theme} = props;
   const {language} = props;
 
   return(
-    <div className="filter">
-      <div className="themeCol">
-        <div className="filterTitle">by subject</div>
-        <ul className="themeLink">
-          {theme.map(item =>
-            <li key={item.id}><a href="#">{item.themeName}</a></li>
-          )}
-        </ul>
+      <div className="filter">
+        <div className="filter_content">
+          <div className="theme_col">
+            <div className="filter_title">by subject</div>
+            <ul className="theme_link">
+              {theme.map(item =>
+                <li key={item.id}><Link to={`/theme${item.link}`}>{item.themeName}</Link></li>
+              )}
+            </ul>
+          </div>
+
+          <div className="language_col">
+            <div className="filter_title">by language</div>
+            <ul className="language_link">
+              {language.map(item =>
+                <li key={item.id}><Link to={`/language${item.link}`}>{item.languageName}</Link></li>
+              )}
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <div className="langCol">
-        <div className="filterTitle">by language</div>
-        <ul className="languageLink">
-          {language.map(item =>
-            <li key={item.id}><a href="#">{item.languageName}</a></li>
-          )}
-        </ul>
-      </div>
-
-
-
-    </div>
   )
 }
 
