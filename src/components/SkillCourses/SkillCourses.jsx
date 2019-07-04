@@ -1,28 +1,12 @@
-import React from 'react'
-import Skill from '../../config/coursesSkill'
-
-import Clock from '../../img/clock.svg'
-
-import './skillCourses.sass'
-import Theme from "../../config/theme";
-import Language from "../../config/language";
+import React from 'react';
+import Skill from '../../config/coursesSkill';
+import Clock from '../../img/clock.svg';
+import './skillCourses.sass';
 
 function SkillCourses(props) {
-  let currentThemeId;
-  let currentLanguageId;
-  for (let i = 0; i < Theme.theme.length; i++) {
-    if ((`/${props.match.params.link}`) == Theme.theme[i].link)
-      currentThemeId = Theme.theme[i].id;
-  }
-
-  for (let i = 0; i < Language.language.length; i++) {
-    if ((`/${props.match.params.link}`) == Language.language[i].link)
-      currentLanguageId = Language.language[i].id;
-  }
-
   let skillArr = [];
   skillArr = Skill.skillPath.filter(item =>
-    item.theme.includes(currentThemeId) || item.language.includes(currentLanguageId)
+    item.theme.includes(props.currentThemeId) || item.language.includes(props.currentLanguageId)
   );
 
   return (
@@ -64,7 +48,6 @@ function SkillCourses(props) {
                 </div>
               </div>
             )}
-
           </div>
         </div>
       : ''}

@@ -1,26 +1,28 @@
 @import '../../style/variables'
 
 .skill__box
-  display: flex
-  flex-wrap: wrap
-  justify-content: space-between
+  display: grid
+  grid-template-columns: unquote("repeat(4, [col] 1fr )")
+  grid-column-gap: 2.5%
   max-width: $maxDisplayWidth
   margin: 0 auto
   .skill__box__item
     display: flex
     flex-direction: column
     flex-basis: 23%
-    width: 317px
+    width: 333px
     margin-top: 16px
     margin-bottom: 16px
     box-shadow: 0 0 6px 0 #c0c0c0
     cursor: pointer
-    transition: all .5s
+    transition: all .4s
+    &:hover
+      box-shadow: 0 7px 21px 0 #c0c0c0
     .skill__box__img
       display: flex
       justify-content: center
       align-items: center
-      height: 208px
+      min-height: 208px
     .skill__box__descr
       display: flex
       flex-direction: column
@@ -28,7 +30,8 @@
       padding: 0 16px
       height: 50%
       h2
-        font-weight: 20px
+        padding-top: 35px
+        font-size: 20px
         margin-bottom: 10px
       .skill__box__descr_more, .period
         color: #5A5B5E

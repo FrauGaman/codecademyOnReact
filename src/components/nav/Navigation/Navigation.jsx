@@ -1,5 +1,5 @@
 import React from 'react';
-import './navigation.sass'
+import './navigation.sass';
 
 function Something(props) {
   return (

@@ -1,49 +1,49 @@
 {
   "language": [
     {
-      "id": 0,
+      "id": 1,
       "languageName": "HTML & CSS",
       "descr": "HTML is the foundation behind all web pages. It’s used to add structure and form to text, images, and more. CSS is the language used to style HTML content. In this first course, you’ll learn the fundamentals of both languages so that you can create visually appealing web pages.",
       "link": "/html-css"
     },
     {
-      "id": 1,
+      "id": 2,
       "languageName": "Python",
       "descr": "Python is a general-purpose, versatile and modern programming language. It’s great as a first language because it is concise and easy to read. Use it for everything from web development to software development and scientific applications.",
       "link": "/python"
     },
     {
-      "id": 2,
+      "id": 3,
       "languageName": "JavaScript",
       "descr": "JavaScript is the programming language of the web. You can use it to add dynamic behavior, store information, and handle requests and responses on a website. This course sequence covers data types and structures, functions, and object-oriented programming with classical inheritance in ES6 syntax.",
       "link": "/javascript"
     },
     {
-      "id": 3,
+      "id": 4,
       "languageName": "Java",
       "descr": "Java is among the most popular programming languages out there, thanks to its versatility and compatibility. Java is used for software development, mobile applications, and large systems development.",
       "link": "/java"
     },
     {
-      "id": 4,
+      "id": 5,
       "languageName": "SQL",
       "descr": "We live in a data-driven world: people search through data to find insights to inform strategy, marketing, operations, and a plethora of other categories. There are a ton of businesses that use large, relational databases, which makes a basic understanding of SQL a great employable skill not only for data scientists but almost everyone.",
       "link": "/sql"
     },
     {
-      "id": 5,
+      "id": 6,
       "languageName": "Bash/Shell",
       "descr": "The command line terminal is one of the most powerful tools available to you in a computer. It can run complex commands that can manipulate the existing file structure, download from remote sites, and support version control systems like Git (among many others).",
       "link": "/bash"
     },
     {
-      "id": 6,
+      "id": 7,
       "languageName": "Ruby",
       "descr": "Ruby is a general-purpose language that is still popular and in high demand in the marketplace, and is used commonly in Rails applications. Concise and readable, it is easy to pick up but also plenty powerful. Companies like Twitter, Soundcloud, Goodreads, and Kickstarter got their products off the ground with Ruby.",
       "link": "/ruby"
     },
     {
-      "id": 7,
+      "id": 8,
       "languageName": "C++",
       "descr": "C++ is a very popular language for performance-critical applications that rely on speed and efficient memory management. It is used in a wide range of industries including game development, VR, robotics, and scientific computing.",
       "link": "/c-plus-plus"

@@ -1,5 +1,5 @@
 import React from 'react';
-import './additionally.sass'
+import './additionally.sass';
 
 function Additionally() {
   return(

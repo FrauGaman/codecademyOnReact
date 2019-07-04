@@ -1,0 +1,25 @@
+{
+  "coursesList": [
+    {
+      "importance": "Course",
+      "title": "Welcome To Codecademy",
+      "descr": "First time on our site? Start here to learn how to use our platform.",
+      "icon": "../../img/courseList/purple.svg",
+      "borderColor": "#69639a"
+    },
+    {
+      "importance": "Course",
+      "title": "Learn How to Code",
+      "descr": "Learn key programming concepts and write your first lines of code!",
+      "icon": "../../img/courseList/purple.svg",
+      "borderColor": "#69639a"
+    },
+    {
+      "importance": "Course",
+      "title": "Introduction to HTML",
+      "descr": "In just 7 hours, learn the basics of HTML5 and start building & editing web pages.",
+      "icon": "../../img/courseList/blue.svg",
+      "borderColor": "#3c64c2"
+    }
+  ]
+}

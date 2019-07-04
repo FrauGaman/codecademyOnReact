@@ -5,16 +5,16 @@ import App from './App.jsx';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Route} from "react-router-dom";
 
-import CareerCourses from "./components/CareerCourses/CareerCourses";
-import SkillCourses from "./components/SkillCourses/SkillCourses";
+import FullCatalogPage from "./components/FullCatalogPage";
+// import MainDescr from "./components/MainDescription/MainDescription";
 
 
 ReactDOM.render((
   <BrowserRouter>
     <App>
-      <Route path="/theme/:link" component={CareerCourses} />
-      <Route path="/theme/:link" component={SkillCourses} />
-      <Route path="/language/:link" component={SkillCourses} />
+      {/*<Route path="/theme/:mainDescript" component={MainDescr} />*/}
+      <Route path="/theme/:link" component={FullCatalogPage} />
+      <Route path="/language/:linkLang" component={ FullCatalogPage } />
     </App>
   </BrowserRouter>
 ), document.getElementById('root'));

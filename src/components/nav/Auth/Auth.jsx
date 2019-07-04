@@ -1,5 +1,5 @@
 import React from 'react';
-import './auth.sass'
+import './auth.sass';
 
 function Auth() {
   return(

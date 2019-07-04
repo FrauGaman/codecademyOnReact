@@ -1,7 +1,6 @@
 import React from 'react';
-import './logo.sass'
-
-import Image from '../../../img/navLogo.svg'
+import './logo.sass';
+import Image from '../../../img/navLogo.svg';
 
 function Logo() {
   return(

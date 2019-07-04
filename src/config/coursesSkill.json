@@ -6,8 +6,8 @@
       "title": "Analyze Data with Python",
       "descr": "Learn how to analyze and visualize data using Python.",
       "period": "10 weeks",
-      "theme": [0, 3],
-      "language": [1]
+      "theme": [1, 4],
+      "language": [2]
     },
     {
       "img": "../../img/skillPath/skill2.svg",
@@ -15,8 +15,8 @@
       "title": "Analyze Data with SQL",
       "descr": "Master SQL queries and work with multiple datasets so you can analyze your business data and level up your career.",
       "period": "6 weeks",
-      "theme": [0, 3],
-      "language": [4]
+      "theme": [1, 4],
+      "language": [5]
     },
     {
       "img": "../../img/skillPath/skill3.svg",
@@ -24,8 +24,8 @@
       "title": "Create a Back-End App with JavaScript",
       "descr": "Learn how to build back-end web APIs using Express.js, Node.js, SQL, and a Node.js-SQLite database library.",
       "period": "8 weeks",
-      "theme": [0, 1],
-      "language": [2]
+      "theme": [1, 2],
+      "language": [3]
     },
     {
       "img": "../../img/skillPath/skill4.svg",
@@ -33,7 +33,7 @@
       "title": "Create a Front-End App with React",
       "descr": "Learn to build front-end web apps with JavaScript and React.",
       "period": "8 weeks",
-      "theme": [0, 1],
+      "theme": [1, 2],
       "language": []
     },
     {
@@ -42,8 +42,8 @@
       "title": "Get Started with Machine Learning",
       "descr": "Learn the fundamentals of machine learning and apply those concepts to real world data!",
       "period": "7 weeks",
-      "theme": [0, 3],
-      "language": [1]
+      "theme": [1, 4],
+      "language": [2]
     },
     {
       "img": "../../img/skillPath/skill6.svg",
@@ -51,8 +51,8 @@
       "title": "Learn How to Build Websites ",
       "descr": "Learn the basics of web development to build your own website.",
       "period": "10 weeks",
-      "theme": [0, 1],
-      "language": [0]
+      "theme": [1, 2],
+      "language": [1]
     }
   ]
 
