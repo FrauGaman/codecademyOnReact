@@ -39,10 +39,16 @@ function SkillCourses(props) {
                 </div>
                 <div className="skill__box__descr">
                   <h2>{item.title}</h2>
-                  <div className="skill__box__descr_more career__box__descr_more">{item.descr}</div>
+                  <div className="skill__box__descr_more career__box__descr_more">
+                    <div className="descr__text">
+                      {item.descr}
+                    </div>
+
+                  </div>
                   <div className="period">
-                    <img src={Clock} alt=""/>
-                    {item.period}
+                    <img className="period__img" src={Clock} alt=""/>
+                    <div className="period__text">{item.period}</div>
+
                   </div>
                 </div>
               </div>

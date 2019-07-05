@@ -24,9 +24,19 @@
       height: 17%
       margin-top: -33px
       right: 0
-    .course__importance
-      font-size: 14px
-      color: #5A5B5E
+    .importance__box
+      position: relative
+      display: flex
+      align-items: center
+      .course__importance
+        font-size: 14px
+        color: #5A5B5E
+      .importance__icon
+        position: absolute
+        margin-top: -10px
+        width: 70px
+        height: 38px
+        left: -30px
     .course__title
       padding-top: 18px
       padding-bottom: 10px
@@ -36,6 +46,20 @@
     .course__description
       font-size: $mainFontSize
       color: #5A5B5E
+      .descr__text
+        position: relative
+        overflow: hidden
+        height: 49px
+        margin-bottom: 20px
+        &::after
+          position: absolute
+          content: ""
+          text-align: right
+          bottom: 0
+          right: 0
+          width: 35%
+          height: 1.5rem
+          background: linear-gradient(90deg,hsla(0,0%,100%,0),#fff 75%)
 
 
 
