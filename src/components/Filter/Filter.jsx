@@ -14,7 +14,7 @@ function Filter(props) {
             <div className="filter_title">by subject</div>
             <ul className="theme_link">
               {theme.map(item =>
-                <li key={item.id}><NavLink to={`/theme${item.link}`}>{item.themeName}</NavLink></li>
+                <li key={item.id}><NavLink to={`/theme${item.link}`}>{item.name}</NavLink></li>
               )}
             </ul>
           </div>
@@ -23,7 +23,7 @@ function Filter(props) {
             <div className="filter_title">by language</div>
             <ul className="language_link">
               {language.map(item =>
-                <li key={item.id}><NavLink to={`/language${item.link}`}>{item.languageName}</NavLink></li>
+                <li key={item.id}><NavLink to={`/language${item.link}`}>{item.name}</NavLink></li>
               )}
             </ul>
           </div>

@@ -20,6 +20,34 @@
       "descr": "In just 7 hours, learn the basics of HTML5 and start building & editing web pages.",
       "icon": "../../img/courseList/blue.svg",
       "borderColor": "#3c64c2"
+    },
+    {
+      "importance": "Exclusive Course",
+      "title": "Learn Python 3",
+      "descr": "Learn the latest and greatest version of the most popular programming language in the world!",
+      "icon": "../../img/courseList/lightPurple.svg",
+      "borderColor": "#9385f5"
+    },
+    {
+      "importance": "Course",
+      "title": "Learn Python 2",
+      "descr": "Learn the basics of the world's fastest growing and most popular programming language used by software engineers, analysts, data scientists, and machine learning engineers alike.",
+      "icon": "../../img/courseList/lightPurple.svg",
+      "borderColor": "#9385f5"
+    },
+    {
+      "importance": "Course",
+      "title": "Introduction To JavaScript",
+      "descr": "Learn the JavaScript fundamentals you'll need for front-end or back-end development.",
+      "icon": "../../img/courseList/green.svg",
+      "borderColor": "#2daaa6"
+    },
+    {
+      "importance": "Course",
+      "title": "Learn Java",
+      "descr": "Learn the basics of the popular Java language in this introductory course.",
+      "icon": "../../img/courseList/green.svg",
+      "borderColor": "#2daaa6"
     }
   ]
 }

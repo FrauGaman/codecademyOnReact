@@ -4,10 +4,11 @@ import Done from '../../img/done.svg';
 import './careerCourses.sass';
 
 function CareerCourse(props) {
+
   return(
     <div>
       {
-        !props.currentLanguageId ?
+        (!props.currentLanguageId) && (Career.careerPath.theme !== []) ?
           <div>
             <div className="course__title">
               <h2>Career path</h2>
@@ -29,7 +30,7 @@ function CareerCourse(props) {
                     <img src={item.img} alt={item.title}/>
                   </div>
                   <div className="career__box__descr">
-                    <h3>{item.title}</h3>
+                    <h3 className="career_title">{item.title}</h3>
                     <div className="career__box__descr_more">{item.descr}</div>
                     <div className="knowledges">
                       {item.knowledge.map(knowItem =>

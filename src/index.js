@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App.jsx';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route, Redirect} from "react-router-dom";
 
 import FullCatalogPage from "./components/FullCatalogPage";
+import Auth from "./components/nav/Auth/Auth";
 // import MainDescr from "./components/MainDescription/MainDescription";
 
 
@@ -15,6 +16,9 @@ ReactDOM.render((
       {/*<Route path="/theme/:mainDescript" component={MainDescr} />*/}
       <Route path="/theme/:link" component={FullCatalogPage} />
       <Route path="/language/:linkLang" component={ FullCatalogPage } />
+      <Route exact path="/" render={() => (
+        <Redirect to="/theme/all"/>
+      )}/>
     </App>
   </BrowserRouter>
 ), document.getElementById('root'));

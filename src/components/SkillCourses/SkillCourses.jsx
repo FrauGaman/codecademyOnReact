@@ -4,8 +4,7 @@ import Clock from '../../img/clock.svg';
 import './skillCourses.sass';
 
 function SkillCourses(props) {
-  let skillArr = [];
-  skillArr = Skill.skillPath.filter(item =>
+  let skillArr = Skill.skillPath.filter(item =>
     item.theme.includes(props.currentThemeId) || item.language.includes(props.currentLanguageId)
   );
 

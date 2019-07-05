@@ -1,0 +1,43 @@
+@import '../../style/variables'
+
+.courses__box
+  display: grid
+  grid-template-columns: unquote("repeat(4, [col] 1fr )")
+  grid-column-gap: 2.5%
+  max-width: $maxDisplayWidth
+  margin: 0 auto
+  .course__box__item
+    position: relative
+    margin-bottom: 36px
+    padding-top: 25px
+    padding-left: 19px
+    height: 216px
+    border-top: 8px solid
+    border-radius: 3px
+    box-shadow: 0 0 6px 0 #c0c0c0
+    cursor: pointer
+    transition: all .4s
+    &:hover
+      box-shadow: 0 7px 21px 0 #c0c0c0
+    .course__item__icon
+      position: absolute
+      height: 17%
+      margin-top: -33px
+      right: 0
+    .course__importance
+      font-size: 14px
+      color: #5A5B5E
+    .course__title
+      padding-top: 18px
+      padding-bottom: 10px
+      font-size: 20px
+      color: #292929
+      text-transform: none
+    .course__description
+      font-size: $mainFontSize
+      color: #5A5B5E
+
+
+
+
+
