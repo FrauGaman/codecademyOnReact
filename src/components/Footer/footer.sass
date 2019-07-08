@@ -1,0 +1,47 @@
+@import '../../style/variables'
+
+.footer__container
+  display: flex
+  justify-content: space-between
+  flex-wrap: wrap
+  max-width: $maxDisplayWidth
+  max-height: 230px
+  padding-top: 31px
+  padding-bottom: 26px
+  margin: 0 auto
+  font-size: 15px
+  color: $footerColor
+  border: 2px solid red
+  .footer__list
+    display: flex
+    flex-direction: column
+    margin: 0
+    padding: 0
+    height: 126px
+    flex-wrap: wrap
+  .footer__list__down
+    height: 145px
+  .footer__li
+    line-height: 28px
+    color: $footerColor
+    &:hover
+      color: #4c7ef3
+  .footer__title
+    font-size: $mainFontSize
+    padding-bottom: 13px
+    color: #000
+  .site__navigation
+    flex-basis: 25%
+  .footer__courses__links
+    display: flex
+    flex-wrap: wrap
+    .filter__title
+      font-size: 14px
+      font-weight: 700
+      text-transform: uppercase
+  .courses__navigation
+    flex-basis: 55%
+    .theme_col, .language__col
+      flex-basis: 50%
+  .resources__navigation
+    flex-basis: 20%

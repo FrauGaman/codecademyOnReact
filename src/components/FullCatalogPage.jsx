@@ -49,7 +49,7 @@ function FullCatalogPage(props) {
         </section>
 
       <section className="courses__list">
-        <CoursesList />
+        <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId}/>
       </section>
 
     </React.Fragment>
