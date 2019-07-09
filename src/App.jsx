@@ -1,9 +1,6 @@
 import React from 'react';
 
-import Logo from "./components/nav/Logo/Logo";
-import Navigation from "./components/nav/Navigation/Navigation";
-import Additionally from "./components/nav/Additionally/Additionally";
-import Auth from "./components/nav/Auth/Auth";
+import Nav from "./components/nav/Nav"
 import Filter from "./components/Filter/Filter";
 import Footer from "./components/Footer/Footer";
 
@@ -14,33 +11,15 @@ import footerNav from "./config/siteNavigation";
 import resources from "./config/resourses";
 
 import './style/basic.sass';
-import './style/app.sass';
 
 const App = ({children}) => (
   <React.Fragment>
-    <nav>
-      <div className="nav-container">
-        <div className="navLinks">
-          <Logo/>
-          <Navigation
-            Menu={menu}
-            URL={menu.URL}
-            linkName={menu.linkName}
-          />
-        </div>
-        <div className="usersActions">
-          <Additionally/>
-          <Auth/>
-        </div>
-      </div>
-    </nav>
 
-    <section className="filterSection">
-      <Filter theme={theme.theme} language={language.language}
-      />
-    </section>
+   <Nav menu={menu}/>
 
-    {children}
+   <Filter theme={theme.theme} language={language.language} />
+
+   {children}
 
     <section className="footer">
       <Footer

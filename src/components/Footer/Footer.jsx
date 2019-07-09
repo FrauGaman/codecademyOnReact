@@ -6,7 +6,7 @@ import Resources from "./Resources";
 import './footer.sass'
 
 function Footer(props) {
-  return(
+  return (
     <div className="footer__container">
 
       <div className="site__navigation">
@@ -16,7 +16,7 @@ function Footer(props) {
 
       <div className="courses__navigation">
         <div className="footer__title">Catalog</div>
-        <FooterCatalog theme={props.theme} language={props.language} />
+        <FooterCatalog theme={props.theme} language={props.language}/>
       </div>
 
       <div className="resources__navigation">

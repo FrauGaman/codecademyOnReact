@@ -1,1 +1,6 @@
-<svg class="icon__3TkiZwjUef_P_sLQPXVACy" width="25" height="25" fill="currentColor" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Checkmark Icon</title><path d="m18 2-12 12-5.5-5.5 1.41-1.41 4.09 4.08 10.59-10.58z" transform="translate(3 5)"></path></svg>
+<svg class="icon__3TkiZwjUef_P_sLQPXVACy" width="25" height="25" fill="#525252" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title>Checkmark Icon</title>
+    <path d="m18 2-12 12-5.5-5.5 1.41-1.41 4.09 4.08 10.59-10.58z" transform="translate(3 5)">
+
+    </path>
+</svg>

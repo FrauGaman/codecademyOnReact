@@ -1,5 +1,4 @@
 import React from 'react';
-import Skill from '../../config/coursesSkill';
 import Clock from '../../img/clock.svg';
 
 function SkillCoursesMap(props) {

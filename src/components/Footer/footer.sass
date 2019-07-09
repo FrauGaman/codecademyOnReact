@@ -5,20 +5,26 @@
   justify-content: space-between
   flex-wrap: wrap
   max-width: $maxDisplayWidth
-  max-height: 230px
+  max-height: 318px
   padding-top: 31px
   padding-bottom: 26px
   margin: 0 auto
   font-size: 15px
   color: $footerColor
-  border: 2px solid red
+  @media screen and (max-width: 1560px)
+    max-width: $mediumDisplayWidth
+  @media screen and (max-width: 791px)
+    flex-direction: column
+    max-height: 100%
   .footer__list
     display: flex
     flex-direction: column
     margin: 0
     padding: 0
-    height: 126px
+    height: 200px
     flex-wrap: wrap
+    @media screen and (max-width: 450px)
+      height: 100%
   .footer__list__down
     height: 145px
   .footer__li
@@ -30,15 +36,49 @@
     font-size: $mainFontSize
     padding-bottom: 13px
     color: #000
+    text-transform: uppercase
+    @media screen and (max-width: 791px)
+      padding-top: 20px
+      padding-bottom: 15px
   .site__navigation
     flex-basis: 25%
+    .images
+      padding-top: 5px
+      .twitter__icon, .facebook__icon, .insta__icon, .youtube__icon
+        display: inline-block
+        margin-right: 7px
+        width: 20px
+        height: 20px
+        &:hover
+          background-position: 0 -20px
+      .twitter__icon
+        background: url('../../img/twitter.png') no-repeat
+        -webkit-background-size: 100%
+        background-size: 100%
+      .facebook__icon
+        background: url('../../img/facebook.png') no-repeat
+        -webkit-background-size: 100%
+        background-size: 100%
+      .insta__icon
+        background: url('../../img/instagram.png') no-repeat
+        -webkit-background-size: 100%
+        background-size: 100%
+      .youtube__icon
+        background: url('../../img/youtube.png') no-repeat
+        -webkit-background-size: 100%
+        background-size: 100%
   .footer__courses__links
     display: flex
     flex-wrap: wrap
+    @media screen and (max-width: 450px)
+      flex-direction: column
     .filter__title
       font-size: 14px
       font-weight: 700
       text-transform: uppercase
+      @media screen and (max-width: 450px)
+        padding-top: 20px
+        padding-bottom: 7px
   .courses__navigation
     flex-basis: 55%
     .theme_col, .language__col

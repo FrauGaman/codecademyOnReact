@@ -4,7 +4,6 @@ import CareerCourses from "./CareerCourses/CareerCourses";
 import SkillCourses from "./SkillCourses/SkillCourses";
 import CoursesList from "./CoursesList/CoursesList";
 import '../style/basic.sass';
-import '../style/app.sass';
 import Theme from "../config/theme";
 import Language from "../config/language";
 
@@ -34,25 +33,15 @@ function FullCatalogPage(props) {
   }
 
    return (
-    <React.Fragment>
-
-        <main className="main">
+      <div className="content__wrapper">
           <MainDescr filterArr={filterArr} activeLink={activeLink}/>
-        </main>
 
-        <section className="careerPath">
           <CareerCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId}/>
-        </section>
 
-        <section className="skillPath">
           <SkillCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId}/>
-        </section>
 
-      <section className="courses__list">
-        <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId}/>
-      </section>
-
-    </React.Fragment>
+          <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId}/>
+      </div>
 
   );
 }

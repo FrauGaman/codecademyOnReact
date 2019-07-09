@@ -4,6 +4,8 @@
   display: flex
   justify-content: space-between
   align-items: center
+  @media screen and (max-width: 960px)
+    display: none
 .upgrade__Btn
   display: block
   width: 147px
@@ -13,8 +15,12 @@
   font-size: $mainFontSize
   font-weight: 700
   color: $mainColor
+  @media screen and (max-width: 960px)
+    width: 100%
+    margin-top: 15px
   &:hover
     background-color: rgba(75, 53, 239, 0.1)
 .search__btn
   margin-left: 38px
   margin-right: 38px
+  cursor: pointer

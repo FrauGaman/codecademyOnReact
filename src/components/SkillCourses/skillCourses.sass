@@ -6,11 +6,21 @@
   grid-column-gap: 2.5%
   max-width: $maxDisplayWidth
   margin: 0 auto
+  @media screen and (max-width: 1560px)
+    max-width: $mediumDisplayWidth
+    grid-column-gap: 2%
+  @media screen and (max-width: 1450px)
+    grid-template-columns: unquote("repeat(3, [col] 1fr )")
+  @media screen and (max-width: 1190px)
+    max-width: $middleDisplayWidth
+  @media screen and (max-width: 1000px)
+    grid-template-columns: unquote("repeat(2, [col] 1fr )")
+  @media screen and (max-width: 645px)
+    grid-template-columns: unquote("repeat(1, [col] 1fr )")
   .skill__box__item
     display: flex
     flex-direction: column
     flex-basis: 23%
-    width: 333px
     margin-top: 16px
     margin-bottom: 16px
     box-shadow: 0 0 6px 0 #c0c0c0

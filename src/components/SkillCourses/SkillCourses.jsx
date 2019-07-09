@@ -16,7 +16,7 @@ function SkillCourses(props) {
           <div className="course__title">
             <h2>skill paths</h2>
             <a href="#">
-              <Icons iconId={1}/>
+              <Icons iconId={"proIcon"}/>
             </a>
           </div>
 

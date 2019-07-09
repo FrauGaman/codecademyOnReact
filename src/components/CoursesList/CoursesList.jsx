@@ -3,8 +3,6 @@ import Courses from '../../config/coursesList';
 import './coursesList.sass';
 
 import CoursesListMap from "./CoursesListMap";
-import Icons from "../Icons";
-import SkillCoursesMap from "../SkillCourses/SkillCoursesMap";
 
 function CoursesList(props) {
   let coursesArr = Courses.coursesList.filter(item =>
@@ -12,7 +10,7 @@ function CoursesList(props) {
 
 
   return (
-    <div>
+    <div className="courses__list">
       {coursesArr.length ?
         <div>
           <div className="course__title">
@@ -23,7 +21,7 @@ function CoursesList(props) {
           </div>
 
           <div className="courses__box">
-            <CoursesListMap currentThemeId={props.currentThemeId} currentLanguageId={props.currentLanguageId} />
+            <CoursesListMap currentThemeId={props.currentThemeId} currentLanguageId={props.currentLanguageId} coursesArr={coursesArr}/>
           </div>
         </div>
         : ''}

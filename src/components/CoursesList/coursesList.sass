@@ -1,65 +1,82 @@
 @import '../../style/variables'
 
-.courses__box
-  display: grid
-  grid-template-columns: unquote("repeat(4, [col] 1fr )")
-  grid-column-gap: 2.5%
-  max-width: $maxDisplayWidth
-  margin: 0 auto
-  .course__box__item
-    position: relative
-    margin-bottom: 36px
-    padding-top: 25px
-    padding-left: 19px
-    height: 216px
-    border-top: 8px solid
-    border-radius: 3px
-    box-shadow: 0 0 6px 0 #c0c0c0
-    cursor: pointer
-    transition: all .4s
-    &:hover
-      box-shadow: 0 7px 21px 0 #c0c0c0
-    .course__item__icon
-      position: absolute
-      height: 17%
-      margin-top: -33px
-      right: 0
-    .importance__box
+
+.courses__list
+  padding-bottom: 52px
+  border-bottom: 1px solid #e9eaea
+  .courses__box
+    display: grid
+    grid-template-columns: unquote("repeat(4, [col] 1fr )")
+    grid-column-gap: 2.5%
+    max-width: $maxDisplayWidth
+    margin: 0 auto
+    @media screen and (max-width: 1560px)
+      max-width: $mediumDisplayWidth
+      grid-column-gap: 2%
+    @media screen and (max-width: 1450px)
+      grid-template-columns: unquote("repeat(3, [col] 1fr )")
+    @media screen and (max-width: 1190px)
+      max-width: $middleDisplayWidth
+    @media screen and (max-width: 1000px)
+      grid-template-columns: unquote("repeat(2, [col] 1fr )")
+    @media screen and (max-width: 645px)
+      grid-template-columns: unquote("repeat(1, [col] 1fr )")
+    .course__box__item
       position: relative
-      display: flex
-      align-items: center
-      .course__importance
-        font-size: 14px
-        color: #5A5B5E
-      .importance__icon
+      margin-bottom: 36px
+      padding-top: 25px
+      padding-left: 16px
+      height: 216px
+      border-top: 8px solid
+      border-radius: 3px
+      box-shadow: 0 0 6px 0 #c0c0c0
+      cursor: pointer
+      transition: all .4s
+      &:hover
+        box-shadow: 0 7px 21px 0 #c0c0c0
+      .course__item__icon
         position: absolute
-        margin-top: -10px
-        width: 70px
-        height: 38px
-        left: -30px
-    .course__title
-      padding-top: 18px
-      padding-bottom: 10px
-      font-size: 20px
-      color: #292929
-      text-transform: none
-    .course__description
-      font-size: $mainFontSize
-      color: #5A5B5E
-      .descr__text
+        height: 17%
+        margin-top: -33px
+        right: 0
+      .importance__box
         position: relative
-        overflow: hidden
-        height: 49px
-        margin-bottom: 20px
-        &::after
+        display: flex
+        align-items: center
+        .course__importance
+          font-size: 14px
+          color: #5A5B5E
+        .importance__icon
           position: absolute
-          content: ""
-          text-align: right
-          bottom: 0
-          right: 0
-          width: 35%
-          height: 1.5rem
-          background: linear-gradient(90deg,hsla(0,0%,100%,0),#fff 75%)
+          margin-top: -10px
+          width: 70px
+          height: 38px
+          left: -30px
+      .course__title
+        padding-top: 18px
+        padding-bottom: 10px
+        font-size: 19px
+        color: #292929
+        text-transform: none
+        @media screen and (max-width: 1560px)
+          margin: 0
+      .course__description
+        font-size: $mainFontSize
+        color: #5A5B5E
+        .descr__text
+          position: relative
+          overflow: hidden
+          height: 49px
+          margin-bottom: 20px
+          &::after
+            position: absolute
+            content: ""
+            text-align: right
+            bottom: 0
+            right: 0
+            width: 35%
+            height: 1.5rem
+            background: linear-gradient(90deg,hsla(0,0%,100%,0),#fff 75%)
 
 
 

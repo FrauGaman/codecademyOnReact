@@ -35,6 +35,12 @@
       "name": "Design",
       "descr":"Design is essential to bringing a product to life. The courses below will help you to make thoughtful design decisions, learn first principles in responsive design, and create a compelling user experience.",
       "link": "/design"
+    },
+    {
+      "id" : 7,
+      "name": "Game Development",
+      "descr":"Love playing video games? Hone your coding skills while learning how to build them!",
+      "link": "/game-development"
     }
   ]
 }

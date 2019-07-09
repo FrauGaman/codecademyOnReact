@@ -1,10 +1,8 @@
 import React from 'react';
 
-function Resources (props) {
+function Resources(props) {
   const {res} = props;
-  // console.log(res)
-  console.log(props)
-  return(
+  return (
     <ul className="footer__list footer__list__down">
       {res.map(item =>
         <li key={item.title}><a href="#" className="footer__li">{item.title}</a></li>
