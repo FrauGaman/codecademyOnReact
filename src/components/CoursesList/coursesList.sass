@@ -3,7 +3,7 @@
 
 .courses__list
   padding-bottom: 52px
-  border-bottom: 1px solid #e9eaea
+  border-bottom: 1px solid $mainDescrBorder
   .courses__box
     display: grid
     grid-template-columns: unquote("repeat(4, [col] 1fr )")
@@ -29,11 +29,11 @@
       height: 216px
       border-top: 8px solid
       border-radius: 3px
-      box-shadow: 0 0 6px 0 #c0c0c0
+      box-shadow: 0 0 6px 0 $boxShadowColor
       cursor: pointer
       transition: all .4s
       &:hover
-        box-shadow: 0 7px 21px 0 #c0c0c0
+        box-shadow: 0 7px 21px 0 $boxShadowColor
       .course__item__icon
         position: absolute
         height: 17%
@@ -44,8 +44,8 @@
         display: flex
         align-items: center
         .course__importance
-          font-size: 14px
-          color: #5A5B5E
+          font-size: $miniFontSize
+          color: $coursesImportanceColor
         .importance__icon
           position: absolute
           margin-top: -10px
@@ -55,14 +55,14 @@
       .course__title
         padding-top: 18px
         padding-bottom: 10px
-        font-size: 19px
-        color: #292929
+        font-size: $burgerMenuFontSize
+        color: $darkTitleColor
         text-transform: none
         @media screen and (max-width: 1560px)
           margin: 0
       .course__description
         font-size: $mainFontSize
-        color: #5A5B5E
+        color: $coursesImportanceColor
         .descr__text
           position: relative
           overflow: hidden
