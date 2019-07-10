@@ -8,22 +8,20 @@ function FooterCatalog(props) {
         <div className="filter__title">by subject</div>
         <ul className="footer__list">
           {theme.map(item =>
-            <li key={item.id}><a href="#" className="footer__li">{item.name}</a></li>
+            <li key={item.id}><a href="null" className="footer__li">{item.name}</a></li>
           )}
         </ul>
       </div>
-
       <div className="language__col">
         <div className="filter__title">by language</div>
         <ul className="footer__list">
           {language.map(item =>
-            <li key={item.id}><a href="#" className="footer__li">{item.name}</a></li>
+            <li key={item.id}><a href="null" className="footer__li">{item.name}</a></li>
           )}
         </ul>
       </div>
     </div>
-
-  )
+  );
 }
 
-export default FooterCatalog
+export default FooterCatalog;

@@ -22,7 +22,7 @@ function CareerCoursesMap(props) {
         </div>
       </div>
     )
-  )
+  );
 }
 
 export default CareerCoursesMap;

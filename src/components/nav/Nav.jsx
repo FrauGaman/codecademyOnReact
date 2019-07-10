@@ -1,15 +1,12 @@
 import React from 'react';
-
-import Logo from "./Logo/Logo";
-import Navigation from "./Navigation/Navigation";
-import Additionally from "./Additionally/Additionally";
-import Auth from "./Auth/Auth";
-import BurgerMenu from "../BurgerMenu/BurgerMenu";
-import Search from "./Search/Search";
-
-import MenuIcon from '../Icons'
-
-import './nav.sass'
+import Logo from './Logo/Logo';
+import Navigation from './Navigation/Navigation';
+import Additionally from './Additionally/Additionally';
+import Auth from './Auth/Auth';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import Search from './Search/Search';
+import MenuIcon from '../Icons';
+import './nav.sass';
 
 class Nav extends React.Component {
   constructor(props) {
@@ -18,40 +15,30 @@ class Nav extends React.Component {
       isSearchShow: false,
       isMenuShow: false
     };
-
-    this.showSearch = this.showSearch.bind(this);
-    this.hideSearch = this.hideSearch.bind(this);
-    this.showMenu = this.showMenu.bind(this);
-    this.hideMenu = this.hideMenu.bind(this);
-  }
-
-  showSearch() {
+  };
+  showSearch = () => {
     this.setState(state => ({
-        isSearchShow: !state.isSearchShow
+        isSearchShow: !state.isSearchShow,
       })
     )
-  }
-
-  hideSearch() {
+  };
+  hideSearch = () => {
     this.setState({
-      isSearchShow: false
+      isSearchShow: false,
     })
-  }
-
-  showMenu() {
+  };
+  showMenu = () => {
     this.setState(state => ({
-      isMenuShow: !state.isMenuShow
+        isMenuShow: !state.isMenuShow,
       })
     )
-  }
-
-  hideMenu() {
+  };
+  hideMenu = () => {
     this.setState({
-        isMenuShow: false
+        isMenuShow: false,
       }
     )
-  }
-
+  };
   render() {
     return (
       <React.Fragment>
@@ -60,33 +47,23 @@ class Nav extends React.Component {
             <div className="nav__links">
               <Logo/>
               <Navigation
-                Menu={this.props.menu}
-                URL={this.props.menu.URL}
-                linkName={this.props.menu.linkName}
+                menu={this.props.menu}
               />
             </div>
             <div className="users__actions">
-              <Additionally showSearch={this.showSearch}/>
+              <Additionally showSearch={this.showSearch} />
               <Auth/>
               <div className="menu__icon__box" onClick={this.showMenu}>
-                <MenuIcon iconId={3}  />
+                <MenuIcon iconId={3}/>
               </div>
-
             </div>
           </div>
         </nav>
-        {this.state.isMenuShow ?
-          <BurgerMenu hideMenu={this.hideMenu}/>
-          : ""}
-
-        {this.state.isSearchShow ?
-          <Search hideSearch={this.hideSearch}/>
-          : ""}
+        {this.state.isMenuShow && <BurgerMenu hideMenu={this.hideMenu} />}
+        {this.state.isSearchShow && <Search hideSearch={this.hideSearch} />}
       </React.Fragment>
-
-    )
+    );
   }
-
 }
 
-export default Nav
+export default Nav;

@@ -22,7 +22,7 @@ function SkillCoursesMap(props) {
         </div>
       </div>
     )
-  )
+  );
 }
 
-export default SkillCoursesMap
+export default SkillCoursesMap;

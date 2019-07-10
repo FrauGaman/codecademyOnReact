@@ -13,8 +13,7 @@ function MainDescr(props) {
         </div>
       )}
     </div>
-
-  )
+  );
 }
 
-export default MainDescr
+export default MainDescr;

@@ -5,10 +5,9 @@ function Resources(props) {
   return (
     <ul className="footer__list footer__list__down">
       {res.map(item =>
-        <li key={item.title}><a href="#" className="footer__li">{item.title}</a></li>
-      )}
+        <li key={item.title}><a href="null" className="footer__li">{item.title}</a></li>)}
     </ul>
-  )
+  );
 }
 
-export default Resources
+export default Resources;

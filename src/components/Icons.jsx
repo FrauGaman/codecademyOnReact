@@ -1,10 +1,11 @@
 import React from 'react';
 
 function Icons(props) {
-  if (props.iconId === "proIcon") {
+  if (props.iconId === 'proIcon') {
     return (
       <svg height="30"
-           viewBox="0 0 95 40" xmlns="http://www.w3.org/2000/svg">
+           viewBox="0 0 95 40"
+           xmlns="http://www.w3.org/2000/svg">
         <g fill="currentColor" fillRule="evenodd">
           <path d="m0 0h74v40h-74zm78 34h17v6h-17z" fill="currentColor"></path>
           <path
@@ -46,4 +47,4 @@ function Icons(props) {
   }
 }
 
-export default Icons
+export default Icons;

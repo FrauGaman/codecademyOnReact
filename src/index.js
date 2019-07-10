@@ -1,21 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App.jsx';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter, Route, Redirect} from "react-router-dom";
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
-import FullCatalogPage from "./components/FullCatalogPage";
-import Auth from "./components/nav/Auth/Auth";
-// import MainDescr from "./components/MainDescription/MainDescription";
+import FullCatalogPage from './components/FullCatalogPage';
 
 
 ReactDOM.render((
   <BrowserRouter>
     <App>
-      {/*<Route path="/theme/:mainDescript" component={MainDescr} />*/}
-      <Route path="/theme/:link" component={FullCatalogPage} />
-      <Route path="/language/:linkLang" component={ FullCatalogPage } />
+      <Route path="/theme/:link" component={FullCatalogPage}/>
+      <Route path="/language/:linkLang" component={ FullCatalogPage }/>
       <Route exact path="/" render={() => (
         <Redirect to="/theme/all"/>
       )}/>
