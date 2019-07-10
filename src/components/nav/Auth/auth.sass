@@ -3,12 +3,12 @@
 .logIn__btn
   margin-left: 12px
   padding: 10px 6px
-  font-weight: 700
-  color: #323233
+  font-weight: $mainFontWeight
+  color: $mediumTitleColor
   font-family: 'Nunito Sans', sans-serif
   @media screen and (max-width: 375px)
     margin-left: 7px
-    font-size: 14px
+    font-size: $miniFontSize
 .signUp__btn
   margin-left: 38px
   width: 96px
@@ -16,23 +16,24 @@
   border: none
   background-color: $mainColor
   font-size: $mainFontSize
-  font-weight: 700
+  font-weight: $mainFontWeight
   color: #fff
   font-family: 'Nunito Sans', sans-serif
 
   @media screen and (max-width: 960px)
     background-color: #fff
-    color: #323233
+    color: $mediumTitleColor
     &__menu
       margin-top: 20px
       margin-left: 0
       width: 100%
       background-color: $mainColor
       font-size: $mainFontSize
-      font-weight: 700
+      font-weight: $mainFontWeight
       color: #fff
   @media screen and (max-width: 735px)
     width: 70px
     margin-left: 0
-    font-size: 14px
-
+    font-size: $miniFontSize
+    &__menu
+      width: 100%

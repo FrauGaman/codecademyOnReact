@@ -2,47 +2,50 @@
 
 .burger__menu
   position: fixed
-  display: flex
-  flex-direction: column
   width: 100%
   height: 100%
   padding-top: 17px
-  padding-left: 25px
-  padding-right: 25px
+  //padding-left: 25px
+  //padding-right: 25px
   background-color: #fff
   z-index: 1000
   @media screen and (max-width: 1560px)
     display: none
   @media screen and (max-width: 960px)
     display: flex
-  .close__icon
-    align-self: flex-end
-    width: 28px
-    height: 28px
-    &:active
-      border: 2px solid #828285
-      border-radius: 5px
-  input
-    width: 100%
-    margin: 20px auto
-    padding: 12px 40px 12px 12px
-    height: 50px
-    font-size: $mainFontSize
-    border: 1px solid #c4c3c7
-    outline: none
-    &::placeholder
-      color: #D3D3D3
-  .menu__search__icon
-    align-self: flex-end
-    margin-right: 15px
-    margin-top: -55px
-  .burger__menu__link
-    display: block
-    padding: 16px 0
-    font-size: 19px
-    color: #323232
-  ul
-    margin-top: 10px
+  .burger__menu__content
+    display: flex
+    flex-direction: column
+    margin: 0 auto
+    width: 90%
+    .close__icon
+      align-self: flex-end
+      width: 28px
+      height: 28px
+      &:active
+        border: 2px solid $iconColor
+        border-radius: 5px
+    input
+      width: 100%
+      margin: 20px auto
+      padding: 12px 40px 12px 12px
+      height: 50px
+      font-size: $mainFontSize
+      border: 1px solid $placeholderColor
+      outline: none
+      &::placeholder
+        color: $burgerMenuPlaseholderColor
+    .menu__search__icon
+      align-self: flex-end
+      margin-right: 15px
+      margin-top: -55px
+    .burger__menu__link
+      display: block
+      padding: 16px 0
+      font-size: $burgerMenuFontSize
+      color: $mediumTitleColor
+    ul
+      margin-top: 10px
 
 
 
