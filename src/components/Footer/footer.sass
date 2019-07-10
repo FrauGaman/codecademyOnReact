@@ -9,7 +9,7 @@
   padding-top: 31px
   padding-bottom: 26px
   margin: 0 auto
-  font-size: 15px
+  font-size: $smallFontSize
   color: $footerColor
   @media screen and (max-width: 1560px)
     max-width: $mediumDisplayWidth
@@ -28,10 +28,10 @@
   .footer__list__down
     height: 145px
   .footer__li
-    line-height: 28px
+    line-height: $bigLineHeight
     color: $footerColor
     &:hover
-      color: #4c7ef3
+      color: $footerHowerColor
   .footer__title
     font-size: $mainFontSize
     padding-bottom: 13px
@@ -73,8 +73,8 @@
     @media screen and (max-width: 450px)
       flex-direction: column
     .filter__title
-      font-size: 14px
-      font-weight: 700
+      font-size: $miniFontSize
+      font-weight: $mainFontWeight
       text-transform: uppercase
       @media screen and (max-width: 450px)
         padding-top: 20px
