@@ -7,7 +7,7 @@ function Auth() {
   return (
     <div>
       <a href="#" className="logIn__btn">Log in</a>
-      <SignUpBtn />
+      <SignUpBtn SignUpBtnClass={"signUp__btn"}/>
     </div>
   )
 }

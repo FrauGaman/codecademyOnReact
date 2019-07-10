@@ -1,8 +1,8 @@
 import React from 'react';
 
-function SignUpBtn() {
+function SignUpBtn(props) {
   return (
-    <button className="signUp__btn">Sign up</button>
+    <button className={props.SignUpBtnClass}>Sign up</button>
   )
 }
 

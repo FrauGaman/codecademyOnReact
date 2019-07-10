@@ -3,6 +3,7 @@ import menu from '../../config/menu'
 import UpgradeBtn from "../nav/Additionally/UpgradeBtn";
 import MenuIcons from '../Icons'
 import './burgerMenu.sass'
+import SignUpBtn from "../nav/Auth/SignUpBtn";
 
 function BurgerMenu(props) {
   return (
@@ -23,7 +24,9 @@ function BurgerMenu(props) {
 
       <UpgradeBtn />
 
-      <button className="menu__signUp__btn">Sign up</button>
+      <SignUpBtn SignUpBtnClass={"signUp__btn signUp__btn__menu"}/>
+
+      {/*<button className="menu__signUp__btn">Sign up</button>*/}
 
 
     </div>
