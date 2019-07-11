@@ -1,29 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ProIcon from '../../img/proIcon.webp';
 
-function CoursesListMap(props) {
+function CoursesListMap({ coursesArr }) {
   return (
-    props.coursesArr.map(item =>
-      <div key={item.title} className="course__box__item" style={{borderTopColor: item.borderColor}}>
-        <img className="course__item__icon" src={item.icon} alt=""/>
+    coursesArr.map(({ importance = 'Course', title = 'Title Plug', descr = 'description Plug', icon = '../../img/courseList/purple.svg', borderColor = '#000' }) =>
+      <div key={title} className="course__box__item" style={{borderTopColor: borderColor}}>
+        <img className="course__item__icon" src={icon} alt="" />
         <div className="importance__box">
-          {item.importance === 'Exclusive Course' ?
+          {importance === 'Exclusive Course' ?
             <div>
               <img className="importance__icon" src={ProIcon} alt=""/>
-              <div className="course__importance" style={{marginLeft: '49px'}}>{item.importance}</div>
-            </div> :
-            <div className="course__importance">{item.importance}</div>
+              <div className="course__importance" style={{marginLeft: '49px'}}>{importance}</div>
+            </div>
+            : <div className="course__importance">{importance}</div>
           }
         </div>
-        <h3 className="course__title">{item.title}</h3>
+        <h3 className="course__title">{title}</h3>
         <div className="course__description">
           <div className="descr__text">
-            {item.descr}
+            {descr}
           </div>
         </div>
       </div>
     )
   );
 }
-
+CoursesListMap.propTypes = {
+  coursesArr: PropTypes.arrayOf(PropTypes.shape({
+    importance: PropTypes.string,
+    title: PropTypes.string,
+    descr: PropTypes.string,
+    icon: PropTypes.string,
+    borderColor: PropTypes.string,
+  })),
+};
 export default CoursesListMap;

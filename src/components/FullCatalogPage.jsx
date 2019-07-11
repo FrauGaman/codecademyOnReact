@@ -4,24 +4,45 @@ import CareerCourses from './CareerCourses/CareerCourses';
 import SkillCourses from './SkillCourses/SkillCourses';
 import CoursesList from './CoursesList/CoursesList';
 import '../style/basic.sass';
-import Theme from '../config/theme';
-import Language from '../config/language';
+import theme from '../config/theme';
+import language from '../config/language';
 
 function FullCatalogPage(props) {
   let currentThemeId;
   let currentLanguageId;
   let activeLink;
-  for (let i = 0; i < Theme.theme.length; i++) {
-    if ((`/${props.match.params.link}`) === Theme.theme[i].link) {
-      currentThemeId = Theme.theme[i].id;
+  let filterArr;
+
+  if (theme.theme) {
+    for (let i = 0; i < theme.theme.length; i++) {
+      if ((`/${props.match.params.link}`) === theme.theme[i].link) {
+        currentThemeId = theme.theme[i].id;
+      }
     }
+  } else {
+    theme.theme = [];
   }
-  for (let i = 0; i < Language.language.length; i++) {
-    if ((`/${props.match.params.linkLang}`) === Language.language[i].link) {
-      currentLanguageId = Language.language[i].id;
+
+  if (language.language) {
+    for (let i = 0; i < language.language.length; i++) {
+      if ((`/${props.match.params.linkLang}`) === language.language[i].link) {
+        currentLanguageId = language.language[i].id;
+      }
     }
+  } else {
+    language.language = [];
   }
-  const filterArr = [...Theme.theme, ...Language.language];
+
+   if (theme.theme && language.language) {
+    filterArr = [...theme.theme, ...language.language];
+  } else if (!theme.theme && language.language) {
+    filterArr = [...language.language];
+  } else if (theme.theme && !language.language) {
+    filterArr = [...theme.theme];
+  } else {
+     filterArr = [];
+   }
+
   for (let i = 0; i < filterArr.length; i++) {
     if (((`/${props.match.params.link}`) !== undefined) && ((`/${props.match.params.link}`) === filterArr[i].link)) {
       activeLink = filterArr[i].link;
@@ -29,6 +50,7 @@ function FullCatalogPage(props) {
       activeLink = filterArr[i].link;
     }
   }
+
   return (
     <div className="content__wrapper">
       <MainDescr filterArr={filterArr} activeLink={activeLink} />

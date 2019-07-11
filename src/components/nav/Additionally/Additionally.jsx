@@ -1,17 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './additionally.sass';
-import Icons from '../../Icons';
+import { ReactComponent as SearchIcon } from '../../../img/icons/SearchIcon.svg';
 import UpgradeBtn from './UpgradeBtn';
 
-function Additionally(props) {
+function Additionally({ showSearch }) {
   return (
     <div className="additionally">
-      <UpgradeBtn/>
-      <div className="search__btn" onClick={props.showSearch}>
-        <Icons iconId={'searchIcon'} height={24} width={24} color={'#828285'}/>
-      </div>
+      <UpgradeBtn />
+      <SearchIcon className="searchIcon" onClick={showSearch} />
     </div>
   );
+}
+Additionally.propTypes = {
+  showSearch: PropTypes.func,
 }
 
 export default Additionally;

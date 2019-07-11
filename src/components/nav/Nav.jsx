@@ -5,7 +5,8 @@ import Additionally from './Additionally/Additionally';
 import Auth from './Auth/Auth';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Search from './Search/Search';
-import MenuIcon from '../Icons';
+import { ReactComponent as OpenMenuIcon } from '../../img/OpenMenuIcon.svg'
+// import MenuIcon from '../Icons';
 import './nav.sass';
 
 class Nav extends React.Component {
@@ -39,6 +40,7 @@ class Nav extends React.Component {
       }
     )
   };
+
   render() {
     return (
       <React.Fragment>
@@ -54,12 +56,12 @@ class Nav extends React.Component {
               <Additionally showSearch={this.showSearch} />
               <Auth/>
               <div className="menu__icon__box" onClick={this.showMenu}>
-                <MenuIcon iconId={3}/>
+                <OpenMenuIcon />
               </div>
             </div>
           </div>
         </nav>
-        {this.state.isMenuShow && <BurgerMenu hideMenu={this.hideMenu} />}
+        {this.state.isMenuShow && <BurgerMenu menu={this.props.menu} hideMenu={this.hideMenu} />}
         {this.state.isSearchShow && <Search hideSearch={this.hideSearch} />}
       </React.Fragment>
     );

@@ -11,18 +11,15 @@
   z-index: 999
   @media screen and (max-width: 960px)
     display: none
-
   .search__container
     width: $maxDisplayWidth
     margin: 0 auto
     @media screen and (max-width: 1560px)
       max-width: $mediumDisplayWidth
-
     .search__input__box
       display: flex
       align-items: center
       padding-bottom: 33px
-
       &::after
         content: ""
         position: absolute
@@ -31,7 +28,6 @@
         margin-top: 50px
         padding: 0
         border-bottom: 3px solid $searchHrColor
-
       input
         width: 100%
         margin-left: 20px
@@ -39,29 +35,26 @@
         border: none
         font-size: $inputFontSize
         font-weight: 700
-
         &::placeholder
           color: $placeholderColor
-
         &:focus
           outline: none
-
+      .searchIcon__big
+        width: 47px
+        height: 47px
+        color: $iconColor
     .popular__searches
       padding-top: 30px
-
       .popular__title
         font-size: 20px
         color: $darkTitleColor
-
       .search__list
         display: flex
         padding-top: 30px
         padding-bottom: 44px
-
         li
           &:first-child
             margin-left: -41px
-
           button
             margin-left: 25px
             padding: 6px 16px
@@ -71,14 +64,11 @@
             background-color: #fff
             border: 3px solid #fff
             outline: none
-
             &:hover
               color: $searchButtonHoverColor
-
             &:active
               border: 3px solid $searchButtonActiveColor
               border-radius: 5px
-
 .black__content
   position: fixed
   width: 100%

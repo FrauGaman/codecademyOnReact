@@ -1,10 +1,12 @@
 {
   "items": [
     {
+      "id": 0,
       "URL": "/catalog",
       "linkName": "Catalog"
     },
     {
+      "id": 1,
       "URL": "/pricing",
       "linkName": "Pricing"
     }

@@ -1,46 +1,41 @@
-import React, { useEffect } from 'react';
-import menu from '../../config/menu';
+import React from 'react';
+import PropTypes from 'prop-types';
 import UpgradeBtn from '../nav/Additionally/UpgradeBtn';
-import MenuIcons from '../Icons';
+import { ReactComponent as CloseMenuIcon} from '../../img/icons/CloseMenuIcon.svg';
+import { ReactComponent as SearchIcon} from '../../img/icons/SearchIcon.svg';
 import './burgerMenu.sass';
 import SignUpBtn from '../nav/Auth/SignUpBtn';
 
-function BurgerMenu({ hideMenu }) {
-  useEffect(() => {
-    if (typeof (hideMenu) === 'function') {
-      hideMenu = hideMenu;
-    } else {
-      hideMenu = console.log('You have some problems');
-    }
-  });
+function BurgerMenu({ menu, hideMenu }) {
   return (
     <div className="burger__menu">
       <div className="burger__menu__content">
         <div className="close__icon" onClick={hideMenu}>
-          <MenuIcons iconId={4} />
+          <CloseMenuIcon />
         </div>
-        <input type="text" placeholder="e.g. Python, Data Science, Javascript" />
+        <input type="text" placeholder="e.g. Python, Data Science, Javascript"/>
         <div className="menu__search__icon">
-          <MenuIcons iconId={'searchIcon'} width={24} height={24} color={'#000'} />
+          <SearchIcon className="search__icon" />
         </div>
         <ul>
-          {menu.items.map(item => <li key={item.linkName}><a href="null" className="burger__menu__link">{item.linkName}</a></li>
-          )}
+          {menu.items ?
+            menu.items.map(({ id, URL = '/all', linkName = 'linkPlug' }) =>
+              <li key={id}><a href={URL} className="burger__menu__link">{linkName}</a></li>
+          ) : []}
         </ul>
-        <a href="null" className="burger__menu__link">Log in</a>
-        <UpgradeBtn/>
-        <SignUpBtn signUpBtnClass={"signUp__btn signUp__btn__menu"} />
+        <a href="{null}" className="burger__menu__link">Log in</a>
+        <UpgradeBtn />
+        <SignUpBtn signUpBtnClass={"signUp__btn signUp__btn__menu"}/>
       </div>
     </div>
   );
 }
-
+BurgerMenu.propTypes = {
+  menu: PropTypes.objectOf(PropTypes.arrayOf((PropTypes.shape({
+    id: PropTypes.number,
+    URL: PropTypes.string,
+    linkName: PropTypes.string,
+  })))),
+  hideMenu: PropTypes.func,
+};
 export default BurgerMenu;
-
-// BurgerMenu.defaultProps = {
-//   linkName: 'lololo',
-// };
-//
-// BurgerMenu.propTypes = {
-//   linkName: PropTypes.string,
-// };

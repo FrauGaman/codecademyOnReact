@@ -1,34 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Skill from '../../config/coursesSkill';
 import './skillCourses.sass';
-import Icons from '../Icons';
+import { ReactComponent as ProIcon } from '../../img/ProIcon.svg';
 import SkillCoursesMap from './SkillCoursesMap';
 
-function SkillCourses(props) {
-  const skillArr = Skill.skillPath.filter(item => item.theme.includes(props.currentThemeId) || item.language.includes(props.currentLanguageId));
+function SkillCourses({ currentThemeId, currentLanguageId }) {
+  let skillArr;
+  if (Skill.skillPath) {
+    skillArr = Skill.skillPath.filter(item => (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
+  } else {
+    skillArr = [];
+  }
   return (
     <div>
-      {skillArr.length &&
+      { Skill.skillPath ?
+        skillArr.length ?
       <div>
         <div className="course__title">
           <h2>skill paths</h2>
-          <a href="null">
-            <Icons iconId={'proIcon'}/>
+          <a href="{null}">
+            <ProIcon />
           </a>
         </div>
         <div className="course__descr_all">
           Skill Paths provide a short roadmap to help you master a new job-ready skill.
         </div>
         <div className="skill__box">
-          <SkillCoursesMap
-            currentThemeId={props.currentThemeId}
-            currentLanguageId={props.currentLanguageId}
-            skillArr={skillArr}/>
+          <SkillCoursesMap skillArr={skillArr} />
         </div>
       </div>
+          : []
+        : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
   );
 }
-
+SkillCourses.propTypes = {
+  currentThemeId: PropTypes.number,
+  currentLanguageId: PropTypes.number,
+};
 export default SkillCourses;

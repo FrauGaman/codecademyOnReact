@@ -1,20 +1,21 @@
 import React from 'react';
-import Done from '../../img/done.svg';
+import PropTypes from 'prop-types';
+import { ReactComponent as DoneIcon} from '../../img/icons/done.svg';
 
-function CareerCoursesMap(props) {
+function CareerCoursesMap({ careerArr }) {
   return (
-    props.careerArr.map(item =>
-      <div key={item.title} className="career__box__item">
-        <div className="career__box__img" style={{backgroundColor: item.bgColor}}>
-          <img src={item.img} alt={item.title}/>
+    careerArr.map(( { img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', knowledge = [] }) =>
+      <div key={title} className="career__box__item">
+        <div className="career__box__img" style={{ backgroundColor: bgColor }}>
+          <img src={img} alt={title}/>
         </div>
         <div className="career__box__descr">
-          <h3 className="career_title">{item.title}</h3>
-          <div className="career__box__descr_more">{item.descr}</div>
+          <h3 className="career_title">{title}</h3>
+          <div className="career__box__descr_more">{descr}</div>
           <div className="knowledges">
-            {item.knowledge.map(knowItem =>
+            {knowledge.map(knowItem =>
               <div key={knowItem} className="know__item">
-                <img src={Done} alt=""/>
+                <DoneIcon className="done__icon" />
                 {knowItem}
               </div>
             )}
@@ -24,5 +25,13 @@ function CareerCoursesMap(props) {
     )
   );
 }
-
+CareerCoursesMap.propTypes = {
+  careerArr: PropTypes.arrayOf(PropTypes.shape({
+    img: PropTypes.string,
+    bgColor: PropTypes.string,
+    title: PropTypes.string,
+    descr: PropTypes.string,
+    knowledge: PropTypes.array,
+  })),
+};
 export default CareerCoursesMap;

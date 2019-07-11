@@ -1,25 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './navigation.sass';
-// import PropTypes from 'prop-types';
 
-function NavMenu(props) {
+function NavMenu({ menu }) {
   return (
     <ul>
-      {props.menu.items.map(item =>
-        <li className="menu__link" key={item.URL}><a href={item.URL}>{item.linkName}</a></li>
-      )}
+      {menu.items ? menu.items.map(({id, URL = '/all', linkName = 'linkPlug'}) =>
+        <li className="menu__link" key={id}><a href={URL}>{linkName}</a></li>
+      ): []}
     </ul>
   );
 }
-
+NavMenu.propTypes = {
+  menu: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    URL: PropTypes.string,
+    linkName: PropTypes.string,
+  }))),
+};
 export default NavMenu;
-
-// NavMenu.defaultProps = {
-//   linkName: 'lololo',
-//   URL: 'cococo',
-// };
-//
-// NavMenu.propTypes = {
-//   linkName: PropTypes.string,
-//   URL: PropTypes.string,
-// };

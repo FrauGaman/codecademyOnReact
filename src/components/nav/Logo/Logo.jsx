@@ -1,14 +1,13 @@
 import React from 'react';
+import { ReactComponent as LogoIcon } from '../../../img/navLogo.svg';
+
 import './logo.sass';
-import Image from '../../../img/navLogo.svg';
 
 function Logo() {
   return (
-    <div>
-      <a href="null">
-        <img src={Image} alt="" height="27.5" width="128.5"/>
-      </a>
-    </div>
+    <a href="{null}">
+      <LogoIcon className="logo__icon"/>
+    </a>
   );
 }
 

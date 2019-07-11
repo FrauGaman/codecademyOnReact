@@ -11,11 +11,15 @@ import FullCatalogPage from './components/FullCatalogPage';
 ReactDOM.render((
   <BrowserRouter>
     <App>
-      <Route path="/theme/:link" component={FullCatalogPage}/>
-      <Route path="/language/:linkLang" component={ FullCatalogPage }/>
+      <Route path="/theme/:link" component={FullCatalogPage} />
+      <Route path="/language/:linkLang" component={ FullCatalogPage } />
       <Route exact path="/" render={() => (
-        <Redirect to="/theme/all"/>
-      )}/>
+        <Redirect to="/theme/all" />
+      )} />
+      <Route path="*/linkPlug" render={() => (
+        <Redirect to="/theme/all" />
+      )} />
+
     </App>
   </BrowserRouter>
 ), document.getElementById('root'));
