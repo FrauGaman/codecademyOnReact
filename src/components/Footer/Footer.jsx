@@ -29,6 +29,7 @@ function Footer({ footerNav, theme, language, resources }) {
     </div>
   );
 }
+
 Footer.propTypes = {
   footerNav: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))),
   theme: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
@@ -45,4 +46,5 @@ Footer.propTypes = {
   }))),
   resources: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))),
 };
+
 export default Footer;

@@ -7,10 +7,13 @@ function NavMenu({ menu }) {
     <ul>
       {menu.items ? menu.items.map(({id, URL = '/all', linkName = 'linkPlug'}) =>
         <li className="menu__link" key={id}><a href={URL}>{linkName}</a></li>
-      ): []}
+      )
+        : []
+      }
     </ul>
   );
 }
+
 NavMenu.propTypes = {
   menu: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
@@ -18,4 +21,5 @@ NavMenu.propTypes = {
     linkName: PropTypes.string,
   }))),
 };
+
 export default NavMenu;

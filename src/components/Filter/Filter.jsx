@@ -14,7 +14,7 @@ function Filter({ theme, language }) {
               theme.theme.map(({ id, name = 'LinkPlug', link = '/linkPlug' }) =>
               <li key={id}><NavLink to={`/theme${link}`}>{name}</NavLink></li>
             )
-              : <div className="plug__block__mini"><hr/> Now this field is in work <hr/></div>}
+              : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>}
           </ul>
         </div>
         <div className="language__col">
@@ -31,6 +31,7 @@ function Filter({ theme, language }) {
     </div>
   );
 }
+
 Filter.propTypes = {
   theme: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
@@ -45,4 +46,5 @@ Filter.propTypes = {
     link: PropTypes.string,
   }))),
 };
+
 export default Filter;

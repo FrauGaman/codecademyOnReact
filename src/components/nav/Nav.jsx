@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Logo from './Logo/Logo';
 import Navigation from './Navigation/Navigation';
 import Additionally from './Additionally/Additionally';
@@ -6,7 +7,6 @@ import Auth from './Auth/Auth';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Search from './Search/Search';
 import { ReactComponent as OpenMenuIcon } from '../../img/OpenMenuIcon.svg'
-// import MenuIcon from '../Icons';
 import './nav.sass';
 
 class Nav extends React.Component {
@@ -67,5 +67,9 @@ class Nav extends React.Component {
     );
   }
 }
+
+Nav.propTypes = {
+  props: PropTypes.object,
+};
 
 export default Nav;

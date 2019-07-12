@@ -26,7 +26,9 @@ function SiteNav({ footerNav }) {
     </div>
   );
 }
+
 SiteNav.propTypes = {
   footerNav: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 }
+
 export default SiteNav;

@@ -30,6 +30,7 @@ function BurgerMenu({ menu, hideMenu }) {
     </div>
   );
 }
+
 BurgerMenu.propTypes = {
   menu: PropTypes.objectOf(PropTypes.arrayOf((PropTypes.shape({
     id: PropTypes.number,
@@ -38,4 +39,5 @@ BurgerMenu.propTypes = {
   })))),
   hideMenu: PropTypes.func,
 };
+
 export default BurgerMenu;

@@ -9,7 +9,9 @@ function Resources({ res }) {
     </ul>
   );
 }
+
 Resources.propTypes = {
-  resources: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))),
-}
+  res: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+};
+
 export default Resources;

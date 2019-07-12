@@ -26,6 +26,7 @@ function CoursesListMap({ coursesArr }) {
     )
   );
 }
+
 CoursesListMap.propTypes = {
   coursesArr: PropTypes.arrayOf(PropTypes.shape({
     importance: PropTypes.string,
@@ -35,4 +36,5 @@ CoursesListMap.propTypes = {
     borderColor: PropTypes.string,
   })),
 };
+
 export default CoursesListMap;

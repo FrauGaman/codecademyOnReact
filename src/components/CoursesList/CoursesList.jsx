@@ -14,8 +14,7 @@ function CoursesList({ currentThemeId, currentLanguageId }) {
   }
   return (
     <div className="courses__list">
-      {Courses.coursesList ?
-        coursesArr.length ?
+      {(Courses.coursesList && coursesArr.length) ?
         <div>
           <div className="course__title">
             <h2>courses</h2>
@@ -27,14 +26,15 @@ function CoursesList({ currentThemeId, currentLanguageId }) {
             <CoursesListMap coursesArr={coursesArr}/>
           </div>
         </div>
-          : []
         : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
   );
 }
+
 CoursesList.propTypes = {
   currentThemeId: PropTypes.number,
   currentLanguageId: PropTypes.number,
 };
+
 export default CoursesList;

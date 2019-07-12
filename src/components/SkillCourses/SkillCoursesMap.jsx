@@ -25,6 +25,7 @@ function SkillCoursesMap({ skillArr }) {
     )
   );
 }
+
 SkillCoursesMap.propTypes = {
   careerArr: PropTypes.arrayOf(PropTypes.shape({
     img: PropTypes.string,
@@ -34,4 +35,5 @@ SkillCoursesMap.propTypes = {
     period: PropTypes.string,
   })),
 };
+
 export default SkillCoursesMap;

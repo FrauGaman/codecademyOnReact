@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 import FullCatalogPage from './components/FullCatalogPage';
 
@@ -19,6 +19,7 @@ ReactDOM.render((
       <Route path="*/linkPlug" render={() => (
         <Redirect to="/theme/all" />
       )} />
+
 
     </App>
   </BrowserRouter>

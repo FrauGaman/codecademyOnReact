@@ -29,6 +29,7 @@ function FooterCatalog({ theme, language }) {
     </div>
   );
 }
+
 FooterCatalog.propTypes = {
   theme: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
@@ -43,4 +44,5 @@ FooterCatalog.propTypes = {
     link: PropTypes.string,
   }))),
 };
+
 export default FooterCatalog;

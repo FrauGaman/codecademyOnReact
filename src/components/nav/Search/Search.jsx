@@ -16,11 +16,15 @@ function Search({ hideSearch }) {
           <div className="popular__searches">
             <h5 className="popular__title">Popular Searches</h5>
             <ul className="search__list">
-              {popularSearches.popularSearches.map(({title = 'TitlePlug'}) =>
+              {
+                popularSearches.popularSearches ?
+                  popularSearches.popularSearches.map(({title = 'TitlePlug'}) =>
                 <li key={title}>
                   <button>{title}</button>
                 </li>
-              )}
+              )
+                : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
+              }
             </ul>
           </div>
         </div>

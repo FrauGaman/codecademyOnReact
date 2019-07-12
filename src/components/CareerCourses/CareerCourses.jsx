@@ -14,7 +14,7 @@ function CareerCourse({ currentThemeId, currentLanguageId }) {
   }
   return (
     <div>
-      {Career.careerPath ?
+      {(Career.careerPath && currentThemeId) ?
         (!currentLanguageId)
         && (Career.careerPath.theme !== []
         && careerArr.length)

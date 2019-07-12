@@ -12,6 +12,7 @@ function Additionally({ showSearch }) {
     </div>
   );
 }
+
 Additionally.propTypes = {
   showSearch: PropTypes.func,
 }

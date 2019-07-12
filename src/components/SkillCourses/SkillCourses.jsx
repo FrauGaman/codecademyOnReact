@@ -14,8 +14,7 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
   }
   return (
     <div>
-      { Skill.skillPath ?
-        skillArr.length ?
+      { (Skill.skillPath && skillArr.length) ?
       <div>
         <div className="course__title">
           <h2>skill paths</h2>
@@ -30,7 +29,6 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
           <SkillCoursesMap skillArr={skillArr} />
         </div>
       </div>
-          : []
         : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
