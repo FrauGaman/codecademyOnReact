@@ -6,7 +6,7 @@ import Additionally from './Additionally/Additionally';
 import Auth from './Auth/Auth';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Search from './Search/Search';
-import { ReactComponent as OpenMenuIcon } from '../../img/OpenMenuIcon.svg'
+import OpenMenuIcon from '../Icons/Icons'
 import './nav.sass';
 
 class Nav extends React.Component {
@@ -56,7 +56,7 @@ class Nav extends React.Component {
               <Additionally showSearch={this.showSearch} />
               <Auth/>
               <div className="menu__icon__box" onClick={this.showMenu}>
-                <OpenMenuIcon />
+                <OpenMenuIcon iconName={'openMenuIcon'}/>
               </div>
             </div>
           </div>

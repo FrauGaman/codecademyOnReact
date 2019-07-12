@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SkillCoursesMap from './SkillCoursesMap';
+import ProIcon from '../Icons/Icons';
 import Skill from '../../config/coursesSkill';
 import './skillCourses.sass';
-import { ReactComponent as ProIcon } from '../../img/ProIcon.svg';
-import SkillCoursesMap from './SkillCoursesMap';
 
 function SkillCourses({ currentThemeId, currentLanguageId }) {
   let skillArr;
@@ -14,12 +14,13 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
   }
   return (
     <div>
-      { (Skill.skillPath && skillArr.length) ?
+      { Skill.skillPath ?
+        skillArr.length ?
       <div>
         <div className="course__title">
           <h2>skill paths</h2>
           <a href="{null}">
-            <ProIcon />
+            <ProIcon iconName={'proIcon'} />
           </a>
         </div>
         <div className="course__descr_all">
@@ -29,13 +30,16 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
           <SkillCoursesMap skillArr={skillArr} />
         </div>
       </div>
+          : []
         : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
   );
 }
+
 SkillCourses.propTypes = {
   currentThemeId: PropTypes.number,
   currentLanguageId: PropTypes.number,
 };
+
 export default SkillCourses;

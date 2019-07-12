@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './filter.sass';
 import { NavLink } from 'react-router-dom';
+import './filter.sass';
 
 function Filter({ theme, language }) {
   return (

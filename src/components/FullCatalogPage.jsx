@@ -4,9 +4,9 @@ import MainDescr from './MainDescription/MainDescription';
 import CareerCourses from './CareerCourses/CareerCourses';
 import SkillCourses from './SkillCourses/SkillCourses';
 import CoursesList from './CoursesList/CoursesList';
-import '../style/basic.sass';
 import theme from '../config/theme';
 import language from '../config/language';
+import '../style/basic.sass';
 
 function FullCatalogPage({ match }) {
   let currentThemeId;

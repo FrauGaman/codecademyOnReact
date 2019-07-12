@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import UpgradeBtn from '../nav/Additionally/UpgradeBtn';
-import { ReactComponent as CloseMenuIcon} from '../../img/icons/CloseMenuIcon.svg';
-import { ReactComponent as SearchIcon} from '../../img/icons/SearchIcon.svg';
+import Icon from '../Icons/Icons';
 import './burgerMenu.sass';
 import SignUpBtn from '../nav/Auth/SignUpBtn';
 
@@ -11,11 +10,11 @@ function BurgerMenu({ menu, hideMenu }) {
     <div className="burger__menu">
       <div className="burger__menu__content">
         <div className="close__icon" onClick={hideMenu}>
-          <CloseMenuIcon />
+          <Icon iconName={'closeMenuIcon'} />
         </div>
         <input type="text" placeholder="e.g. Python, Data Science, Javascript"/>
         <div className="menu__search__icon">
-          <SearchIcon className="search__icon" />
+          <Icon iconName={'searchIcon'} className={'search__icon__menu'} />
         </div>
         <ul>
           {menu.items ?

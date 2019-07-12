@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as DoneIcon} from '../../img/icons/done.svg';
+import DoneIcon from '../Icons/Icons';
 
 function CareerCoursesMap({ careerArr }) {
   return (
@@ -15,7 +15,7 @@ function CareerCoursesMap({ careerArr }) {
           <div className="knowledges">
             {knowledge.map(knowItem =>
               <div key={knowItem} className="know__item">
-                <DoneIcon className="done__icon" />
+                <DoneIcon iconName={'doneIcon'} className="done__icon" />
                 {knowItem}
               </div>
             )}
@@ -25,6 +25,7 @@ function CareerCoursesMap({ careerArr }) {
     )
   );
 }
+
 CareerCoursesMap.propTypes = {
   careerArr: PropTypes.arrayOf(PropTypes.shape({
     img: PropTypes.string,
@@ -34,4 +35,5 @@ CareerCoursesMap.propTypes = {
     knowledge: PropTypes.array,
   })),
 };
+
 export default CareerCoursesMap;

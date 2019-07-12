@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SearchIcon from '../../Icons/Icons';
 import './search.sass';
 import popularSearches from '../../../config/searchList';
-import { ReactComponent as SearchIcon } from '../../../img/icons/SearchIcon.svg';
 
 function Search({ hideSearch }) {
   return (
@@ -10,8 +10,8 @@ function Search({ hideSearch }) {
       <div className="search">
         <div className="search__container">
           <div className="search__input__box">
-            <SearchIcon className="searchIcon__big"/>
-            <input type="text" placeholder="e.g. Python, Data Science, JavaScript"/>
+            <SearchIcon iconName="searchIcon" className={'search__icon_big'} />
+            <input type="text" placeholder="e.g. Python, Data Science, JavaScript" />
           </div>
           <div className="popular__searches">
             <h5 className="popular__title">Popular Searches</h5>

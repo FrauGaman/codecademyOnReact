@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './additionally.sass';
-import { ReactComponent as SearchIcon } from '../../../img/icons/SearchIcon.svg';
 import UpgradeBtn from './UpgradeBtn';
+import SearchIcon from '../../Icons/Icons';
+import './additionally.sass';
 
 function Additionally({ showSearch }) {
   return (
     <div className="additionally">
       <UpgradeBtn />
-      <SearchIcon className="searchIcon" onClick={showSearch} />
+      <div className="icon__wrapper" onClick={showSearch}>
+        <SearchIcon iconName="searchIcon" className={'search__icon_small'} />
+      </div>
     </div>
   );
 }
 
 Additionally.propTypes = {
   showSearch: PropTypes.func,
-}
+};
 
 export default Additionally;

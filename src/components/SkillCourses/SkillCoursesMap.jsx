@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as ClockIcon } from '../../img/icons/clock.svg';
+import ClockIcon from '../Icons/Icons';
 
 function SkillCoursesMap({ skillArr }) {
   return (
-    skillArr.map(({ img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', period = '' }) =>
+    skillArr.map(({ img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', period = 'some time ago' }) =>
       <div key={title} className="skill__box__item">
         <div className="skill__box__img" style={{backgroundColor: bgColor}}>
           <img src={img} alt={title} />
@@ -17,7 +17,7 @@ function SkillCoursesMap({ skillArr }) {
             </div>
           </div>
           <div className="period">
-            <ClockIcon className="period__img" />
+            <ClockIcon iconName="clockIcon" className={'clock__icon'} />
             <div className="period__text">{period}</div>
           </div>
         </div>

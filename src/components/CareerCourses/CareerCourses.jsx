@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CareerCoursesMap from './CareerCoursesMap';
+import ProIcon from '../Icons/Icons';
 import Career from '../../config/coursesCareer';
 import './careerCourses.sass';
-import { ReactComponent as ProIcon } from '../../img/ProIcon.svg';
 
 function CareerCourse({ currentThemeId, currentLanguageId }) {
   let careerArr;
@@ -14,16 +14,13 @@ function CareerCourse({ currentThemeId, currentLanguageId }) {
   }
   return (
     <div>
-      {(Career.careerPath && currentThemeId) ?
-        (!currentLanguageId)
-        && (Career.careerPath.theme !== []
-        && careerArr.length)
-        &&
+      { Career.careerPath ?
+        (currentThemeId && !currentLanguageId && (Career.careerPath.theme !== []) && careerArr.length) ?
         <div>
           <div className="course__title">
             <h2>Career path</h2>
             <a href="{null}">
-              <ProIcon />
+              <ProIcon iconName={'proIcon'} />
             </a>
           </div>
           <div className="course__descr_all">Career Paths guide you through exactly what you need to learn to build a
@@ -33,6 +30,7 @@ function CareerCourse({ currentThemeId, currentLanguageId }) {
             <CareerCoursesMap careerArr={careerArr} />
           </div>
         </div>
+          : []
         : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>

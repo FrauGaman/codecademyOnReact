@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CoursesListMap from './CoursesListMap';
 import Courses from '../../config/coursesList';
 import './coursesList.sass';
-import CoursesListMap from './CoursesListMap';
 
 function CoursesList({ currentThemeId, currentLanguageId }) {
   let coursesArr;
@@ -14,7 +14,8 @@ function CoursesList({ currentThemeId, currentLanguageId }) {
   }
   return (
     <div className="courses__list">
-      {(Courses.coursesList && coursesArr.length) ?
+      {Courses.coursesList ?
+        coursesArr.length ?
         <div>
           <div className="course__title">
             <h2>courses</h2>
@@ -23,9 +24,10 @@ function CoursesList({ currentThemeId, currentLanguageId }) {
             Codecademy courses teach you a specific language or technology through interactive lessons.
           </div>
           <div className="courses__box">
-            <CoursesListMap coursesArr={coursesArr}/>
+            <CoursesListMap coursesArr={coursesArr} />
           </div>
         </div>
+          : []
         : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
