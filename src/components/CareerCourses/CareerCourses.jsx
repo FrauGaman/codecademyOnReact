@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CareerCoursesMap from './CareerCoursesMap';
 import ProIcon from '../Icons/Icons';
-import Career from '../../config/coursesCareer';
 import './careerCourses.sass';
+import { PATH } from '../../scripts/const';
+import getData from '../../scripts/getData';
 
 function CareerCourse({ currentThemeId, currentLanguageId }) {
+  const [result, setResult] = useState([]);
+  const addData = (res) => {
+    setResult(res);
+  };
+
+  useEffect(() => {
+    getData(PATH.CAREERPATH, addData);
+  }, []);
+
+
+  const careerPathArr = result || [];
   let careerArr;
-  if (Career.careerPath) {
-    careerArr = Career.careerPath.filter(item => item.theme && item.theme.includes(currentThemeId));
+  if (careerPathArr.length) {
+    careerArr = careerPathArr.filter(item => item.theme && item.theme.includes(currentThemeId));
   } else {
     careerArr = [];
   }
+
   return (
     <div>
-      { Career.careerPath ?
-        (currentThemeId && !currentLanguageId && (Career.careerPath.theme !== []) && careerArr.length) ?
+      { (currentThemeId && !currentLanguageId && careerArr.length) ?
         <div>
           <div className="course__title">
             <h2>Career path</h2>
@@ -31,7 +43,6 @@ function CareerCourse({ currentThemeId, currentLanguageId }) {
           </div>
         </div>
           : []
-        : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
   );

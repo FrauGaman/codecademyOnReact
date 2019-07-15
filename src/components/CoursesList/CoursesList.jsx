@@ -1,21 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import CoursesListMap from './CoursesListMap';
-import Courses from '../../config/coursesList';
+import { PATH } from '../../scripts/const';
+import getData from '../../scripts/getData';
 import './coursesList.sass';
 
 function CoursesList({ currentThemeId, currentLanguageId }) {
+  const [result, setResult] = useState([]);
+  const addData = (res) => {
+    setResult(res);
+  };
+
+  useEffect(() => {
+    getData(PATH.COURSESLIST, addData);
+  }, []);
+
+  const coursesListPathArr = result || [];
+
   let coursesArr;
-  if (Courses.coursesList) {
-    coursesArr = Courses.coursesList.filter(item =>
+  if (coursesListPathArr.length) {
+    coursesArr = coursesListPathArr.filter(item =>
       (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
   } else {
     coursesArr = [];
   }
   return (
     <div className="courses__list">
-      {Courses.coursesList ?
-        coursesArr.length ?
+      { coursesArr.length ?
         <div>
           <div className="course__title">
             <h2>courses</h2>
@@ -28,7 +39,6 @@ function CoursesList({ currentThemeId, currentLanguageId }) {
           </div>
         </div>
           : []
-        : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
   );

@@ -4,7 +4,7 @@ import DoneIcon from '../Icons/Icons';
 
 function CareerCoursesMap({ careerArr }) {
   return (
-    careerArr.map(( { img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', knowledge = [] }) =>
+    careerArr.map(({ img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', knowledge = [] }) =>
       <div key={title} className="career__box__item">
         <div className="career__box__img" style={{ backgroundColor: bgColor }}>
           <img src={img} alt={title}/>

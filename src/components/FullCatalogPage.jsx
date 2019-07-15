@@ -1,47 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MainDescr from './MainDescription/MainDescription';
 import CareerCourses from './CareerCourses/CareerCourses';
 import SkillCourses from './SkillCourses/SkillCourses';
 import CoursesList from './CoursesList/CoursesList';
-import theme from '../config/theme';
-import language from '../config/language';
+// import theme from '../config/theme';
+// import language from '../config/language';
+import { PATH } from '../scripts/const';
+import getData from '../scripts/getData';
 import '../style/basic.sass';
 
 function FullCatalogPage({ match }) {
   let currentThemeId;
   let currentLanguageId;
   let activeLink;
-  let filterArr;
+  let filterArr = [];
 
-  if (theme.theme) {
-    for (let i = 0; i < theme.theme.length; i++) {
-      if ((`/${match.params.link}`) === theme.theme[i].link) {
-        currentThemeId = theme.theme[i].id;
+  const [themeResult, setThemeResult] = useState([]);
+  const addDataTheme = (res) => {
+    res = typeof res === 'object' ? [] : res;
+    setThemeResult(res);
+  };
+  const [langResult, setLangResult] = useState([]);
+  const addDataLang = (res) => {
+    res = typeof res === 'object' ? [] : res;
+    setLangResult(res);
+  };
+
+  useEffect(() => {
+    getData(PATH.THEME, addDataTheme);
+  }, []);
+
+  useEffect(() => {
+    getData(PATH.LANGUAGE, addDataLang);
+  }, []);
+
+  const themeArr = themeResult;
+  const languageArr = langResult;
+  filterArr = [...themeResult, ...langResult];
+  // console.log(themeArr, 'theme');
+  //   // console.log(langResult, 'lang');
+  // console.log(filterArr, 'filterArr');
+
+  if (themeArr.length) {
+    for (let i = 0; i < themeArr.length; i++) {
+      if ((`/${match.params.link}`) === themeArr[i].link) {
+        currentThemeId = themeArr[i].id;
       }
     }
-  } else {
-    theme.theme = [];
   }
 
-  if (language.language) {
-    for (let i = 0; i < language.language.length; i++) {
-      if ((`/${match.params.linkLang}`) === language.language[i].link) {
-        currentLanguageId = language.language[i].id;
+  if (languageArr.length) {
+    for (let i = 0; i < languageArr.length; i++) {
+      if ((`/${match.params.linkLang}`) === languageArr[i].link) {
+        currentLanguageId = languageArr[i].id;
       }
     }
-  } else {
-    language.language = [];
-  }
-
-  if (theme.theme && language.language) {
-    filterArr = [...theme.theme, ...language.language];
-  } else if (!theme.theme && language.language) {
-    filterArr = [...language.language];
-  } else if (theme.theme && !language.language) {
-    filterArr = [...theme.theme];
-  } else {
-    filterArr = [];
   }
 
   for (let i = 0; i < filterArr.length; i++) {

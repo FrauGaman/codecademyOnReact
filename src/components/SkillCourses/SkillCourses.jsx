@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SkillCoursesMap from './SkillCoursesMap';
 import ProIcon from '../Icons/Icons';
-import Skill from '../../config/coursesSkill';
+import { PATH } from '../../scripts/const';
+import getData from '../../scripts/getData';
 import './skillCourses.sass';
 
+
 function SkillCourses({ currentThemeId, currentLanguageId }) {
+  const [result, setResult] = useState([]);
+  const addData = (res) => {
+    setResult(res);
+  };
+
+  useEffect(() => {
+    getData(PATH.SKILLPATH, addData);
+  }, []);
+
+  const skillPathArr = result || [];
+
   let skillArr;
-  if (Skill.skillPath) {
-    skillArr = Skill.skillPath.filter(item => (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
+  if (skillPathArr.length) {
+    skillArr = skillPathArr.filter(item => (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
   } else {
     skillArr = [];
   }
+
   return (
     <div>
-      { Skill.skillPath ?
-        skillArr.length ?
+      { skillArr.length ?
       <div>
         <div className="course__title">
           <h2>skill paths</h2>
@@ -31,7 +44,6 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
         </div>
       </div>
           : []
-        : <div className="plug__block"> <hr/> Now this field is in work <hr/> </div>
       }
     </div>
   );

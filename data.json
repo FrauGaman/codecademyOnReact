@@ -1,0 +1,334 @@
+{
+  "careerPath": [
+    {
+      "img": "../../img/courses/course1.svg",
+      "bgColor": "#90edc5",
+      "title": "Code Foundation",
+      "descr": "Interested in learning how to code, but unsure where to start? This is the path for you!",
+      "theme": [1],
+      "language": [],
+      "knowledge": ["Computer Science History", "Career Exploration", "Applications"]
+    },
+    {
+      "img": "../../img/courses/course2.svg",
+      "bgColor": "#b035c9",
+      "title": "Computer Science",
+      "descr": "Looking for an introduction to the theory behind programming? Master Python while learning data structures, algorithms, and more!",
+      "theme": [1, 3],
+      "language": [],
+      "knowledge": ["Python", "Data Structures", "Command Line", "Git"]
+    },
+    {
+      "img": "../../img/courses/course3.svg",
+      "bgColor": "#3731b8",
+      "title": "Data Science",
+      "descr": "Learn SQL and Python and build the skills you need to query, analyze, and visualize data.",
+      "theme": [1, 4],
+      "language": [],
+      "knowledge": ["Python", "SQL", "Data Visualization", "Machine Learning"]
+    },
+    {
+      "img": "../../img/courses/course4.svg",
+      "bgColor": "#49a9f8",
+      "title": "Web Development",
+      "descr": "Master the languages of the web: HTML, CSS, JavaScript, and SQL. This path is great for budding front-end or back-end engineers!",
+      "theme": [1, 2],
+      "language": [],
+      "knowledge": ["HTML", "CSS", "JavaScript", "React"]
+    }
+  ],
+  "coursesList": [
+    {
+      "importance": "Course",
+      "title": "Welcome To Codecademy",
+      "descr": "First time on our site? Start here to learn how to use our platform.",
+      "icon": "../../img/courseList/purple.svg",
+      "borderColor": "#69639a",
+      "theme": [1, 3],
+      "language": []
+    },
+    {
+      "importance": "Course",
+      "title": "Learn How to Code",
+      "descr": "Learn key programming concepts and write your first lines of code!",
+      "icon": "../../img/courseList/purple.svg",
+      "borderColor": "#69639a",
+      "theme": [1, 3],
+      "language": []
+    },
+    {
+      "importance": "Course",
+      "title": "Introduction to HTML",
+      "descr": "In just 7 hours, learn the basics of HTML5 and start building & editing web pages.",
+      "icon": "../../img/courseList/blue.svg",
+      "borderColor": "#3c64c2",
+      "theme": [1, 2, 6],
+      "language": [1]
+    },
+    {
+      "importance": "Exclusive Course",
+      "title": "Learn Python 3",
+      "descr": "Learn the latest and greatest version of the most popular programming language in the world!",
+      "icon": "../../img/courseList/lightPurple.svg",
+      "borderColor": "#9385f5",
+      "theme": [1, 4],
+      "language": [2]
+    },
+    {
+      "importance": "Course",
+      "title": "Learn Python 2",
+      "descr": "Learn the basics of the world's fastest growing and most popular programming language used by software engineers, analysts, data scientists, and machine learning engineers alike.",
+      "icon": "../../img/courseList/lightPurple.svg",
+      "borderColor": "#9385f5",
+      "theme": [1, 4],
+      "language": [2]
+    },
+    {
+      "importance": "Course",
+      "title": "Introduction To JavaScript",
+      "descr": "Learn the JavaScript fundamentals you'll need for front-end or back-end development.",
+      "icon": "../../img/courseList/green.svg",
+      "borderColor": "#2daaa6",
+      "theme": [1],
+      "language": [3]
+    },
+    {
+      "importance": "Course",
+      "title": "Learn Java",
+      "descr": "Learn the basics of the popular Java language in this introductory course.",
+      "icon": "../../img/courseList/green.svg",
+      "borderColor": "#2daaa6",
+      "theme": [1],
+      "language": [4]
+    }
+  ],
+  "skillPath": [
+    {
+      "img": "../../img/skillPath/skill1.svg",
+      "bgColor": "#6437cc",
+      "title": "Analyze Data with Python",
+      "descr": "Learn how to analyze and visualize data using Python.",
+      "period": "10 weeks",
+      "theme": [1, 4],
+      "language": [2]
+    },
+    {
+      "img": "../../img/skillPath/skill2.svg",
+      "bgColor": "#d957d9",
+      "title": "Analyze Data with SQL",
+      "descr": "Master SQL queries and work with multiple datasets so you can analyze your business data and level up your career.",
+      "period": "6 weeks",
+      "theme": [1, 4],
+      "language": [5]
+    },
+    {
+      "img": "../../img/skillPath/skill3.svg",
+      "bgColor": "#47cca0",
+      "title": "Create a Back-End App with JavaScript",
+      "descr": "Learn how to build back-end web APIs using Express.js, Node.js, SQL, and a Node.js-SQLite database library.",
+      "period": "8 weeks",
+      "theme": [1, 2],
+      "language": [3]
+    },
+    {
+      "img": "../../img/skillPath/skill4.svg",
+      "bgColor": "#47cca0",
+      "title": "Create a Front-End App with React",
+      "descr": "Learn to build front-end web apps with JavaScript and React.",
+      "period": "8 weeks",
+      "theme": [1, 2],
+      "language": []
+    },
+    {
+      "img": "../../img/skillPath/skill5.svg",
+      "bgColor": "#6437cc",
+      "title": "Get Started with Machine Learning",
+      "descr": "Learn the fundamentals of machine learning and apply those concepts to real world data!",
+      "period": "7 weeks",
+      "theme": [1, 4],
+      "language": [2]
+    },
+    {
+      "img": "../../img/skillPath/skill6.svg",
+      "bgColor": "#2d5dcc",
+      "title": "Learn How to Build Websites ",
+      "descr": "Learn the basics of web development to build your own website.",
+      "period": "10 weeks",
+      "theme": [1, 2],
+      "language": [1]
+    }
+  ],
+  "language": [
+    {
+      "id": 1,
+      "name": "HTML & CSS",
+      "descr": "HTML is the foundation behind all web pages. It’s used to add structure and form to text, images, and more. CSS is the language used to style HTML content. In this first course, you’ll learn the fundamentals of both languages so that you can create visually appealing web pages.",
+      "link": "/html-css"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "descr": "Python is a general-purpose, versatile and modern programming language. It’s great as a first language because it is concise and easy to read. Use it for everything from web development to software development and scientific applications.",
+      "link": "/python"
+    },
+    {
+      "id": 3,
+      "name": "JavaScript",
+      "descr": "JavaScript is the programming language of the web. You can use it to add dynamic behavior, store information, and handle requests and responses on a website. This course sequence covers data types and structures, functions, and object-oriented programming with classical inheritance in ES6 syntax.",
+      "link": "/javascript"
+    },
+    {
+      "id": 4,
+      "name": "Java",
+      "descr": "Java is among the most popular programming languages out there, thanks to its versatility and compatibility. Java is used for software development, mobile applications, and large systems development.",
+      "link": "/java"
+    },
+    {
+      "id": 5,
+      "name": "SQL",
+      "descr": "We live in a data-driven world: people search through data to find insights to inform strategy, marketing, operations, and a plethora of other categories. There are a ton of businesses that use large, relational databases, which makes a basic understanding of SQL a great employable skill not only for data scientists but almost everyone.",
+      "link": "/sql"
+    },
+    {
+      "id": 6,
+      "name": "Bash/Shell",
+      "descr": "The command line terminal is one of the most powerful tools available to you in a computer. It can run complex commands that can manipulate the existing file structure, download from remote sites, and support version control systems like Git (among many others).",
+      "link": "/bash"
+    },
+    {
+      "id": 7,
+      "name": "Ruby",
+      "descr": "Ruby is a general-purpose language that is still popular and in high demand in the marketplace, and is used commonly in Rails applications. Concise and readable, it is easy to pick up but also plenty powerful. Companies like Twitter, Soundcloud, Goodreads, and Kickstarter got their products off the ground with Ruby.",
+      "link": "/ruby"
+    },
+    {
+      "id": 8,
+      "name": "C++",
+      "descr": "C++ is a very popular language for performance-critical applications that rely on speed and efficient memory management. It is used in a wide range of industries including game development, VR, robotics, and scientific computing.",
+      "link": "/c-plus-plus"
+    },
+    {
+      "id": 9,
+      "name": "R",
+      "descr": "R is a widely used statistical programming language that’s beloved by users in academia and industry. R works well with data, making it a great language for anyone interested in data analysis, data visualization, and data science.",
+      "link": "/r"
+    },
+    {
+      "id": 10,
+      "name": "C#",
+      "descr": "C# is one of the most popular programming languages and can be used for a variety of things, including mobile applications, game development, and enterprise software. Knowing C# opens a great deal of doors for you as a developer.",
+      "link": "/c-sharp"
+    },
+    {
+      "id": 11,
+      "name": "PHP",
+      "descr": "PHP is a widely used server-side programming language that’s become increasingly fast and powerful over the years. PHP works well with HTML and databases, making it a great language for anyone interested in building dynamic web applications.",
+      "link": "/php"
+    }
+  ],
+  "items": [
+    {
+      "id": 0,
+      "URL": "/catalog",
+      "linkName": "Catalog"
+    },
+    {
+      "id": 1,
+      "URL": "/pricing",
+      "linkName": "Pricing"
+    }
+  ],
+  "siteNavigation": [
+    {
+      "title": "Beta Courses"
+    },
+    {
+      "title": "Arcticles"
+    },
+    {
+      "title": "Forums"
+    },
+    {
+      "title": "Help"
+    },
+    {
+      "title": "Blog"
+    }
+
+  ],
+  "popularSearches": [
+    {
+      "title": "Data Science"
+    },
+    {
+      "title": "Python"
+    },
+    {
+      "title": "Web Development"
+    },
+    {
+      "title": "HTML"
+    },
+    {
+      "title": "Java"
+    }
+  ],
+  "footerSiteNavigation": [
+    {
+      "title": "About"
+    },
+    {
+      "title": "Shop"
+    },
+    {
+      "title": "Stories"
+    },
+    {
+      "title": "We're Hiring"
+    }
+  ],
+  "theme" : [
+    {
+      "id" : 1,
+      "name": "Full Catalog",
+      "descr" : "Whether you’re trying to level up your career, build your side project, or simply play around with programming, you’ve found the right place to start. Explore our programs and courses, try an exercise or two, and join our community of 45 million learners.",
+      "link": "/all"
+    },
+    {
+      "id" : 2,
+      "name": "Web development",
+      "descr": "Tell your story, grow your business, or learn new skills to use at work. These courses teach you the skills to start building stunning websites.",
+      "link": "/web-development"
+    },
+    {
+      "id" : 3,
+      "name": "Programming",
+      "descr": "Take full advantage of a computer’s power by learning to use the world’s most popular programming languages. Learn to automate tasks, manipulate files, sort and search through data efficiently, and much more.",
+      "link": "/programming"
+    },
+    {
+      "id" : 4,
+      "name": "Data Science",
+      "descr": "Today’s technology has made it easier than ever for businesses and organizations to accumulate data on a massive scale. These courses will teach you how to wrangle large, unstructured sets of data to gain insights and make data-driven decisions.",
+      "link": "/data-science"
+    },
+    {
+      "id" : 5,
+      "name": "Partnerships",
+      "descr": "We’ve partnered with experts to bring you industry-relevant skills and technologies.",
+      "link": "/partnerships"
+    },
+    {
+      "id" : 6,
+      "name": "Design",
+      "descr":"Design is essential to bringing a product to life. The courses below will help you to make thoughtful design decisions, learn first principles in responsive design, and create a compelling user experience.",
+      "link": "/design"
+    },
+    {
+      "id" : 7,
+      "name": "Game Development",
+      "descr":"Love playing video games? Hone your coding skills while learning how to build them!",
+      "link": "/game-development"
+    }
+  ]
+}
