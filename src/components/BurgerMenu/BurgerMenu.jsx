@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import UpgradeBtn from '../nav/Additionally/UpgradeBtn';
+import SignUpBtn from '../nav/Auth/SignUpBtn';
 import Icon from '../Icons/Icons';
 import './burgerMenu.sass';
-import SignUpBtn from '../nav/Auth/SignUpBtn';
 
 function BurgerMenu({ menu, hideMenu }) {
   return (
@@ -17,8 +17,8 @@ function BurgerMenu({ menu, hideMenu }) {
           <Icon iconName={'searchIcon'} className={'search__icon__menu'} />
         </div>
         <ul>
-          {menu.items ?
-            menu.items.map(({ id, URL = '/all', linkName = 'linkPlug' }) =>
+          {menu.length ?
+            menu.map(({ id, URL = '/all', linkName = 'linkPlug' }) =>
               <li key={id}><a href={URL} className="burger__menu__link">{linkName}</a></li>
           ) : []}
         </ul>
@@ -31,11 +31,11 @@ function BurgerMenu({ menu, hideMenu }) {
 }
 
 BurgerMenu.propTypes = {
-  menu: PropTypes.objectOf(PropTypes.arrayOf((PropTypes.shape({
+  menu: PropTypes.arrayOf((PropTypes.shape({
     id: PropTypes.number,
     URL: PropTypes.string,
     linkName: PropTypes.string,
-  })))),
+  }))),
   hideMenu: PropTypes.func,
 };
 

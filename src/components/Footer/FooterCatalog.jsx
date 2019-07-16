@@ -7,8 +7,8 @@ function FooterCatalog({ theme, language }) {
       <div className="theme_col">
         <div className="filter__title">by subject</div>
         <ul className="footer__list">
-          { theme.theme.length ?
-            theme.theme.map(({ id, name = 'LinkPlug' }) =>
+          { theme.length ?
+            theme.map(({ id, name = 'LinkPlug' }) =>
                 <li key={id}><a href="{null}" className="footer__li">{name}</a></li>
               )
             : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
@@ -18,8 +18,8 @@ function FooterCatalog({ theme, language }) {
       <div className="language__col">
         <div className="filter__title">by language</div>
         <ul className="footer__list">
-          {language.language.length ?
-            language.language.map(({ id, name = 'LinkPlug' }) =>
+          {language.length ?
+            language.map(({ id, name = 'LinkPlug' }) =>
               <li key={id}><a href="{null}" className="footer__li">{name}</a></li>
             )
             : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
@@ -31,18 +31,18 @@ function FooterCatalog({ theme, language }) {
 }
 
 FooterCatalog.propTypes = {
-  theme: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  theme: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     descr: PropTypes.string,
     link: PropTypes.string,
-  }))),
-  language: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  })),
+  language: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     descr: PropTypes.string,
     link: PropTypes.string,
-  }))),
+  })),
 };
 
 export default FooterCatalog;

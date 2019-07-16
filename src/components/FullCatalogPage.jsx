@@ -4,8 +4,6 @@ import MainDescr from './MainDescription/MainDescription';
 import CareerCourses from './CareerCourses/CareerCourses';
 import SkillCourses from './SkillCourses/SkillCourses';
 import CoursesList from './CoursesList/CoursesList';
-// import theme from '../config/theme';
-// import language from '../config/language';
 import { PATH } from '../scripts/const';
 import getData from '../scripts/getData';
 import '../style/basic.sass';
@@ -18,12 +16,10 @@ function FullCatalogPage({ match }) {
 
   const [themeResult, setThemeResult] = useState([]);
   const addDataTheme = (res) => {
-    res = typeof res === 'object' ? [] : res;
     setThemeResult(res);
   };
   const [langResult, setLangResult] = useState([]);
   const addDataLang = (res) => {
-    res = typeof res === 'object' ? [] : res;
     setLangResult(res);
   };
 
@@ -38,9 +34,6 @@ function FullCatalogPage({ match }) {
   const themeArr = themeResult;
   const languageArr = langResult;
   filterArr = [...themeResult, ...langResult];
-  // console.log(themeArr, 'theme');
-  //   // console.log(langResult, 'lang');
-  // console.log(filterArr, 'filterArr');
 
   if (themeArr.length) {
     for (let i = 0; i < themeArr.length; i++) {

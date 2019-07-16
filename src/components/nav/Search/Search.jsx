@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchIcon from '../../Icons/Icons';
 import './search.sass';
-import popularSearches from '../../../config/searchList';
+import getData from '../../../scripts/getData';
+import { PATH } from '../../../scripts/const';
 
 function Search({ hideSearch }) {
+  const [searchState, setSearch] = useState([]);
+  const addDataSearch = (res) => {
+    setSearch(res);
+  };
+  useEffect(() => {
+    getData(PATH.POPULARSEARCHES, addDataSearch);
+  }, []);
+
   return (
     <React.Fragment>
       <div className="search">
@@ -17,8 +26,8 @@ function Search({ hideSearch }) {
             <h5 className="popular__title">Popular Searches</h5>
             <ul className="search__list">
               {
-                popularSearches.popularSearches ?
-                  popularSearches.popularSearches.map(({title = 'TitlePlug'}) =>
+                searchState.length ?
+                  searchState.map(({title = 'TitlePlug'}) =>
                 <li key={title}>
                   <button>{title}</button>
                 </li>

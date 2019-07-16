@@ -5,7 +5,7 @@ import './mainDescription.sass';
 function MainDescr({ filterArr, activeLink }) {
   return (
     <div className="main__descr__container">
-      {filterArr ?
+      {filterArr.length ?
         filterArr.filter(({ link = 'linkPlug' }) =>
           activeLink === link,
         ).map(({ id, name = 'LinkPlug', descr = 'descrPlug' }) =>

@@ -10,8 +10,8 @@ function Footer({ footerNav, theme, language, resources }) {
     <div className="footer__container">
       <div className="site__navigation">
         <div className="footer__title">Codecademy</div>
-        { footerNav.siteNavigation ?
-          <SiteNav footerNav={footerNav.siteNavigation} />
+        { footerNav.length ?
+          <SiteNav footerNav={footerNav} />
           : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
         }
       </div>
@@ -21,8 +21,8 @@ function Footer({ footerNav, theme, language, resources }) {
       </div>
       <div className="resources__navigation">
         <div className="footer__title">Resources</div>
-        { resources.siteNavigation ?
-          <Resources res={resources.siteNavigation} />
+        { resources.length ?
+          <Resources res={resources} />
           : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
         }
       </div>
@@ -31,20 +31,20 @@ function Footer({ footerNav, theme, language, resources }) {
 }
 
 Footer.propTypes = {
-  footerNav: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))),
-  theme: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  footerNav: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  theme: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     descr: PropTypes.string,
     link: PropTypes.string,
-  }))),
-  language: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  })),
+  language: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     descr: PropTypes.string,
     link: PropTypes.string,
-  }))),
-  resources: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))),
+  })),
+  resources: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 };
 
 export default Footer;

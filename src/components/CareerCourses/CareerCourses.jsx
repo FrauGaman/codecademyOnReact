@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CareerCoursesMap from './CareerCoursesMap';
 import ProIcon from '../Icons/Icons';
-import './careerCourses.sass';
 import { PATH } from '../../scripts/const';
 import getData from '../../scripts/getData';
+import './careerCourses.sass';
 
 function CareerCourse({ currentThemeId, currentLanguageId }) {
   const [result, setResult] = useState([]);

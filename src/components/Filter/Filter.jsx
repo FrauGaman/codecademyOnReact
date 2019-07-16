@@ -10,8 +10,8 @@ function Filter({ theme, language }) {
         <div className="theme__col">
           <div className="filter__title">by subject</div>
           <ul className="theme__link">
-            {theme.theme ?
-              theme.theme.map(({ id, name = 'LinkPlug', link = '/linkPlug' }) =>
+            {theme.length ?
+              theme.map(({ id, name = 'LinkPlug', link = '/linkPlug' }) =>
               <li key={id}><NavLink to={`/theme${link}`}>{name}</NavLink></li>
             )
               : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>}
@@ -20,8 +20,8 @@ function Filter({ theme, language }) {
         <div className="language__col">
           <div className="filter__title">by language</div>
           <ul className="language__link">
-            {language.language ?
-              language.language.map(({ id, name = 'LinkPlug', link = '/linkPlug' }) =>
+            {language.length ?
+              language.map(({ id, name = 'LinkPlug', link = '/linkPlug' }) =>
               <li key={id}><NavLink to={`/language${link}`}>{name}</NavLink></li>
             )
               : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>}
@@ -33,18 +33,18 @@ function Filter({ theme, language }) {
 }
 
 Filter.propTypes = {
-  theme: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  theme: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     descr: PropTypes.string,
     link: PropTypes.string,
-  }))),
-  language: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  })),
+  language: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     descr: PropTypes.string,
     link: PropTypes.string,
-  }))),
+  })),
 };
 
 export default Filter;

@@ -17,6 +17,7 @@ class Nav extends React.Component {
       isMenuShow: false
     };
   };
+
   showSearch = () => {
     this.setState(state => ({
         isSearchShow: !state.isSearchShow,

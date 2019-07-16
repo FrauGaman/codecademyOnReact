@@ -6,7 +6,6 @@ import { PATH } from '../../scripts/const';
 import getData from '../../scripts/getData';
 import './skillCourses.sass';
 
-
 function SkillCourses({ currentThemeId, currentLanguageId }) {
   const [result, setResult] = useState([]);
   const addData = (res) => {

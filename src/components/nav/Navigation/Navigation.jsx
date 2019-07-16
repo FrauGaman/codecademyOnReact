@@ -5,7 +5,7 @@ import './navigation.sass';
 function NavMenu({ menu }) {
   return (
     <ul>
-      {menu.items ? menu.items.map(({id, URL = '/all', linkName = 'linkPlug'}) =>
+      {menu.length ? menu.map(({id, URL = '/all', linkName = 'linkPlug'}) =>
         <li className="menu__link" key={id}><a href={URL}>{linkName}</a></li>
       )
         : []
@@ -15,11 +15,11 @@ function NavMenu({ menu }) {
 }
 
 NavMenu.propTypes = {
-  menu: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+  menu: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     URL: PropTypes.string,
     linkName: PropTypes.string,
-  }))),
+  })),
 };
 
 export default NavMenu;

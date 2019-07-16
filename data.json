@@ -238,6 +238,23 @@
       "linkName": "Pricing"
     }
   ],
+  "popularSearches": [
+    {
+      "title": "Data Science"
+    },
+    {
+      "title": "Python"
+    },
+    {
+      "title": "Web Development"
+    },
+    {
+      "title": "HTML"
+    },
+    {
+      "title": "Java"
+    }
+  ],
   "siteNavigation": [
     {
       "title": "Beta Courses"
@@ -255,23 +272,6 @@
       "title": "Blog"
     }
 
-  ],
-  "popularSearches": [
-    {
-      "title": "Data Science"
-    },
-    {
-      "title": "Python"
-    },
-    {
-      "title": "Web Development"
-    },
-    {
-      "title": "HTML"
-    },
-    {
-      "title": "Java"
-    }
   ],
   "footerSiteNavigation": [
     {
