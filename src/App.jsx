@@ -15,7 +15,6 @@ function App({ children }) {
   const [footerNavState, setFooterNav] = useState([]);
   const [resourcesState, setResourses] = useState([]);
 
-
   const addDataMenu = (res) => {
     setMenu(res);
   };

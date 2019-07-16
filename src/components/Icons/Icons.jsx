@@ -33,6 +33,14 @@ function Icons({ iconName, className }) {
       return (
         <SVG src="../img/icons/CloseMenuIcon.svg" className={className} />
       );
+    case 'edit':
+      return (
+        <SVG src="../img/admin/edit.svg" className={className} />
+      );
+    case 'delete':
+      return (
+        <SVG src="../img/admin/del.svg" className={className} />
+      );
     default:
       return (
         <SVG src="../img/icons/plugIcon.svg" className={className} />

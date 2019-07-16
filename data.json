@@ -330,5 +330,27 @@
       "descr":"Love playing video games? Hone your coding skills while learning how to build them!",
       "link": "/game-development"
     }
+  ],
+  "adminNav": [
+    {
+      "title": "Career Path",
+      "link": "/career"
+    },
+    {
+      "title": "Skill Path",
+      "link": "/skill"
+    },
+    {
+      "title": "All courses",
+      "link": "/allcourses"
+    },
+    {
+      "title": "Subject",
+      "link": "/subject"
+    },
+    {
+      "title": "Language",
+      "link": "/language"
+    }
   ]
 }

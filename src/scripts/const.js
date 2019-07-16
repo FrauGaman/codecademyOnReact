@@ -8,5 +8,5 @@ export const PATH = {
   SITENAVIGATION: '/siteNavigation',
   POPULARSEARCHES: '/popularSearches',
   FOOTERSITENAVIGATION: '/footerSiteNavigation',
-  THEME: '/theme',
+  ADMINNAV: '/adminNav',
 };
