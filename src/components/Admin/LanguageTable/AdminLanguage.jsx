@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
-import AllCoursesTableTemplate from './AllCoursesTableTemplate';
+import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import AllCoursesFormModal from '../CreateForms/AllCoursesFormModal';
+import LanguageFormModel from '../CreateForms/LanguageFormModel';
 
-function AdminAllCourses() {
+function AdminLanguage() {
   const [modalShow, setModalShow] = useState(false);
-  const [allCoursesStatus, setAllCoursesStatus] = useState([]);
+  const [languageStatus, setLanguageStatus] = useState([]);
   const addData = (res) => {
-    setAllCoursesStatus(res);
+    setLanguageStatus(res);
   };
 
   useEffect(() => {
-    getData(PATH.COURSESLIST, addData);
+    getData(PATH.LANGUAGE, addData);
   }, []);
 
   return (
@@ -27,16 +27,16 @@ function AdminAllCourses() {
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <AllCoursesFormModal
+        <LanguageFormModel
           show={modalShow}
           onHide={() => setModalShow(false)}
-          tableData={allCoursesStatus}
+          tableData={languageStatus}
         />
       </ButtonToolbar>
 
-      <AllCoursesTableTemplate tableData={allCoursesStatus} />
+      <LanguageTableTemplate tableData={languageStatus} />
     </React.Fragment>
   );
 }
 
-export default AdminAllCourses;
+export default AdminLanguage;

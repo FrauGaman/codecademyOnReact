@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
-import AllCoursesTableTemplate from './AllCoursesTableTemplate';
+import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import AllCoursesFormModal from '../CreateForms/AllCoursesFormModal';
+import ThemeFormModel from '../CreateForms/ThemeFormModel';
 
-function AdminAllCourses() {
+function AdminTheme() {
   const [modalShow, setModalShow] = useState(false);
-  const [allCoursesStatus, setAllCoursesStatus] = useState([]);
+  const [themeStatus, setThemeStatus] = useState([]);
   const addData = (res) => {
-    setAllCoursesStatus(res);
+    setThemeStatus(res);
   };
 
   useEffect(() => {
-    getData(PATH.COURSESLIST, addData);
+    getData(PATH.THEME, addData);
   }, []);
 
   return (
@@ -27,16 +27,16 @@ function AdminAllCourses() {
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <AllCoursesFormModal
+        <ThemeFormModel
           show={modalShow}
           onHide={() => setModalShow(false)}
-          tableData={allCoursesStatus}
+          tableData={themeStatus}
         />
       </ButtonToolbar>
 
-      <AllCoursesTableTemplate tableData={allCoursesStatus} />
+      <ThemeTableTemplate tableData={themeStatus} />
     </React.Fragment>
   );
 }
 
-export default AdminAllCourses;
+export default AdminTheme;

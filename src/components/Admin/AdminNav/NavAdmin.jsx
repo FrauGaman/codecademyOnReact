@@ -18,8 +18,8 @@ function NavAdmin() {
     <div className="admin__menu__container">
       <ul className="menu__link__container">
         {navList.length ?
-          navList.map(({ title = 'titlePlug' }) =>
-            <li key={title}><NavLink to={}>{title}</NavLink></li>
+          navList.map(({ title = 'titlePlug', link = 'linkPlug' }) =>
+            <li key={title}><NavLink to={`/admin${link}`}>{title}</NavLink></li>
           )
           : []
         }

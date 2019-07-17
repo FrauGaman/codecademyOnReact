@@ -1,10 +1,10 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
 function CareerTableTemplate({ tableData }) {
   return (
-    <div className="table">
+    <div className="table use__bootstrap">
       <Table striped bordered hover>
         <thead>
         <tr>
@@ -22,13 +22,13 @@ function CareerTableTemplate({ tableData }) {
         {
           tableData.map((item) =>
             <tr key={item.title}>
-              <td>{ item.title }</td>
-              <td>{ item.descr }</td>
-              <td>{ item.importance }</td>
-              <td>{ item.icon }</td>
-              <td>{ item.borderColor }</td>
-              <td>{ item.theme }</td>
-              <td>{ item.language }</td>
+              <td>{item.title}</td>
+              <td>{item.descr}</td>
+              <td>{item.importance}</td>
+              <td>{item.icon}</td>
+              <td>{item.borderColor}</td>
+              <td>{item.theme}</td>
+              <td>{item.language}</td>
               <td>
                 <Icon iconName={'edit'} className={'editIcon'} />
                 <Icon iconName={'delete'} className={'delIcon'} />
@@ -39,7 +39,7 @@ function CareerTableTemplate({ tableData }) {
         </tbody>
       </Table>
     </div>
-  )
+  );
 }
 
 export default CareerTableTemplate;

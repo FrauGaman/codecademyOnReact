@@ -10,6 +10,8 @@ import AdminPanel from './components/Admin/AdminPanel';
 import AdminCareer from './components/Admin/CareerTable/AdminCareer';
 import AdminSkill from './components/Admin/SkillTable/AdminSkill';
 import AdminAllCourses from './components/Admin/AllCoursesTable/AdminAllCourses';
+import AdminTheme from './components/Admin/ThemeTable/AdminTheme';
+import AdminLanguage from './components/Admin/LanguageTable/AdminLanguage';
 
 ReactDOM.render((
   <BrowserRouter>
@@ -19,6 +21,14 @@ ReactDOM.render((
           <Route path="/admin/career" component={AdminCareer} />
           <Route path="/admin/skill" component={AdminSkill} />
           <Route path="/admin/allcourses" component={AdminAllCourses} />
+          <Route path="/admin/subject" component={AdminTheme} />
+          <Route path="/admin/language" component={AdminLanguage} />
+          <Route exact path="/admin" render={() => (
+            <Redirect to="/admin/career" />
+          )} />
+          <Route path="*/linkPlug" render={() => (
+            <Redirect to="/admin/career" />
+          )} />
         </AdminPanel>
       </Route>
       <Route path="/">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
 function CareerTableTemplate({ tableData }) {
@@ -19,27 +19,28 @@ function CareerTableTemplate({ tableData }) {
         </tr>
         </thead>
         <tbody>
-          {
-            tableData.map((item) =>
-              <tr key={item.title}>
-                <td>{ item.title }</td>
-                <td>{ item.descr }</td>
-                <td>{ item.img }</td>
-                <td>{ item.bgColor }</td>
-                <td>{ item.theme }</td>
-                <td>{ item.language }</td>
-                <td>{ item.knowledge }</td>
-                <td>
-                  <Icon iconName={'edit'} className={'editIcon'} />
-                  <Icon iconName={'delete'} className={'delIcon'} />
-                </td>
-              </tr>
-            )
-          }
+        {
+          tableData.map((item) =>
+            <tr key={item.title}>
+              <td>{item.title}</td>
+              <td>{item.descr}</td>
+              <td>{item.img}</td>
+              <td>{item.bgColor}</td>
+              {/*сделать map на темы, внутри которого сравнивать id тем и их названия с id из этого массива */}
+              <td>{item.theme}</td>
+              <td>{item.language}</td>
+              <td>{item.knowledge}</td>
+              <td>
+                <Icon iconName={'edit'} className={'editIcon'} />
+                <Icon iconName={'delete'} className={'delIcon'} />
+              </td>
+            </tr>
+          )
+        }
         </tbody>
       </Table>
     </div>
-  )
+  );
 }
 
 export default CareerTableTemplate;
