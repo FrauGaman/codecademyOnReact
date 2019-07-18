@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+
+// import { connect } from 'react-redux';
+// import AddCareerData from '../../../actions/actionAddCareerData';
+
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
@@ -41,3 +45,7 @@ function AdminCareer() {
 }
 
 export default AdminCareer;
+
+// export default connect(state => ({
+//   careerTasks: state.careerTasks,
+// }))(AdminCareer);

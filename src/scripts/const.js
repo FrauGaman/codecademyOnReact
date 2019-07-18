@@ -11,3 +11,8 @@ export const PATH = {
   THEME: '/theme',
   ADMINNAV: '/adminNav',
 };
+
+
+export const TYPE = {
+  ADD_CAREER_DATA: 'ADD_CAREER_DATA',
+}
