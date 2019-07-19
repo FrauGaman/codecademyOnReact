@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import { connect } from 'react-redux';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import LanguageFormModel from '../CreateForms/LanguageFormModel';
+import LanguageFormModel from './LanguageFormModel';
+import { AddLanguageData, RemoveLanguageData } from '../../../actions/actionLanguageData';
 
-function AdminLanguage() {
+function AdminLanguage({ languageStatus, getLanguageData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
-  const [languageStatus, setLanguageStatus] = useState([]);
-  const addData = (res) => {
-    setLanguageStatus(res);
-  };
 
   useEffect(() => {
-    getData(PATH.LANGUAGE, addData);
+    getLanguageData();
   }, []);
 
   return (
@@ -30,13 +28,25 @@ function AdminLanguage() {
         <LanguageFormModel
           show={modalShow}
           onHide={() => setModalShow(false)}
-          tableData={languageStatus}
+          tabledata={languageStatus}
         />
       </ButtonToolbar>
 
-      <LanguageTableTemplate tableData={languageStatus} />
+      <LanguageTableTemplate tableData={languageStatus} removeData={removeData} />
     </React.Fragment>
   );
 }
 
-export default AdminLanguage;
+const mapStateToProps = state => ({
+  languageStatus: state.languageTask,
+});
+const mapStateToDispatch = dispatch => ({
+  getLanguageData: () => {
+    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+  },
+  removeData: (id) => {
+    dispatch(RemoveLanguageData(id));
+  },
+});
+
+export default connect(mapStateToProps, mapStateToDispatch)(AdminLanguage);

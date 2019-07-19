@@ -9,11 +9,11 @@ import store from './store';
 
 import FullCatalogPage from './components/FullCatalogPage';
 import AdminPanel from './components/Admin/AdminPanel';
-import AdminCareer from './components/Admin/CareerTable/AdminCareer';
-import AdminSkill from './components/Admin/SkillTable/AdminSkill';
-import AdminAllCourses from './components/Admin/AllCoursesTable/AdminAllCourses';
-import AdminTheme from './components/Admin/ThemeTable/AdminTheme';
-import AdminLanguage from './components/Admin/LanguageTable/AdminLanguage';
+import AdminCareer from './components/Admin/CareerBlock/AdminCareer';
+import AdminSkill from './components/Admin/SkillBlock/AdminSkill';
+import AdminAllCourses from './components/Admin/AllCoursesBlock/AdminAllCourses';
+import AdminTheme from './components/Admin/ThemeBlock/AdminTheme';
+import AdminLanguage from './components/Admin/LanguageBlock/AdminLanguage';
 
 ReactDOM.render((
   <Provider store={store}>

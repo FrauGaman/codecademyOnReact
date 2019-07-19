@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function ThemeTableTemplate({ tableData }) {
+function ThemeTableTemplate({ tableData, removeData }) {
   return (
     <div className="table">
       <Table striped bordered hover>
@@ -16,14 +16,16 @@ function ThemeTableTemplate({ tableData }) {
         </thead>
         <tbody>
         {
-          tableData.map((item) =>
+          tableData.map(item =>
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.descr}</td>
               <td>{item.link}</td>
               <td>
                 <Icon iconName={'edit'} className={'editIcon'} />
-                <Icon iconName={'delete'} className={'delIcon'} />
+                <div onClick={() => removeData(item.id)}>
+                  <Icon iconName={'delete'} className={'delIcon'} />
+                </div>
               </td>
             </tr>
           )

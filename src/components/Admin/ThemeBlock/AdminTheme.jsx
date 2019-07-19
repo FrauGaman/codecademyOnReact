@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import { connect } from 'react-redux';
+import { AddThemeData, RemoveThemeData } from '../../../actions/actionThemeData';
+
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import ThemeFormModel from '../CreateForms/ThemeFormModel';
+import ThemeFormModel from './ThemeFormModel';
 
-function AdminTheme() {
+function AdminTheme({ themeStatus, getThemeData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
-  const [themeStatus, setThemeStatus] = useState([]);
-  const addData = (res) => {
-    setThemeStatus(res);
-  };
 
   useEffect(() => {
-    getData(PATH.THEME, addData);
+    getThemeData();
   }, []);
 
   return (
@@ -30,13 +29,25 @@ function AdminTheme() {
         <ThemeFormModel
           show={modalShow}
           onHide={() => setModalShow(false)}
-          tableData={themeStatus}
+          tabledata={themeStatus}
         />
       </ButtonToolbar>
 
-      <ThemeTableTemplate tableData={themeStatus} />
+      <ThemeTableTemplate tableData={themeStatus} removeData={removeData} />
     </React.Fragment>
   );
 }
 
-export default AdminTheme;
+const mapStateToProps = state => ({
+  themeStatus: state.themeTasks,
+});
+const mapStateToDispatch = dispatch => ({
+  getThemeData: () => {
+    getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
+  },
+  removeData: (id) => {
+    dispatch(RemoveThemeData(id));
+  },
+})
+
+export default connect(mapStateToProps, mapStateToDispatch)(AdminTheme);

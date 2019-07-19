@@ -1,17 +1,13 @@
-import { createStore, compose } from 'redux';
+import { createStore, applyMiddleware  } from 'redux';
 import rootReducer from './reducers/index';
-
-const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
-  typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 const configureStore = preloadedState => (
   createStore(
     rootReducer,
     preloadedState,
-    composeEnhancers(),
+    composeWithDevTools(applyMiddleware(thunk)),
   )
 );
 

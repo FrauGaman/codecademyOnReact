@@ -5,17 +5,16 @@ import ProIcon from '../Icons/Icons';
 import { PATH } from '../../scripts/const';
 import getData from '../../scripts/getData';
 import './careerCourses.sass';
-import careerTasks from '../../reducers/careerTasks';
 
-function CareerCourse({ currentThemeId, currentLanguageId, getData }) {
-  // const [result, setResult] = useState([]);
+function CareerCourse({ currentThemeId, currentLanguageId }) {
+  const [result, setResult] = useState([]);
 
   const addData = (res) => {
-    // setResult(res);
+    setResult(res);
   };
 
   useEffect(() => {
-    getData();
+    getData(PATH.CAREERPATH, addData);
   }, []);
 
 
@@ -41,7 +40,7 @@ function CareerCourse({ currentThemeId, currentLanguageId, getData }) {
             solid foundation for a career in tech.
           </div>
           <div className="career__box">
-            <CareerCoursesMap careerArr={careerArr} />
+            <CareerCoursesMap careerArr={careerArr}  />
           </div>
         </div>
           : []
@@ -55,14 +54,4 @@ CareerCourse.propTypes = {
   currentLanguageId: PropTypes.number,
 };
 
-const mapStateToProps = state => ({
-  careerTasks: state.careerTasks,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getData: () => {
-    getData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)))
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CareerCourse);
+export default CareerCourse;
