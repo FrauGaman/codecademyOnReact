@@ -14,6 +14,7 @@ import AdminSkill from './components/Admin/SkillBlock/AdminSkill';
 import AdminAllCourses from './components/Admin/AllCoursesBlock/AdminAllCourses';
 import AdminTheme from './components/Admin/ThemeBlock/AdminTheme';
 import AdminLanguage from './components/Admin/LanguageBlock/AdminLanguage';
+import AdminKnowledge from './components/Admin/KnowledgeBlock/AdminKnowledge';
 
 ReactDOM.render((
   <Provider store={store}>
@@ -26,6 +27,7 @@ ReactDOM.render((
             <Route path="/admin/allcourses" component={AdminAllCourses} />
             <Route path="/admin/subject" component={AdminTheme} />
             <Route path="/admin/language" component={AdminLanguage} />
+            <Route path="/admin/knowledge" component={AdminKnowledge} />
             <Route exact path="/admin" render={() => (
               <Redirect to="/admin/career" />
             )} />

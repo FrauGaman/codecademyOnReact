@@ -7,27 +7,15 @@ import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import CareerFormModal from './CareerFormModal';
+import CareerFormModalCreate from './CareerFormModalCreate';
 
 function AdminCareer({ careerStatus, getCareerData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
-  // const [createNewCareer, setNewCareer] = useState({
-  //   id: '',
-  //   img: '',
-  //   bgColor: '',
-  //   title: '',
-  //   descr: '',
-  //   theme: [],
-  //   language: [],
-  //   knowledge: [],
-  // });
+
   useEffect(() => {
     getCareerData();
   }, []);
 
-  // const setCareerState = () => {
-  //   setnewCareer
-  // }
 
   return (
     <React.Fragment>
@@ -39,7 +27,7 @@ function AdminCareer({ careerStatus, getCareerData, removeData }) {
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <CareerFormModal
+        <CareerFormModalCreate
           show={modalShow}
           onHide={() => setModalShow(false)}
           tabledata={careerStatus}

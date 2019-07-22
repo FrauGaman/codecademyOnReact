@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-function CareerFormModal(props) {
+function SkillFormModalCreate(props) {
   return (
     <Modal
       {...props}
@@ -22,11 +22,11 @@ function CareerFormModal(props) {
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" rows="3" />
+            <Form.Control as="textarea" rows="3"/>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Img</Form.Label>
-            <Form.Control type="file" />
+            <Form.Control type="file"/>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Bg color</Form.Label>
@@ -35,20 +35,14 @@ function CareerFormModal(props) {
           <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Theme, Language</Form.Label>
             <Form.Control as="select" multiple>
-            {/*   !!!!!!!!!!!!!!!!THEME, LANGUAGE!!!!!!!!!!!!!!*/}
+              {/*   !!!!!!!!!!!!!!!!THEME, LANGUAGE!!!!!!!!!!!!!!*/}
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label>Knowledge</Form.Label>
-            <Form.Control type="text" placeholder="Knowledge" />
-            <Form.Control as="select">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Control>
+            <Form.Label>Period</Form.Label>
+            <Form.Control type="text" placeholder="Сourse duration" />
           </Form.Group>
+
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -59,4 +53,4 @@ function CareerFormModal(props) {
   );
 }
 
-export default CareerFormModal;
+export default SkillFormModalCreate;

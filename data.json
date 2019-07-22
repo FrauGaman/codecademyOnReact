@@ -190,8 +190,8 @@
       ]
     },
     {
-
-      "id": 2,"img": "../../img/skillPath/skill2.svg",
+      "id": 2,
+      "img": "../../img/skillPath/skill2.svg",
       "bgColor": "#d957d9",
       "title": "Analyze Data with SQL",
       "descr": "Master SQL queries and work with multiple datasets so you can analyze your business data and level up your career.",
@@ -455,6 +455,68 @@
     {
       "title": "Language",
       "link": "/language"
+    },
+    {
+      "title": "Knowledge",
+      "link": "/knowledge"
+    }
+  ],
+  "knowledge": [
+    {
+      "id": 1,
+      "know": "Computer Science History"
+    },
+    {
+      "id": 2,
+      "know": "Career Exploration"
+    },
+    {
+      "id": 3,
+      "know": "Applications"
+    },
+    {
+      "id": 4,
+      "know": "Python"
+    },
+    {
+      "id": 5,
+      "know": "Data Structures"
+    },
+    {
+      "id": 6,
+      "know": "Command Line"
+    },
+    {
+      "id": 7,
+      "know": "Git"
+    },
+    {
+      "id": 8,
+      "know": "SQL"
+    },
+    {
+      "id": 9,
+      "know": "Data Visualization"
+    },
+    {
+      "id": 10,
+      "know": "Machine Learning"
+    },
+    {
+      "id": 11,
+      "know": "HTML"
+    },
+    {
+      "id": 12,
+      "know": "CSS"
+    },
+    {
+      "id": 13,
+      "know": "JavaScript"
+    },
+    {
+      "id": 14,
+      "know": "React"
     }
   ]
 }

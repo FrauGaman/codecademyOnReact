@@ -5,14 +5,16 @@ import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import AllCoursesFormModal from './AllCoursesFormModal';
+import AllCoursesFormModalCreate from './AllCoursesFormModalCreate';
 import { AddCoursesData, RemoveCoursesData } from '../../../actions/actionCoursesData';
+import { AddThemeData } from '../../../actions/actionThemeData';
 
-function AdminAllCourses({ allCoursesStatus, getCoursesData, removeData }) {
+function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     getCoursesData();
+    getThemeData();
   }, []);
 
   return (
@@ -25,29 +27,41 @@ function AdminAllCourses({ allCoursesStatus, getCoursesData, removeData }) {
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <AllCoursesFormModal
+        <AllCoursesFormModalCreate
           show={modalShow}
           onHide={() => setModalShow(false)}
+          themeList={themeList}
+          languageList={languageList}
           tabledata={allCoursesStatus}
         />
       </ButtonToolbar>
 
-      <AllCoursesTableTemplate tableData={allCoursesStatus} removeData={removeData} />
+      <AllCoursesTableTemplate
+        tableData={allCoursesStatus}
+        themeList={themeList}
+        languageList={languageList}
+        removeData={removeData}
+      />
     </React.Fragment>
   );
 }
 
 const mapStateToProps = state => ({
   allCoursesStatus: state.coursesTasks,
+  themeList: state.themeTasks,
+  languageList: state.languageTask,
 });
 
 const mapStateToDispatch = dispatch => ({
   getCoursesData: () => {
     getData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)));
   },
+  getThemeData: () => {
+    getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
+  },
   removeData: (id) => {
     dispatch(RemoveCoursesData(id));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminAllCourses);

@@ -8,7 +8,7 @@ import { PATH } from '../../../scripts/const';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import SkillFormModal from './SkillFormModal';
+import SkillFormModalCreate from './SkillFormModalCreate';
 
 function AdminSkill({ skillStatus, getSkillsData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -26,7 +26,7 @@ function AdminSkill({ skillStatus, getSkillsData, removeData }) {
           position={{ span: 2, offset: 10 }}
           variant="primary"
           onClick={() => setModalShow(true)} />
-        <SkillFormModal
+        <SkillFormModalCreate
           show={modalShow}
           onHide={() => setModalShow(false)}
           tabledata={skillStatus} />

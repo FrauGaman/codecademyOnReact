@@ -1,16 +1,16 @@
 import { TYPE } from '../scripts/const';
 
-const themeTasks = (state = [], action) => {
+const knowledgeTasks = (state = [], action) => {
   switch (action.type) {
-    case TYPE.ADD_THEME_DATA:
+    case TYPE.ADD_KNOWLEDGE_DATA:
       state = [];
       return [
         ...state,
         ...action.payload,
       ];
-    case TYPE.REMOVE_THEME_DATA:
+    case TYPE.REMOVE_KNOWLEDGE_DATA:
       return [...state].filter((item) => item.id !== action.payload.id);
-    case TYPE.CREATE_THEME_DATA:
+    case TYPE.CREATE_KNOWLEDGE_DATA:
       return [
         ...state,
         ...action.payload,
@@ -20,4 +20,4 @@ const themeTasks = (state = [], action) => {
   }
 };
 
-export default themeTasks;
+export default knowledgeTasks;

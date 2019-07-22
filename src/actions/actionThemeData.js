@@ -16,3 +16,22 @@ export function RemoveThemeData(id) {
     payload: { id },
   };
 }
+
+export function CreateThemeData(payload) {
+  payload.map(item =>
+    fetch(`${BASE_PATH}${PATH.THEME}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id: item.id,
+        name: item.name,
+        descr: item.descr,
+        link: item.link,
+      }),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    })
+  );
+  return {
+    type: TYPE.CREATE_THEME_DATA,
+    payload,
+  };
+}

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { connect } from 'react-redux';
-import { AddThemeData, RemoveThemeData, CreateThemeData } from '../../../actions/actionThemeData';
+import { AddKnowledgeData, CreateKnowledgeData, RemoveKnowledgeData } from '../../../actions/actionKnowledgeData';
 
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
-import ThemeTableTemplate from './ThemeTableTemplate';
+import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import ThemeFormModelCreate from './ThemeFormModelCreate';
+import KnowledgeFormModalCreate from './KnowledgeFormModalCreate';
 
-function AdminTheme({ themeStatus, getThemeData, removeData, createData }) {
+function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData }) {
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
-    getThemeData();
+    getKnowledgeData();
   }, []);
+
 
   return (
     <React.Fragment>
@@ -26,32 +27,32 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData }) {
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <ThemeFormModelCreate
+        <KnowledgeFormModalCreate
           show={modalShow}
           onHide={() => setModalShow(false)}
-          tabledata={themeStatus}
           createdata={createData}
         />
       </ButtonToolbar>
 
-      <ThemeTableTemplate tableData={themeStatus} removeData={removeData} />
+      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} />
     </React.Fragment>
   );
 }
 
 const mapStateToProps = state => ({
-  themeStatus: state.themeTasks,
+  knowledgeStatus: state.knowledgeTask,
 });
+
 const mapStateToDispatch = dispatch => ({
-  getThemeData: () => {
-    getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
+  getKnowledgeData: () => {
+    getData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)));
   },
   removeData: (id) => {
-    dispatch(RemoveThemeData(id));
+    dispatch(RemoveKnowledgeData(id));
   },
   createData: (newData) => {
-    dispatch(CreateThemeData(newData));
+    dispatch(CreateKnowledgeData(newData));
   },
 });
 
-export default connect(mapStateToProps, mapStateToDispatch)(AdminTheme);
+export default connect(mapStateToProps, mapStateToDispatch)(AdminKnowledge);

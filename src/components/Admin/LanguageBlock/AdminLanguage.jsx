@@ -5,10 +5,10 @@ import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import LanguageFormModel from './LanguageFormModel';
-import { AddLanguageData, RemoveLanguageData } from '../../../actions/actionLanguageData';
+import LanguageFormModelCreate from './LanguageFormModelCreate';
+import { AddLanguageData, RemoveLanguageData, CreateLanguageData } from '../../../actions/actionLanguageData';
 
-function AdminLanguage({ languageStatus, getLanguageData, removeData }) {
+function AdminLanguage({ languageStatus, getLanguageData, removeData, createData }) {
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
@@ -25,10 +25,11 @@ function AdminLanguage({ languageStatus, getLanguageData, removeData }) {
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <LanguageFormModel
+        <LanguageFormModelCreate
           show={modalShow}
           onHide={() => setModalShow(false)}
           tabledata={languageStatus}
+          createdata={createData}
         />
       </ButtonToolbar>
 
@@ -46,6 +47,9 @@ const mapStateToDispatch = dispatch => ({
   },
   removeData: (id) => {
     dispatch(RemoveLanguageData(id));
+  },
+  createData: (newData) => {
+    dispatch(CreateLanguageData(newData));
   },
 });
 
