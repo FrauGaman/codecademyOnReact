@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function CareerTableTemplate({ tableData, removeData }) {
+function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeData }) {
   return (
     <div className="table">
       <Table striped bordered hover>
@@ -26,10 +26,15 @@ function CareerTableTemplate({ tableData, removeData }) {
                 <td>{item.descr}</td>
                 <td>{item.img}</td>
                 <td>{item.bgColor}</td>
-                {/*сделать map на темы, внутри которого сравнивать id тем и их названия с id из этого массива */}
-                <td>{item.theme}</td>
-                <td>{item.language}</td>
-                <td>{item.knowledge}</td>
+                <td>{item.theme.map(themeNumber =>
+                  themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
+                  )
+                )}</td>
+                <td>{item.language.map(languageNumber =>
+                  languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
+                  )
+                )}</td>
+                <td>{`${item.knowledge}`}</td>
                 <td>
                   <Icon iconName={'edit'} className={'editIcon'} />
                   <div onClick={() => removeData(item.id)}>

@@ -6,15 +6,17 @@ import { PATH } from '../../../scripts/const';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import AllCoursesFormModalCreate from './AllCoursesFormModalCreate';
-import { AddCoursesData, RemoveCoursesData } from '../../../actions/actionCoursesData';
+import { AddCoursesData, CreateCoursesData, RemoveCoursesData } from '../../../actions/actionCoursesData';
 import { AddThemeData } from '../../../actions/actionThemeData';
+import { AddLanguageData } from '../../../actions/actionLanguageData';
 
-function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, removeData }) {
+function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     getCoursesData();
     getThemeData();
+    getLanguageData();
   }, []);
 
   return (
@@ -33,6 +35,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
           themeList={themeList}
           languageList={languageList}
           tabledata={allCoursesStatus}
+          createdata={createData}
         />
       </ButtonToolbar>
 
@@ -59,8 +62,14 @@ const mapStateToDispatch = dispatch => ({
   getThemeData: () => {
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
+  getLanguageData: () => {
+    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+  },
   removeData: (id) => {
     dispatch(RemoveCoursesData(id));
+  },
+  createData: (newData) => {
+    dispatch(CreateCoursesData(newData));
   },
 });
 

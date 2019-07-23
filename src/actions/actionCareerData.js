@@ -17,3 +17,26 @@ export function RemoveCareerData(id) {
     payload: {id},
   }
 }
+
+export function CreateCareerData(payload) {
+  payload.map(item =>
+    fetch(`${BASE_PATH}${PATH.CAREERPATH}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id: item.id,
+        img: item.img,
+        bgColor: item.bgColor,
+        title: item.title,
+        descr: item.descr,
+        theme: item.theme,
+        language: item.language,
+        knowledge: item.knowledge,
+      }),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    })
+  );
+  return {
+    type: TYPE.CREATE_CAREER_DATA,
+    payload,
+  };
+}

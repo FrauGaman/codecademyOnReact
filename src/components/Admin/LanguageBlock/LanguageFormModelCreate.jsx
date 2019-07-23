@@ -8,7 +8,7 @@ class LanguageFormModelCreate extends React.Component {
       id: +new Date(),
       name: '',
       descr: '',
-      link: '',
+      link: '/',
     };
   }
 
@@ -26,7 +26,7 @@ class LanguageFormModelCreate extends React.Component {
       id: +new Date(),
       name: '',
       descr: '',
-      link: '',
+      link: '/',
     });
     this.props.onHide();
   };

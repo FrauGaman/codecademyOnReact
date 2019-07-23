@@ -16,3 +16,26 @@ export function RemoveSkillData(id) {
     payload: {id},
   }
 }
+
+export function CreateSkillData(payload) {
+  payload.map(item =>
+    fetch(`${BASE_PATH}${PATH.SKILLPATH}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id: item.id,
+        img: item.img,
+        bgColor: item.bgColor,
+        title: item.title,
+        descr: item.descr,
+        period: item.period,
+        theme: item.theme,
+        language: item.language,
+      }),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    })
+  );
+  return {
+    type: TYPE.CREATE_SKILL_DATA,
+    payload,
+  };
+}

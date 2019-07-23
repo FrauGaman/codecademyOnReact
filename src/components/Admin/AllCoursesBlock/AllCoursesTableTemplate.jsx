@@ -28,13 +28,11 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData })
               <td>{item.icon}</td>
               <td>{item.borderColor}</td>
               <td>{item.theme.map(themeNumber =>
-                themeList.map(elem =>
-                  themeNumber === elem.id ? `${elem.name} ` : '',
+                themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 )
               )}</td>
               <td>{item.language.map(languageNumber =>
-                languageList.map(elem =>
-                  languageNumber === elem.id ? `${elem.name} ` : '',
+                languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                 )
               )}</td>
               <td>

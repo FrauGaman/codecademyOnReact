@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Modal, Button, Form } from 'react-bootstrap';
+import MultiSelector from '../Multiselector';
 
 class CareerFormModalCreate extends React.Component {
   constructor(props) {
@@ -11,25 +12,66 @@ class CareerFormModalCreate extends React.Component {
       bgColor: '#',
       title: '',
       descr: '',
-      theme: [],
+      theme: [1],
       language: [],
       knowledge: [],
     };
   }
 
   changeState = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({ [name]: value });
+    let name = event.target.name;
+    let value = event.target.value;
+    this.setState({ [ name ]: value });
     console.log(this.state);
   };
+
+  changeMultiSelectState = (event, someArr, stateField) => {
+    let name = event.target.name;
+    let value;
+    someArr.map(item =>
+      event.target.value === item.name ?
+        value = [...stateField, item.id]
+        : ''
+    );
+    value = [...new Set(value)];
+    this.setState({ [ name ]: value });
+    console.log(this.state)
+  };
+
+  changeKnowledgeState = (event, stateField) => {
+    let name = event.target.name;
+    let value = [...stateField, event.target.value];
+    value = [...new Set(value)];
+    this.setState({ [ name ]: value });
+    console.log(this.state)
+  };
+
+  onSubmit = () => {
+    let stateArr =[];
+    stateArr.push(this.state);
+    this.props.createdata(stateArr);
+    this.setState({
+      id: +new Date(),
+      img: '',
+      bgColor: '#',
+      title: '',
+      descr: '',
+      theme: [1],
+      language: [],
+      knowledge: [],
+    });
+    this.props.onHide();
+  };
+
   render() {
+    let { title, descr, img, bgColor, theme, language, knowledge } = this.state;
     return (
       <Modal
-        {...this.props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        show={this.props.show}
+        onHide={this.props.onHide}
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -44,7 +86,7 @@ class CareerFormModalCreate extends React.Component {
                 type="text"
                 placeholder="Title"
                 name="title"
-                value={this.state.title}
+                value={title}
                 onChange={this.changeState}
               />
             </Form.Group>
@@ -55,7 +97,7 @@ class CareerFormModalCreate extends React.Component {
                 placeholder="Description"
                 rows="3"
                 name="descr"
-                value={this.state.descr}
+                value={descr}
                 onChange={this.changeState}
               />
             </Form.Group>
@@ -65,7 +107,7 @@ class CareerFormModalCreate extends React.Component {
                 type="text"
                 placeholder="Image"
                 name="img"
-                value={this.state.img}
+                value={img}
                 onChange={this.changeState}
               />
             </Form.Group>
@@ -75,45 +117,39 @@ class CareerFormModalCreate extends React.Component {
                 type="text"
                 placeholder="#000"
                 name="bgColor"
-                value={this.state.bgColor}
+                value={bgColor}
                 onChange={this.changeState}
               />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Theme</Form.Label>
-            <Form.Control as="select" multiple>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Control>
+              <MultiSelector
+                dataArr={this.props.themeList}
+                name={'theme'}
+                value={theme}
+                onChange={(event) => this.changeMultiSelectState(event, this.props.themeList, this.state.theme)} />
           </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Language</Form.Label>
-              <Form.Control as="select" multiple>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
+              <MultiSelector
+                dataArr={this.props.languageList}
+                name={'language'}
+                value={language}
+                onChange={(event) => this.changeMultiSelectState(event, this.props.languageList, this.state.language)} />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Knowledge</Form.Label>
-              <Form.Control as="select" multiple>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
+              <MultiSelector
+                dataArr={this.props.knowledgeList}
+                name={'knowledge'}
+                value={knowledge}
+                onChange={(event) => this.changeKnowledgeState(event, this.state.knowledge)} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={this.props.onHide}>Close</Button>
-          <Button variant="primary">Save changes</Button>
+          <Button variant="primary" onClick={this.onSubmit}>Save changes</Button>
         </Modal.Footer>
       </Modal>
     );

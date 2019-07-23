@@ -7,12 +7,12 @@ class KnowledgeFormModalCreate extends React.Component {
     super(props);
     this.state = {
       id: +new Date(),
-      know: '',
+      name: '',
     };
   };
 
   changeState = (event) => {
-    this.setState({ know: event.target.value });
+    this.setState({ name: event.target.value });
   };
 
   onSubmit = () => {
@@ -21,7 +21,7 @@ class KnowledgeFormModalCreate extends React.Component {
     this.props.createdata(stateArr);
     this.setState({
       id: +new Date(),
-      know: '',
+      name: '',
     });
     this.props.onHide();
   };
@@ -48,7 +48,7 @@ class KnowledgeFormModalCreate extends React.Component {
                 type="text"
                 placeholder="item"
                 name="knowledge"
-                value={this.state.know}
+                value={this.state.name}
                 onChange={this.changeState}
               />
             </Form.Group>

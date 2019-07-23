@@ -10,6 +10,11 @@ const skillTasks = (state = [], action) => {
       ];
     case TYPE.REMOVE_SKILL_DATA:
       return [...state].filter((item) => item.id !== action.payload.id);
+    case TYPE.CREATE_SKILL_DATA:
+      return [
+        ...state,
+        ...action.payload,
+      ];
     default:
       return state;
   }

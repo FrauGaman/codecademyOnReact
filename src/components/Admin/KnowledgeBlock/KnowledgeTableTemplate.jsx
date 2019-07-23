@@ -16,7 +16,7 @@ function KnowledgeTableTemplate({ tableData, removeData }) {
         {
           tableData.map(item =>
             <tr key={item.id}>
-              <td>{item.know}</td>
+              <td>{item.name}</td>
               <td>
                 <Icon iconName={'edit'} className={'editIcon'} />
                 <div onClick={() => removeData(item.id)}>

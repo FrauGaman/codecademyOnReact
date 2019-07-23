@@ -23,7 +23,7 @@ export function CreateKnowledgeData(payload) {
       method: 'POST',
       body: JSON.stringify({
         id: item.id,
-        know: item.know,
+        name: item.name,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     })

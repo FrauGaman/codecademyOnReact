@@ -464,59 +464,59 @@
   "knowledge": [
     {
       "id": 1,
-      "know": "Computer Science History"
+      "name": "Computer Science History"
     },
     {
       "id": 2,
-      "know": "Career Exploration"
+      "name": "Career Exploration"
     },
     {
       "id": 3,
-      "know": "Applications"
+      "name": "Applications"
     },
     {
       "id": 4,
-      "know": "Python"
+      "name": "Python"
     },
     {
       "id": 5,
-      "know": "Data Structures"
+      "name": "Data Structures"
     },
     {
       "id": 6,
-      "know": "Command Line"
+      "name": "Command Line"
     },
     {
       "id": 7,
-      "know": "Git"
+      "name": "Git"
     },
     {
       "id": 8,
-      "know": "SQL"
+      "name": "SQL"
     },
     {
       "id": 9,
-      "know": "Data Visualization"
+      "name": "Data Visualization"
     },
     {
       "id": 10,
-      "know": "Machine Learning"
+      "name": "Machine Learning"
     },
     {
       "id": 11,
-      "know": "HTML"
+      "name": "HTML"
     },
     {
       "id": 12,
-      "know": "CSS"
+      "name": "CSS"
     },
     {
       "id": 13,
-      "know": "JavaScript"
+      "name": "JavaScript"
     },
     {
       "id": 14,
-      "know": "React"
+      "name": "React"
     }
   ]
 }

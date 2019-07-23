@@ -21,23 +21,17 @@ class AllCoursesFormModalCreate extends React.Component {
     let name = event.target.name;
     let value = event.target.value;
     this.setState({ [ name ]: value });
-    console.log(this.state);
   };
 
-  changeMultiSelectState = (event) => {
+  changeMultiSelectState = (event, someArr, stateField) => {
     let name = event.target.name;
     let value = event.target.value;
-    // let dataSelectArray=[];
-    // switch (dataSelectArray) {
-    //   case this.props.themeList:
-    //     this.props.themeList.map(item =>{
-    //       if (event.target.value === item.name) {
-    //         value = [...this.state.theme, item.id];
-    //         console.log(this.state);
-    //       }
-    //     });
-    }
-
+    someArr.map(item =>
+      event.target.value === item.name ?
+        value = [...stateField, item.id]
+        : ''
+    );
+    value = [...new Set(value)];
     this.setState({ [ name ]: value });
   };
 
@@ -52,7 +46,7 @@ class AllCoursesFormModalCreate extends React.Component {
       descr: '',
       icon: '',
       borderColor: '#',
-      theme: [],
+      theme: [1],
       language: [],
     });
     this.props.onHide();
@@ -77,35 +71,71 @@ class AllCoursesFormModalCreate extends React.Component {
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" placeholder="Your title" name='title' value={title} onChange={this.changeState} />
+              <Form.Control
+                type="text"
+                placeholder="Title"
+                name='title'
+                value={title}
+                onChange={this.changeState}
+              />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows="3" name='descr' value={descr} onChange={this.changeState} />
+              <Form.Control
+                as="textarea"
+                rows="3"
+                name='descr'
+                value={descr}
+                onChange={this.changeState}
+              />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Importance</Form.Label>
-              <Form.Control as="select" name="importance" value={importance} onChange={this.changeState}>
+              <Form.Control
+                as="select"
+                name="importance"
+                value={importance}
+                onChange={this.changeState}>
                 <option>Course</option>
                 <option>Exclusive Course</option>
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Icon</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Icon"
+                name="icon"
+                value={icon}
+                onChange={this.changeState}
+              />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Border color</Form.Label>
-              <Form.Control type="text" placeholder="#000" name='borderColor' value={borderColor} onChange={this.changeState} />
+              <Form.Control
+                type="text"
+                placeholder="#000"
+                name='borderColor'
+                value={borderColor}
+                onChange={this.changeState}
+              />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Theme</Form.Label>
-              <MultiSelector dataArr={this.props.themeList} name={'theme'} value={theme} onChange={this.changeMultiSelectState} />
+              <MultiSelector
+                dataArr={this.props.themeList}
+                name={'theme'}
+                value={theme}
+                onChange={(event) => this.changeMultiSelectState(event, this.props.themeList, this.state.theme)} />
             </Form.Group>
-            {/*<Form.Group controlId="exampleForm.ControlSelect2">*/}
-            {/*  <Form.Label>Language</Form.Label>*/}
-            {/*  <Form.Control as="select" multiple name='language' value={language} onChange={this.changeState}>*/}
-            {/*    {this.props.languageList.map(item =>*/}
-            {/*      <option key={item.id}>{item.name}</option>*/}
-            {/*    )}*/}
-            {/*  </Form.Control>*/}
-            {/*</Form.Group>*/}
+            <Form.Group controlId="exampleForm.ControlSelect2">
+              <Form.Label>Language</Form.Label>
+              <MultiSelector
+                dataArr={this.props.languageList}
+                name={'language'}
+                value={language}
+                onChange={(event) => this.changeMultiSelectState(event, this.props.languageList, this.state.language)} />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
