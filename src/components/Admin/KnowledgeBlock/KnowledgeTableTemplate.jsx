@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function KnowledgeTableTemplate({ tableData, removeData }) {
+function KnowledgeTableTemplate({ tableData, removeData, showModal }) {
   return (
     <div className="table">
       <Table striped bordered hover>
@@ -18,7 +18,9 @@ function KnowledgeTableTemplate({ tableData, removeData }) {
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>
-                <Icon iconName={'edit'} className={'editIcon'} />
+                <div onClick={() => showModal()}>
+                  <Icon iconName={'edit'} className={'editIcon'} />
+                </div>
                 <div onClick={() => removeData(item.id)}>
                   <Icon iconName={'delete'} className={'delIcon'} />
                 </div>

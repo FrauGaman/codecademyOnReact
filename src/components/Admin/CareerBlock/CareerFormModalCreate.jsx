@@ -22,7 +22,6 @@ class CareerFormModalCreate extends React.Component {
     let name = event.target.name;
     let value = event.target.value;
     this.setState({ [ name ]: value });
-    console.log(this.state);
   };
 
   changeMultiSelectState = (event, someArr, stateField) => {
@@ -35,7 +34,6 @@ class CareerFormModalCreate extends React.Component {
     );
     value = [...new Set(value)];
     this.setState({ [ name ]: value });
-    console.log(this.state)
   };
 
   changeKnowledgeState = (event, stateField) => {
@@ -43,7 +41,6 @@ class CareerFormModalCreate extends React.Component {
     let value = [...stateField, event.target.value];
     value = [...new Set(value)];
     this.setState({ [ name ]: value });
-    console.log(this.state)
   };
 
   onSubmit = () => {
@@ -65,6 +62,8 @@ class CareerFormModalCreate extends React.Component {
 
   render() {
     let { title, descr, img, bgColor, theme, language, knowledge } = this.state;
+    console.log(this.state);
+
     return (
       <Modal
         size="lg"

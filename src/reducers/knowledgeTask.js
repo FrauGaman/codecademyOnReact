@@ -15,6 +15,7 @@ const knowledgeTasks = (state = [], action) => {
         ...state,
         ...action.payload,
       ];
+      // case TYPE.CHANGE_KNOWLEDGE_DATA
     default:
       return state;
   }

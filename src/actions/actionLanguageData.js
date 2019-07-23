@@ -30,6 +30,7 @@ export function CreateLanguageData(payload) {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     })
   );
+  console.log(payload)
   return {
     type: TYPE.CREATE_LANGUAGE_DATA,
     payload,

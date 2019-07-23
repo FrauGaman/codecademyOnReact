@@ -33,3 +33,11 @@ export function CreateKnowledgeData(payload) {
     payload,
   };
 }
+
+export function ChangeKnowledgeData(payload) {
+  console.log(payload);
+  return {
+    type: TYPE.CHANGE_KNOWLEDGE_DATA,
+    payload,
+  }
+}
