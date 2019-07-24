@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DoneIcon from '../Icons/Icons';
 
-function CareerCoursesMap({ careerArr }) {
+function CareerCoursesMap({ careerArr, knowledgeArr }) {
   return (
     careerArr.map(({ img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', knowledge = [] }) =>
       <div key={title} className="career__box__item">
@@ -16,7 +16,9 @@ function CareerCoursesMap({ careerArr }) {
             {knowledge.map(knowItem =>
               <div key={knowItem} className="know__item">
                 <DoneIcon iconName={'doneIcon'} className="done__icon" />
-                {knowItem}
+                {knowledgeArr.map(elem =>
+                  knowItem === elem.id ? knowItem = elem.name : ''
+                )}
               </div>
             )}
           </div>
@@ -34,6 +36,7 @@ CareerCoursesMap.propTypes = {
     descr: PropTypes.string,
     knowledge: PropTypes.array,
   })),
+  knowledgeArr: PropTypes.array,
 };
 
 export default CareerCoursesMap;

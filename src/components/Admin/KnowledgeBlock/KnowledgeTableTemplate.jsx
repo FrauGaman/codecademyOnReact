@@ -18,7 +18,7 @@ function KnowledgeTableTemplate({ tableData, removeData, showModal }) {
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>
-                <div onClick={() => showModal()}>
+                <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />
                 </div>
                 <div onClick={() => removeData(item.id)}>

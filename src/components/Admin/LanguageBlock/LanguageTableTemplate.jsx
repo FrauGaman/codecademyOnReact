@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function LanguageTableTemplate({ tableData, removeData }) {
+function LanguageTableTemplate({ tableData, removeData, showModal }) {
   return (
     <div className="table">
       <Table striped bordered hover>
@@ -22,7 +22,9 @@ function LanguageTableTemplate({ tableData, removeData }) {
               <td>{item.descr}</td>
               <td>{item.link}</td>
               <td>
-                <Icon iconName={'edit'} className={'editIcon'} />
+                <div onClick={() => showModal(item.id)}>
+                  <Icon iconName={'edit'} className={'editIcon'} />
+                </div>
                 <div onClick={() => removeData(item.id)}>
                   <Icon iconName={'delete'} className={'delIcon'} />
                 </div>

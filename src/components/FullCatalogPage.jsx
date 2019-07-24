@@ -23,6 +23,11 @@ function FullCatalogPage({ match }) {
     setLangResult(res);
   };
 
+  const [knowResult, setKnowResult] = useState([]);
+  const addDataKnow = (res) => {
+    setKnowResult(res);
+  };
+
   useEffect(() => {
     getData(PATH.THEME, addDataTheme);
   }, []);
@@ -30,6 +35,11 @@ function FullCatalogPage({ match }) {
   useEffect(() => {
     getData(PATH.LANGUAGE, addDataLang);
   }, []);
+
+  useEffect(() => {
+    getData(PATH.KNOWLEDGE, addDataKnow);
+  }, []);
+
 
   const themeArr = themeResult;
   const languageArr = langResult;
@@ -63,7 +73,7 @@ function FullCatalogPage({ match }) {
     <div>
       <div className="content__wrapper">
         <MainDescr filterArr={filterArr} activeLink={activeLink} />
-        <CareerCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
+        <CareerCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} knowledgeArr={knowResult} />
         <SkillCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
         <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
       </div>

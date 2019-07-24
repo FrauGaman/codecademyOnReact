@@ -1,9 +1,11 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, Button, Form } from 'react-bootstrap';
-import FormInput from '../Forms/Input';
+import { FormInput } from '../Forms/FromParts';
+import { connect } from 'react-redux';
 
 function KnowledgeFormModal({ handleSubmit, submitData, onHide, show }) {
+
   return (
     <Modal
       size="lg"
@@ -18,7 +20,7 @@ function KnowledgeFormModal({ handleSubmit, submitData, onHide, show }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form id="knowledgeForm" onSubmit={handleSubmit(submitData)}>
+        <Form id="knowledgeForm" onSubmit={handleSubmit(submitData)} >
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Knowledge</Form.Label>
             <Field name="name" component={FormInput} type="text" placeholder="item" />
@@ -34,7 +36,8 @@ function KnowledgeFormModal({ handleSubmit, submitData, onHide, show }) {
 }
 
 KnowledgeFormModal = reduxForm({
-  form: 'createKnowledge',
+  form: 'changeKnowledge',
+  enableReinitialize: true,
 })(KnowledgeFormModal);
 
 export default KnowledgeFormModal;

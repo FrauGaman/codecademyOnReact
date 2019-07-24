@@ -5,19 +5,35 @@ import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import AllCoursesFormModalCreate from './AllCoursesFormModalCreate';
+import AllCoursesFormModal from './AllCoursesFormModal';
 import { AddCoursesData, CreateCoursesData, RemoveCoursesData } from '../../../actions/actionCoursesData';
 import { AddThemeData } from '../../../actions/actionThemeData';
 import { AddLanguageData } from '../../../actions/actionLanguageData';
 
 function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   useEffect(() => {
     getCoursesData();
     getThemeData();
     getLanguageData();
   }, []);
+
+  const submitData = value => {
+    value.id = +new Date();
+    value.theme = value.theme.map( item => +item);
+    value.language = value.language.map( item => +item);
+    const stateArr = [...[value]];
+    createData(stateArr);
+    setModalShow(false);
+  };
+
+  const changeData = value => {
+    value.id = +new Date();
+    console.log(value);
+    setEditModalShow(false);
+  };
 
   return (
     <React.Fragment>
@@ -29,12 +45,13 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <AllCoursesFormModalCreate
+        <AllCoursesFormModal
           show={modalShow}
           onHide={() => setModalShow(false)}
           themeList={themeList}
           languageList={languageList}
           tabledata={allCoursesStatus}
+          submitData={submitData}
           createdata={createData}
         />
       </ButtonToolbar>
@@ -44,6 +61,15 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
         themeList={themeList}
         languageList={languageList}
         removeData={removeData}
+        showModal={() => setEditModalShow(true)}
+      />
+      <AllCoursesFormModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        themeList={themeList}
+        languageList={languageList}
+        tabledata={allCoursesStatus}
+        submitData={changeData}
       />
     </React.Fragment>
   );

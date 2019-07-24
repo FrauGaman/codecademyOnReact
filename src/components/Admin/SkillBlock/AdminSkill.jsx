@@ -8,18 +8,34 @@ import { PATH } from '../../../scripts/const';
 import { AddSkillData, RemoveSkillData, CreateSkillData } from '../../../actions/actionSkillData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import SkillFormModalCreate from './SkillFormModalCreate';
+import SkillFormModal from './SkillFormModal';
 import { AddThemeData } from '../../../actions/actionThemeData';
 import { AddLanguageData } from '../../../actions/actionLanguageData';
 
 function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getThemeData, getLanguageData, createData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   useEffect(() => {
     getSkillsData();
     getThemeData();
     getLanguageData();
   }, []);
+
+  const submitData = value => {
+    value.id = +new Date();
+    value.theme = value.theme.map( item => +item);
+    value.language = value.language.map( item => +item);
+    const stateArr = [...[value]];
+    createData(stateArr);
+    setModalShow(false);
+  };
+
+  const changeData = value => {
+    value.id = +new Date();
+    console.log(value);
+    setEditModalShow(false);
+  };
 
   return (
     <React.Fragment>
@@ -31,12 +47,13 @@ function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getTh
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <SkillFormModalCreate
+        <SkillFormModal
           show={modalShow}
           onHide={() => setModalShow(false)}
           themeList={themeList}
           languageList={languageList}
           tabledata={skillStatus}
+          submitData={submitData}
           createdata={createData}
         />
       </ButtonToolbar>
@@ -46,6 +63,15 @@ function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getTh
         themeList={themeList}
         languageList={languageList}
         removeData={removeData}
+        showModal={() => setEditModalShow(true)}
+      />
+      <SkillFormModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        themeList={themeList}
+        languageList={languageList}
+        tabledata={skillStatus}
+        submitData={changeData}
       />
     </React.Fragment>
   );

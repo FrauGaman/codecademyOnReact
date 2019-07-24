@@ -4,7 +4,7 @@ import ClockIcon from '../Icons/Icons';
 
 function SkillCoursesMap({ skillArr }) {
   return (
-    skillArr.map(({ img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', period = 'some time ago' }) =>
+    skillArr.map(({ img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', period = 'some time' }) =>
       <div key={title} className="skill__box__item">
         <div className="skill__box__img" style={{backgroundColor: bgColor}}>
           <img src={img} alt={title} />

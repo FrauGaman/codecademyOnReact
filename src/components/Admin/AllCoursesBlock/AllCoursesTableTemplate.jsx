@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function CareerTableTemplate({ tableData, themeList, languageList, removeData }) {
+function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal }) {
   return (
     <div className="table use__bootstrap">
       <Table striped bordered hover>
@@ -29,14 +29,22 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData })
               <td>{item.borderColor}</td>
               <td>{item.theme.map(themeNumber =>
                 themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
+                ).find(item =>
+                  item !== ''
                 )
-              )}</td>
+              ).join(', ')
+              }</td>
               <td>{item.language.map(languageNumber =>
                 languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
+                ).find(item =>
+                  item !== ''
                 )
-              )}</td>
+              ).join(', ')
+              }</td>
               <td>
-                <Icon iconName={'edit'} className={'editIcon'} />
+                <div onClick={() => showModal()}>
+                  <Icon iconName={'edit'} className={'editIcon'} />
+                </div>
                 <div onClick={() => removeData(item.id)}>
                   <Icon iconName={'delete'} className={'delIcon'} />
                 </div>

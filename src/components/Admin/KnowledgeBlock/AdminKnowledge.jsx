@@ -12,6 +12,7 @@ import KnowledgeFormModal from './KnowledgeFormModal';
 function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [initial, setInitial] = useState([]);
 
   useEffect(() => {
     getKnowledgeData();
@@ -28,6 +29,11 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
     value.id = +new Date();
     console.log(value);
     setEditModalShow(false);
+  };
+
+  const showEditForm = (id) => {
+    setInitial(knowledgeStatus.find(item => item.id === id));
+    setEditModalShow(true);
   };
 
   return (
@@ -47,10 +53,11 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
         />
       </ButtonToolbar>
 
-      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={() => setEditModalShow(true)}/>
+      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)}/>
       <KnowledgeFormModal
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
+        initialValues = {initial}
         submitData={changeData}
       />
     </React.Fragment>
@@ -71,6 +78,13 @@ const mapStateToDispatch = dispatch => ({
   createData: (newData) => {
     dispatch(CreateKnowledgeData(newData));
   },
+  getInitialValue: (id) => ({
+
+  })
+  // editData: (id) => {
+  //   dispatch(ChangeKnowledgeData(id));
+  // }
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminKnowledge);
+

@@ -5,15 +5,35 @@ import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import LanguageFormModelCreate from './LanguageFormModelCreate';
+import LanguageFormModal from './LanguageFormModal';
 import { AddLanguageData, RemoveLanguageData, CreateLanguageData } from '../../../actions/actionLanguageData';
 
 function AdminLanguage({ languageStatus, getLanguageData, removeData, createData }) {
   const [modalShow, setModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [initial, setInitial] = useState([]);
 
   useEffect(() => {
     getLanguageData();
   }, []);
+
+  const submitData = value => {
+    value.id = +new Date();
+    const stateArr = [...[value]];
+    createData(stateArr);
+    setModalShow(false);
+  };
+
+  const changeData = value => {
+    value.id = +new Date();
+    console.log(value);
+    setEditModalShow(false);
+  };
+
+  const showEditForm = (id) => {
+    setInitial(languageStatus.find(item => item.id === id));
+    setEditModalShow(true);
+  };
 
   return (
     <React.Fragment>
@@ -25,15 +45,22 @@ function AdminLanguage({ languageStatus, getLanguageData, removeData, createData
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <LanguageFormModelCreate
+        <LanguageFormModal
           show={modalShow}
           onHide={() => setModalShow(false)}
           tabledata={languageStatus}
+          submitData={submitData}
           createdata={createData}
         />
       </ButtonToolbar>
 
-      <LanguageTableTemplate tableData={languageStatus} removeData={removeData} />
+      <LanguageTableTemplate tableData={languageStatus} removeData={removeData} showModal={(id) => showEditForm(id)} />
+      <LanguageFormModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        initialValues ={initial}
+        submitData={changeData}
+      />
     </React.Fragment>
   );
 }

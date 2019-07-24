@@ -6,7 +6,7 @@ import { PATH } from '../../scripts/const';
 import getData from '../../scripts/getData';
 import './careerCourses.sass';
 
-function CareerCourse({ currentThemeId, currentLanguageId }) {
+function CareerCourse({ currentThemeId, currentLanguageId, knowledgeArr }) {
   const [result, setResult] = useState([]);
 
   const addData = (res) => {
@@ -40,7 +40,7 @@ function CareerCourse({ currentThemeId, currentLanguageId }) {
             solid foundation for a career in tech.
           </div>
           <div className="career__box">
-            <CareerCoursesMap careerArr={careerArr}  />
+            <CareerCoursesMap careerArr={careerArr} knowledgeArr={knowledgeArr} />
           </div>
         </div>
           : []
@@ -52,6 +52,7 @@ function CareerCourse({ currentThemeId, currentLanguageId }) {
 CareerCourse.propTypes = {
   currentThemeId: PropTypes.number,
   currentLanguageId: PropTypes.number,
+  knowledgeArr: PropTypes.array,
 };
 
 export default CareerCourse;

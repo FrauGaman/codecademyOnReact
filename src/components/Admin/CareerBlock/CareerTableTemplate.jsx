@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeData }) {
+function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeData, showModal }) {
   return (
     <div className="table">
       <Table striped bordered hover>
@@ -28,15 +28,29 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
                 <td>{item.bgColor}</td>
                 <td>{item.theme.map(themeNumber =>
                   themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
+                  ).find(item =>
+                    item !== ''
                   )
-                )}</td>
+                ).join(', ')
+                }</td>
                 <td>{item.language.map(languageNumber =>
                   languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
+                  ).find(item =>
+                    item !== ''
                   )
-                )}</td>
-                <td>{`${item.knowledge}`}</td>
+                ).join(', ')
+                }</td>
+                <td>{item.knowledge.map(knowledgeNumber =>
+                  knowledgeList.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
+                  ).find(item =>
+                    item !== ''
+                  )
+                ).join(', ')
+                }</td>
                 <td>
-                  <Icon iconName={'edit'} className={'editIcon'} />
+                  <div onClick={() => showModal()}>
+                    <Icon iconName={'edit'} className={'editIcon'} />
+                  </div>
                   <div onClick={() => removeData(item.id)}>
                     <Icon iconName={'delete'} className={'delIcon'} />
                   </div>

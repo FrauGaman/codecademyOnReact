@@ -7,13 +7,15 @@ import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import CareerFormModalCreate from './CareerFormModalCreate';
+import CareerFormModal from './CareerFormModal';
 import { AddThemeData } from '../../../actions/actionThemeData';
 import { AddLanguageData } from '../../../actions/actionLanguageData';
 import { AddKnowledgeData } from '../../../actions/actionKnowledgeData';
+import SkillFormModal from '../SkillBlock/SkillFormModal';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData }) {
   const [modalShow, setModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   useEffect(() => {
     getCareerData();
@@ -22,6 +24,21 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
     getKnowledgeData();
   }, []);
 
+  const submitData = value => {
+    value.id = +new Date();
+    value.theme = value.theme.map( item => +item);
+    value.language = value.language.map( item => +item);
+    const stateArr = [...[value]];
+    createData(stateArr);
+    setModalShow(false);
+    console.log(value)
+  };
+
+  const changeData = value => {
+    value.id = +new Date();
+    console.log(value);
+    setEditModalShow(false);
+  };
 
   return (
     <React.Fragment>
@@ -33,13 +50,14 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <CareerFormModalCreate
+        <CareerFormModal
           show={modalShow}
           onHide={() => setModalShow(false)}
           themeList={themeList}
           languageList={languageList}
           knowledgeList={knowledgeList}
           tabledata={careerStatus}
+          submitData={submitData}
           createdata={createData}
         />
       </ButtonToolbar>
@@ -50,6 +68,16 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         languageList={languageList}
         knowledgeList={knowledgeList}
         tableData={careerStatus}
+        showModal={() => setEditModalShow(true)}
+      />
+      <CareerFormModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        themeList={themeList}
+        languageList={languageList}
+        knowledgeList={knowledgeList}
+        tabledata={careerStatus}
+        submitData={changeData}
       />
     </React.Fragment>
   );
