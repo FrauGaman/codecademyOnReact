@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import { Form } from 'react-bootstrap';
 import './formPartsStyle.sass';
 
@@ -46,7 +46,7 @@ export function FormMultiSelector(props) {
       as="select"
       multiple={true}
       placeholder={props.placeholder}
-      value={props.input.value}
+      value={props.input.value || []}
       onChange={props.input.onChange}
     >
       {props.dataArr.map(item =>

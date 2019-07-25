@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { AddKnowledgeData, CreateKnowledgeData, RemoveKnowledgeData } from '../../../actions/actionKnowledgeData';
-
+import { isPristine } from 'redux-form';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
+import {
+  AddKnowledgeData,
+  ChangeKnowledgeData,
+  CreateKnowledgeData,
+  RemoveKnowledgeData,
+} from '../../../actions/actionKnowledgeData';
 import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import KnowledgeFormModal from './KnowledgeFormModal';
 
-function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData }) {
+function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData, editData, pristine }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -26,9 +31,15 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
   };
 
   const changeData = value => {
-    value.id = +new Date();
-    console.log(value);
-    setEditModalShow(false);
+    if (pristine) {
+      const notChange = window.confirm('do you really want to leave without change?');
+      if (notChange) {
+        setEditModalShow(false);
+      }
+    } else {
+      editData(knowledgeStatus, value);
+      setEditModalShow(false);
+    }
   };
 
   const showEditForm = (id) => {
@@ -38,34 +49,48 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
 
   return (
     <React.Fragment>
-      <ButtonToolbar>
-        <AdminBtn
-          className={'create__btn'}
-          innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
-          variant="primary"
-          onClick={() => setModalShow(true)}
-        />
-        <KnowledgeFormModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          submitData={submitData}
-        />
-      </ButtonToolbar>
+      <AdminBtn
+        className={'create__btn'}
+        innerBtn={'Create'}
+        position={{ span: 2, offset: 10 }}
+        variant="primary"
+        onClick={() => setModalShow(true)}
+      />
+      {modalShow && <KnowledgeFormModal
+        title={'Create new element'}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        submitData={submitData}
+      />}
 
       <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)}/>
-      <KnowledgeFormModal
+      {editModalShow && <KnowledgeFormModal
+        title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        initialValues = {initial}
+        initialValues={initial}
         submitData={changeData}
-      />
+      />}
     </React.Fragment>
   );
 }
 
+AdminKnowledge.propTypes = {
+  knowledgeStatus: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+  getKnowledgeData: PropTypes.func,
+  removeData: PropTypes.func,
+  createData: PropTypes.func,
+  editData: PropTypes.func,
+  pristine: PropTypes.bool,
+
+};
+
 const mapStateToProps = state => ({
   knowledgeStatus: state.knowledgeTask,
+  pristine: isPristine('changeKnowledge')(state),
 });
 
 const mapStateToDispatch = dispatch => ({
@@ -78,13 +103,9 @@ const mapStateToDispatch = dispatch => ({
   createData: (newData) => {
     dispatch(CreateKnowledgeData(newData));
   },
-  getInitialValue: (id) => ({
-
-  })
-  // editData: (id) => {
-  //   dispatch(ChangeKnowledgeData(id));
-  // }
+  editData: (state, value) => {
+    dispatch(ChangeKnowledgeData(state, value));
+  }
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminKnowledge);
-

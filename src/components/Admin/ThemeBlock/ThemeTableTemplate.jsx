@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
@@ -37,5 +38,16 @@ function ThemeTableTemplate({ tableData, removeData, showModal }) {
     </div>
   );
 }
+
+ThemeTableTemplate.propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  removeData: PropTypes.func,
+  showModal: PropTypes.func,
+};
 
 export default ThemeTableTemplate;

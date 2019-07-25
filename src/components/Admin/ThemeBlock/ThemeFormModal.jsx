@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { FormInput, FormTextarea } from '../Forms/FromParts';
 
-function ThemeFormModal ({ handleSubmit, submitData, onHide, show }) {
+function ThemeFormModal ({ title, handleSubmit, submitData, onHide, show }) {
   return (
     <Modal
       size="lg"
@@ -11,10 +12,11 @@ function ThemeFormModal ({ handleSubmit, submitData, onHide, show }) {
       centered
       show={show}
       onHide={onHide}
+      title={title}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create new course
+          {title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -41,9 +43,18 @@ function ThemeFormModal ({ handleSubmit, submitData, onHide, show }) {
   );
 }
 
+ThemeFormModal.propTypes = {
+  title: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  submitData: PropTypes.func,
+  onHide: PropTypes.func,
+  show: PropTypes.bool,
+}
+
 ThemeFormModal = reduxForm({
   form: 'changeTheme',
   enableReinitialize: true,
+  destroyOnUnmount: true,
 })(ThemeFormModal);
 
 export default ThemeFormModal;

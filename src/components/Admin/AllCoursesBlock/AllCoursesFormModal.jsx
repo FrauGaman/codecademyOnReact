@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormSelector, FormMultiSelector } from '../Forms/FromParts';
 
-function AllCoursesFormModal({ handleSubmit, submitData, onHide, show, themeList, languageList }) {
+function AllCoursesFormModal({ title, handleSubmit, submitData, onHide, show, themeList, languageList }) {
   return (
     <Modal
       size="lg"
@@ -12,14 +12,15 @@ function AllCoursesFormModal({ handleSubmit, submitData, onHide, show, themeList
       centered
       show={show}
       onHide={onHide}
+      title={title}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create new course
+          {title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form id="allCoursesForm" onSubmit={handleSubmit(submitData)}>
+        <Form id="allCoursesForm" onSubmit={handleSubmit(submitData)} >
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Title</Form.Label>
             <Field name="title" component={FormInput} type="text" placeholder="Title" />
@@ -58,13 +59,30 @@ function AllCoursesFormModal({ handleSubmit, submitData, onHide, show, themeList
   );
 }
 
+AllCoursesFormModal.propTypes = {
+  title: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  submitData: PropTypes.func,
+  onHide: PropTypes.func,
+  show: PropTypes.bool,
+  themeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  languageList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+};
+
 AllCoursesFormModal = reduxForm({
   form: 'changeAllCourses',
+  enableReinitialize: true,
+  destroyOnUnmount: true,
 })(AllCoursesFormModal);
 
-export default AllCoursesFormModal = connect(() => ({
-  initialValues: {
-    theme: [1],
-    language: [],
-  },
-}))(AllCoursesFormModal);
+export default AllCoursesFormModal;

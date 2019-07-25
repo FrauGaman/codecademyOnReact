@@ -35,3 +35,22 @@ export function CreateThemeData(payload) {
     payload,
   };
 }
+
+export function ChangeThemeData(state, payload) {
+  state.map(item =>
+    item.id === payload.id ?
+      fetch(`${BASE_PATH}${PATH.THEME}/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          name: payload.name,
+          descr: payload.descr,
+          link: payload.descr,
+        }),
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      }) : '',
+  );
+  return {
+    type: TYPE.CHANGE_THEME_DATA,
+    payload,
+  }
+}

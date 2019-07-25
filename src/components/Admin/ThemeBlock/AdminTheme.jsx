@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { AddThemeData, RemoveThemeData, CreateThemeData } from '../../../actions/actionThemeData';
-
+import { isPristine } from 'redux-form';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
+import {
+  AddThemeData,
+  RemoveThemeData,
+  CreateThemeData,
+  ChangeThemeData,
+} from '../../../actions/actionThemeData';
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ThemeFormModal from './ThemeFormModal';
 
-function AdminTheme({ themeStatus, getThemeData, removeData, createData }) {
+function AdminTheme({ themeStatus, getThemeData, removeData, createData, editData, pristine }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -26,9 +31,15 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData }) {
   };
 
   const changeData = value => {
-    value.id = +new Date();
-    console.log(value);
-    setEditModalShow(false);
+    if (pristine) {
+      const notChange = window.confirm('do you really want to leave without change?');
+      if (notChange) {
+        setEditModalShow(false);
+      }
+    } else {
+      editData(themeStatus, value);
+      setEditModalShow(false);
+    }
   };
 
   const showEditForm = (id) => {
@@ -38,36 +49,51 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData }) {
 
   return (
     <React.Fragment>
-      <ButtonToolbar>
-        <AdminBtn
-          className={'create__btn'}
-          innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
-          variant="primary"
-          onClick={() => setModalShow(true)}
-        />
-        <ThemeFormModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          tabledata={themeStatus}
-          submitData={submitData}
-          createdata={createData}
-        />
-      </ButtonToolbar>
-
-      <ThemeTableTemplate tableData={themeStatus} removeData={removeData} showModal={(id) => showEditForm(id)} />
-      <ThemeFormModal
-        show={editModalShow}
-        onHide={() => setModalShow(false)}
-        initialValues = {initial}
-        submitData={changeData}
+      <AdminBtn
+        className={'create__btn'}
+        innerBtn={'Create'}
+        position={{ span: 2, offset: 10 }}
+        variant="primary"
+        onClick={() => setModalShow(true)}
       />
+      {modalShow && <ThemeFormModal
+        title={'Create new element'}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        tabledata={themeStatus}
+        submitData={submitData}
+        createdata={createData}
+      />}
+
+      <ThemeTableTemplate tableData={themeStatus} removeData={removeData} showModal={(id) => showEditForm(id)}/>
+      {editModalShow && <ThemeFormModal
+        title={'Edit elements'}
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        initialValues={initial}
+        submitData={changeData}
+      />}
     </React.Fragment>
   );
 }
 
+AdminTheme.propTypes = {
+  themeStatus: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  getThemeData: PropTypes.func,
+  removeData: PropTypes.func,
+  createData: PropTypes.func,
+  editData: PropTypes.func,
+  pristine: PropTypes.bool,
+};
+
 const mapStateToProps = state => ({
   themeStatus: state.themeTasks,
+  pristine: isPristine('changeTheme')(state),
 });
 const mapStateToDispatch = dispatch => ({
   getThemeData: () => {
@@ -79,6 +105,9 @@ const mapStateToDispatch = dispatch => ({
   createData: (newData) => {
     dispatch(CreateThemeData(newData));
   },
+  editData: (state, value) => {
+    dispatch(ChangeThemeData(state, value));
+  }
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminTheme);

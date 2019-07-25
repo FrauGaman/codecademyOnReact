@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
@@ -42,7 +43,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData, s
               }</td>
               <td>{item.period}</td>
               <td>
-                <div onClick={() => showModal()}>
+                <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />
                 </div>
                 <div onClick={() => removeData(item.id)}>
@@ -57,5 +58,32 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData, s
     </div>
   );
 }
+
+CareerTableTemplate.propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    img: PropTypes.img,
+    title: PropTypes.string,
+    descr: PropTypes.string,
+    bgColor: PropTypes.string,
+    period: PropTypes.string,
+    theme: PropTypes.array,
+    language: PropTypes.array,
+  })),
+  themeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  languageList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  removeData: PropTypes.func,
+  showModal: PropTypes.func,
+};
 
 export default CareerTableTemplate;

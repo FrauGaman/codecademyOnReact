@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormMultiSelector } from '../Forms/FromParts';
 
-function CareerFormModal({ handleSubmit, submitData, onHide, show, themeList, languageList, knowledgeList }) {
+function CareerFormModal({ title, handleSubmit, submitData, onHide, show, themeList, languageList, knowledgeList }) {
   return (
     <Modal
       size="lg"
@@ -12,10 +12,11 @@ function CareerFormModal({ handleSubmit, submitData, onHide, show, themeList, la
       centered
       show={show}
       onHide={onHide}
+      title={title}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create new course
+          {title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -58,14 +59,34 @@ function CareerFormModal({ handleSubmit, submitData, onHide, show, themeList, la
   );
 }
 
+CareerFormModal.propTypes = {
+  title: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  submitData: PropTypes.func,
+  onHide: PropTypes.func,
+  show: PropTypes.bool,
+  themeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  languageList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  knowledgeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+};
+
 CareerFormModal = reduxForm({
   form: 'changeCareer',
+  enableReinitialize: true,
+  destroyOnUnmount: true,
 })(CareerFormModal);
 
-export default CareerFormModal = connect(() => ({
-  initialValues: {
-    theme: [1],
-    language: [],
-    knowledge: [],
-  },
-}))(CareerFormModal);
+export default CareerFormModal;

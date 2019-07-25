@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
@@ -33,5 +34,14 @@ function KnowledgeTableTemplate({ tableData, removeData, showModal }) {
     </div>
   );
 }
+
+KnowledgeTableTemplate.propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+  removeData: PropTypes.func,
+  showModal: PropTypes.func,
+};
 
 export default KnowledgeTableTemplate;

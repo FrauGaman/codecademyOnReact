@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormMultiSelector } from '../Forms/FromParts';
 
-function SkillFormModal({ handleSubmit, submitData, onHide, show, themeList, languageList }) {
+function SkillFormModal({ title, handleSubmit, submitData, onHide, show, themeList, languageList }) {
   return (
     <Modal
       size="lg"
@@ -12,10 +12,11 @@ function SkillFormModal({ handleSubmit, submitData, onHide, show, themeList, lan
       centered
       show={show}
       onHide={onHide}
+      title={title}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create new course
+          {title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -59,13 +60,30 @@ function SkillFormModal({ handleSubmit, submitData, onHide, show, themeList, lan
   );
 }
 
+SkillFormModal.propTypes = {
+  title: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  submitData: PropTypes.func,
+  onHide: PropTypes.func,
+  show: PropTypes.bool,
+  themeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  languageList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+};
+
 SkillFormModal = reduxForm({
   form: 'changeSkill',
+  enableReinitialize: true,
+  destroyOnUnmount: true,
 })(SkillFormModal);
 
-export default SkillFormModal = connect(() => ({
-  initialValues: {
-    theme: [1],
-    language: [],
-  },
-}))(SkillFormModal);
+export default SkillFormModal;

@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { AddCareerData, CreateCareerData, RemoveCareerData } from '../../../actions/actionCareerData';
-
+import { isPristine } from 'redux-form';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
-import CareerTableTemplate from './CareerTableTemplate';
-import AdminBtn from '../AdminButton/AdminButton';
-import CareerFormModal from './CareerFormModal';
+import {
+  AddCareerData,
+  ChangeCareerData,
+  CreateCareerData,
+  RemoveCareerData,
+} from '../../../actions/actionCareerData';
 import { AddThemeData } from '../../../actions/actionThemeData';
 import { AddLanguageData } from '../../../actions/actionLanguageData';
 import { AddKnowledgeData } from '../../../actions/actionKnowledgeData';
-import SkillFormModal from '../SkillBlock/SkillFormModal';
+import CareerTableTemplate from './CareerTableTemplate';
+import AdminBtn from '../AdminButton/AdminButton';
+import CareerFormModal from './CareerFormModal';
 
-function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData }) {
+function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [initial, setInitial] = useState([]);
 
   useEffect(() => {
     getCareerData();
@@ -26,41 +31,54 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
 
   const submitData = value => {
     value.id = +new Date();
-    value.theme = value.theme.map( item => +item);
-    value.language = value.language.map( item => +item);
+    value.theme = value.theme.map(item => +item);
+    value.language = value.language.map(item => +item);
+    value.knowledge = value.knowledge.map(item => +item);
     const stateArr = [...[value]];
     createData(stateArr);
     setModalShow(false);
-    console.log(value)
   };
 
   const changeData = value => {
-    value.id = +new Date();
-    console.log(value);
-    setEditModalShow(false);
+    if (pristine) {
+      const notChange = window.confirm('do you really want to leave without change?');
+      if (notChange) {
+        setEditModalShow(false);
+      }
+    } else {
+      value.theme = value.theme.map(item => +item);
+      value.language = value.language.map(item => +item);
+      value.knowledge = value.knowledge.map(item => +item);
+      editData(careerStatus, value);
+      setEditModalShow(false);
+    }
+  };
+
+  const showEditForm = (id) => {
+    setInitial(careerStatus.find(item => item.id === id));
+    setEditModalShow(true);
   };
 
   return (
     <React.Fragment>
-      <ButtonToolbar>
-        <AdminBtn
-          className={'create__btn'}
-          innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
-          variant="primary"
-          onClick={() => setModalShow(true)}
-        />
-        <CareerFormModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          themeList={themeList}
-          languageList={languageList}
-          knowledgeList={knowledgeList}
-          tabledata={careerStatus}
-          submitData={submitData}
-          createdata={createData}
-        />
-      </ButtonToolbar>
+      <AdminBtn
+        className={'create__btn'}
+        innerBtn={'Create'}
+        position={{ span: 2, offset: 10 }}
+        variant="primary"
+        onClick={() => setModalShow(true)}
+      />
+      {modalShow && <CareerFormModal
+        title={'Create new element'}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        themeList={themeList}
+        languageList={languageList}
+        knowledgeList={knowledgeList}
+        tabledata={careerStatus}
+        submitData={submitData}
+        createdata={createData}
+      />}
 
       <CareerTableTemplate
         removeData={removeData}
@@ -68,26 +86,66 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         languageList={languageList}
         knowledgeList={knowledgeList}
         tableData={careerStatus}
-        showModal={() => setEditModalShow(true)}
+        showModal={(id) => showEditForm(id)}
       />
-      <CareerFormModal
+      {editModalShow && <CareerFormModal
+        title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
         themeList={themeList}
         languageList={languageList}
         knowledgeList={knowledgeList}
         tabledata={careerStatus}
+        initialValues={initial}
         submitData={changeData}
-      />
+      />}
     </React.Fragment>
   );
 }
+
+AdminCareer.propTypes = {
+  careerStatus: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    img: PropTypes.img,
+    title: PropTypes.string,
+    bgColor: PropTypes.string,
+    descr: PropTypes.string,
+    theme: PropTypes.array,
+    language: PropTypes.array,
+    knowledge: PropTypes.array,
+  })),
+  themeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  languageList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    descr: PropTypes.string,
+    link: PropTypes.string,
+  })),
+  knowledgeList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+  getCareerData: PropTypes.func,
+  getThemeData: PropTypes.func,
+  getLanguageData: PropTypes.func,
+  getKnowledgeData: PropTypes.func,
+  createData: PropTypes.func,
+  removeData: PropTypes.func,
+  editData: PropTypes.func,
+  pristine: PropTypes.bool,
+};
 
 const mapStateToProps = state => ({
   careerStatus: state.careerTasks,
   themeList: state.themeTasks,
   languageList: state.languageTask,
   knowledgeList: state.knowledgeTask,
+  pristine: isPristine('changeCareer')(state),
 });
 
 const mapStateToDispatch = dispatch => ({
@@ -108,6 +166,9 @@ const mapStateToDispatch = dispatch => ({
   },
   createData: (newData) => {
     dispatch(CreateCareerData(newData));
+  },
+  editData: (state, value) => {
+    dispatch(ChangeCareerData(state, value));
   },
 });
 

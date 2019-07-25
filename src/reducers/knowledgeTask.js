@@ -15,7 +15,12 @@ const knowledgeTasks = (state = [], action) => {
         ...state,
         ...action.payload,
       ];
-      // case TYPE.CHANGE_KNOWLEDGE_DATA
+    case TYPE.CHANGE_KNOWLEDGE_DATA:
+      state.map(item =>
+        item.id === action.payload.id ?
+          item.name = action.payload.name : '',
+      );
+      return state;
     default:
       return state;
   }

@@ -39,3 +39,26 @@ export function CreateSkillData(payload) {
     payload,
   };
 }
+
+export function ChangeSkillData(state, payload) {
+  state.map(item =>
+    item.id === payload.id ?
+      fetch(`${BASE_PATH}${PATH.SKILLPATH}/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          title: payload.title,
+          descr: payload.descr,
+          img: payload.img,
+          bgColor: payload.bgColor,
+          period: payload.period,
+          theme: payload.theme,
+          language: payload.language,
+        }),
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      }) : '',
+  );
+  return {
+    type: TYPE.CHANGE_SKILL_DATA,
+    payload,
+  }
+}

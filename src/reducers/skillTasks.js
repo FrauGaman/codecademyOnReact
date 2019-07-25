@@ -15,6 +15,19 @@ const skillTasks = (state = [], action) => {
         ...state,
         ...action.payload,
       ];
+    case TYPE.CHANGE_SKILL_DATA:
+      state.map(item =>{
+        if (item.id === action.payload.id) {
+          item.title = action.payload.title;
+          item.descr = action.payload.descr;
+          item.img = action.payload.img;
+          item.bgColor = action.payload.bgColor;
+          item.period = action.payload.period;
+          item.theme = action.payload.theme;
+          item.language = action.payload.language;
+        }
+      });
+      return state;
     default:
       return state;
   }

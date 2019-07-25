@@ -40,3 +40,26 @@ export function CreateCareerData(payload) {
     payload,
   };
 }
+
+export function ChangeCareerData(state, payload) {
+  state.map(item =>
+    item.id === payload.id ?
+      fetch(`${BASE_PATH}${PATH.CAREERPATH}/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          title: payload.title,
+          descr: payload.descr,
+          img: payload.img,
+          bgColor: payload.bgColor,
+          theme: payload.theme,
+          language: payload.language,
+          knowledge: payload.knowledge,
+        }),
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      }) : '',
+  );
+  return {
+    type: TYPE.CHANGE_CAREER_DATA,
+    payload,
+  }
+}

@@ -15,6 +15,15 @@ const themeTasks = (state = [], action) => {
         ...state,
         ...action.payload,
       ];
+    case TYPE.CHANGE_THEME_DATA:
+      state.map(item =>{
+        if (item.id === action.payload.id) {
+          item.name = action.payload.name;
+          item.descr = action.payload.descr;
+          item.link = action.payload.link;
+        }
+      });
+      return state;
     default:
       return state;
   }

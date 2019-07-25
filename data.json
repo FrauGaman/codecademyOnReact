@@ -469,8 +469,8 @@
   ],
   "knowledge": [
     {
-      "id": 1,
-      "name": "Computer Science History"
+      "name": "Computer Science Historydd",
+      "id": 1
     },
     {
       "id": 2,
@@ -505,8 +505,8 @@
       "name": "Data Visualization"
     },
     {
-      "id": 10,
-      "name": "Machine Learning"
+      "name": "Machine Learningеногвеног ао",
+      "id": 10
     },
     {
       "id": 11,
@@ -523,6 +523,10 @@
     {
       "id": 14,
       "name": "React"
+    },
+    {
+      "id": 1564054565357,
+      "name": "bb"
     }
   ]
 }

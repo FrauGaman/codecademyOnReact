@@ -15,6 +15,19 @@ const coursesTasks = (state = [], action) => {
         ...state,
         ...action.payload,
       ];
+    case TYPE.CHANGE_COURSES_DATA:
+      state.map(item =>{
+        if (item.id === action.payload.id) {
+          item.importance = action.payload.importance;
+          item.title = action.payload.title;
+          item.descr = action.payload.descr;
+          item.icon = action.payload.icon;
+          item.borderColor = action.payload.borderColor;
+          item.theme = action.payload.theme;
+          item.language = action.payload.language;
+        }
+      });
+      return state;
     default:
       return state;
   }

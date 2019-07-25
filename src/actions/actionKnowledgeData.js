@@ -22,7 +22,7 @@ export function CreateKnowledgeData(payload) {
     fetch(`${BASE_PATH}${PATH.KNOWLEDGE}`, {
       method: 'POST',
       body: JSON.stringify({
-        id: item.id,
+        id: +new Date(),
         name: item.name,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -33,18 +33,20 @@ export function CreateKnowledgeData(payload) {
     payload,
   };
 }
-//
-// export function GetKnowledgeData(id) {
-//   return {
-//     type: TYPE.GET_KNOWLEDGE_DATA,
-//     payload: { id },
-//   }
-// }
 
-// export function ChangeKnowledgeData(payload) {
-//   console.log(payload);
-//   return {
-//     type: TYPE.CHANGE_KNOWLEDGE_DATA,
-//     payload,
-//   }
-// }
+export function ChangeKnowledgeData(state, payload) {
+  state.map(item =>
+    item.id === payload.id ?
+      fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${item.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          name: payload.name,
+        }),
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      }) : '',
+  );
+  return {
+    type: TYPE.CHANGE_KNOWLEDGE_DATA,
+    payload,
+  }
+}

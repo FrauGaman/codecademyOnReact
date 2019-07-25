@@ -1,11 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { FormInput } from '../Forms/FromParts';
-import { connect } from 'react-redux';
 
-function KnowledgeFormModal({ handleSubmit, submitData, onHide, show }) {
-
+function KnowledgeFormModal({ title, handleSubmit, submitData, onHide, show }) {
   return (
     <Modal
       size="lg"
@@ -13,10 +12,11 @@ function KnowledgeFormModal({ handleSubmit, submitData, onHide, show }) {
       centered
       show={show}
       onHide={onHide}
+      title={title}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create new course
+          {title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -35,9 +35,18 @@ function KnowledgeFormModal({ handleSubmit, submitData, onHide, show }) {
   );
 }
 
+KnowledgeFormModal.propTypes = {
+  title: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  submitData: PropTypes.func,
+  onHide: PropTypes.func,
+  show: PropTypes.bool,
+};
+
 KnowledgeFormModal = reduxForm({
   form: 'changeKnowledge',
   enableReinitialize: true,
+  destroyOnUnmount: true,
 })(KnowledgeFormModal);
 
 export default KnowledgeFormModal;
