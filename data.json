@@ -11,9 +11,9 @@
       ],
       "language": [],
       "knowledge": [
-        "Computer Science History",
-        "Career Exploration",
-        "Applications"
+        1,
+        2,
+        3
       ]
     },
     {
@@ -28,10 +28,10 @@
       ],
       "language": [],
       "knowledge": [
-        "Python",
-        "Data Structures",
-        "Command Line",
-        "Git"
+        4,
+        5,
+        6,
+        7
       ]
     },
     {
@@ -46,10 +46,10 @@
       ],
       "language": [],
       "knowledge": [
-        "Python",
-        "SQL",
-        "Data Visualization",
-        "Machine Learning"
+        4,
+        8,
+        9,
+        10
       ]
     },
     {
@@ -64,10 +64,10 @@
       ],
       "language": [],
       "knowledge": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React"
+        11,
+        12,
+        13,
+        14
       ]
     }
   ],
