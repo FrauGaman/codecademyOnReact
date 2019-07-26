@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
+import AllCoursesFilterSelect from './AllCoursesFilter-Select';
 
-function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal }) {
+function AllCoursesTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortCoursesData }) {
+  const [sort, setSort] = useState('desc');
+  function chooseSort() {
+    sort === 'asc' ? setSort('desc') : setSort('asc');
+    sortCoursesData(sort);
+  }
   return (
     <div className="table use__bootstrap">
       <Table striped bordered hover>
         <thead>
+        <AllCoursesFilterSelect themeList={themeList} languageList={languageList} />
         <tr>
-          <th>Title</th>
+          <th onClick={() => chooseSort()} className="sort__field">Title</th>
           <th>Description</th>
           <th>Importance</th>
           <th>Icon</th>
@@ -59,7 +66,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData, s
   );
 }
 
-CareerTableTemplate.propTypes = {
+AllCoursesTableTemplate.propTypes = {
   tableData: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     importance: PropTypes.string,
@@ -84,6 +91,7 @@ CareerTableTemplate.propTypes = {
   })),
   removeData: PropTypes.func,
   showModal: PropTypes.func,
+  sortCoursesData: PropTypes.func,
 };
 
-export default CareerTableTemplate;
+export default AllCoursesTableTemplate;

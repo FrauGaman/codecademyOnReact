@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function LanguageTableTemplate({ tableData, removeData, showModal }) {
+function LanguageTableTemplate({ tableData, removeData, showModal, sortLanguageData }) {
+  const [sort, setSort] = useState('desc');
+
+  function chooseSort() {
+    sort === 'asc' ? setSort('desc') : setSort('asc');
+    sortLanguageData(sort);
+  }
   return (
     <div className="table">
       <Table striped bordered hover>
         <thead>
         <tr>
-          <th>Name</th>
+          <th onClick={() => chooseSort()} className="sort__field">Name</th>
           <th>Description</th>
           <th>Link</th>
           <th>Edit</th>
@@ -48,6 +54,7 @@ LanguageTableTemplate.propTypes = {
   })),
   removeData: PropTypes.func,
   showModal: PropTypes.func,
+  sortLanguageData: PropTypes.func,
 };
 
 export default LanguageTableTemplate;

@@ -1,15 +1,22 @@
-import React from 'react';
+import React,  { useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-function KnowledgeTableTemplate({ tableData, removeData, showModal }) {
+function KnowledgeTableTemplate({ tableData, removeData, showModal, sortKnowledgeData }) {
+  const [sort, setSort] = useState('desc');
+
+  function chooseSort() {
+    sort === 'asc' ? setSort('desc') : setSort('asc');
+    sortKnowledgeData(sort);
+  }
+
   return (
     <div className="table">
       <Table striped bordered hover>
         <thead>
         <tr>
-          <th>Knowledge</th>
+          <th onClick={() => chooseSort()} className="sort__field">Knowledge</th>
           <th>Edit</th>
         </tr>
         </thead>
@@ -42,6 +49,7 @@ KnowledgeTableTemplate.propTypes = {
   })),
   removeData: PropTypes.func,
   showModal: PropTypes.func,
+  sortKnowledgeData: PropTypes.func,
 };
 
 export default KnowledgeTableTemplate;

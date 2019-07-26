@@ -16,8 +16,10 @@ import { AddKnowledgeData } from '../../../actions/actionKnowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import CareerFormModal from './CareerFormModal';
+import { sortData } from '../../../scripts/sortData';
+import { AddCoursesData } from '../../../actions/actionCoursesData';
 
-function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine }) {
+function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, sortCareerData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -87,6 +89,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         knowledgeList={knowledgeList}
         tableData={careerStatus}
         showModal={(id) => showEditForm(id)}
+        sortCareerData={(sortType) => sortCareerData(sortType)}
       />
       {editModalShow && <CareerFormModal
         title={'Edit elements'}
@@ -138,6 +141,7 @@ AdminCareer.propTypes = {
   removeData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
+  sortCareerData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -169,6 +173,9 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeCareerData(state, value));
+  },
+  sortCareerData: (sortType) => {
+    sortData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType);
   },
 });
 

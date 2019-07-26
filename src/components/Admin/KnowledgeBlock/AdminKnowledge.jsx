@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
 import getData from '../../../scripts/getData';
+import { sortData } from '../../../scripts/sortData';
 import { PATH } from '../../../scripts/const';
 import {
   AddKnowledgeData,
@@ -14,7 +15,7 @@ import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import KnowledgeFormModal from './KnowledgeFormModal';
 
-function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData, editData, pristine }) {
+function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData, editData, pristine, sortKnowledgeData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -63,7 +64,7 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
         submitData={submitData}
       />}
 
-      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)} />
+      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)} sortKnowledgeData={(sortType) => sortKnowledgeData(sortType)} />
       {editModalShow && <KnowledgeFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -85,6 +86,7 @@ AdminKnowledge.propTypes = {
   createData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
+  sortKnowledgeData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -104,6 +106,9 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeKnowledgeData(state, value));
+  },
+  sortKnowledgeData: (sortType) => {
+    sortData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType);
   },
 });
 

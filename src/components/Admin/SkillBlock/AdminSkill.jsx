@@ -15,8 +15,9 @@ import { AddLanguageData } from '../../../actions/actionLanguageData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import SkillFormModal from './SkillFormModal';
+import { sortData } from '../../../scripts/sortData';
 
-function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getThemeData, getLanguageData, createData, removeData, editData, pristine }) {
+function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getThemeData, getLanguageData, createData, removeData, editData, pristine, sortSkillData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -81,6 +82,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getTh
         languageList={languageList}
         removeData={removeData}
         showModal={(id) => showEditForm(id)}
+        sortSkillData={(sortType) => sortSkillData(sortType)}
       />
       {editModalShow && <SkillFormModal
         title={'Edit elements'}
@@ -126,6 +128,7 @@ AdminSkill.propTypes = {
   removeData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
+  sortSkillData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -152,6 +155,9 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeSkillData(state, value));
+  },
+  sortSkillData: (sortType) => {
+    sortData(PATH.SKILLPATH, (res) => dispatch(AddSkillData(res)), 'title', sortType);
   },
 });
 

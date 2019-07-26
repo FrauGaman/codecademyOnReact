@@ -15,8 +15,9 @@ import { AddLanguageData } from '../../../actions/actionLanguageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import AllCoursesFormModal from './AllCoursesFormModal';
+import { sortData } from '../../../scripts/sortData';
 
-function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData, editData, pristine }) {
+function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData, editData, pristine, sortCoursesData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -81,6 +82,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
         languageList={languageList}
         removeData={removeData}
         showModal={(id) => showEditForm(id)}
+        sortCoursesData={(sortType) => sortCoursesData(sortType)}
       />
       {editModalShow && <AllCoursesFormModal
         title={'Edit elements'}
@@ -126,6 +128,7 @@ AdminAllCourses.propTypes = {
   removeData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
+  sortCoursesData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -153,6 +156,9 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeCoursesData(state, value));
+  },
+  sortCoursesData: (sortType) => {
+    sortData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType);
   },
 });
 

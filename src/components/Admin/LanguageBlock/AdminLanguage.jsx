@@ -13,8 +13,9 @@ import {
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import LanguageFormModal from './LanguageFormModal';
+import { sortData } from '../../../scripts/sortData';
 
-function AdminLanguage({ languageStatus, getLanguageData, removeData, createData, editData, pristine }) {
+function AdminLanguage({ languageStatus, getLanguageData, removeData, createData, editData, pristine, sortLanguageData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -65,7 +66,7 @@ function AdminLanguage({ languageStatus, getLanguageData, removeData, createData
         createdata={createData}
       />}
 
-      <LanguageTableTemplate tableData={languageStatus} removeData={removeData} showModal={(id) => showEditForm(id)} />
+      <LanguageTableTemplate tableData={languageStatus} removeData={removeData} showModal={(id) => showEditForm(id)} sortLanguageData={(sortType) => sortLanguageData(sortType)} />
       {editModalShow && <LanguageFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -89,6 +90,7 @@ AdminLanguage.propTypes = {
   createData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
+  sortLanguageData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -107,6 +109,9 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeLanguageData(state, value));
+  },
+  sortLanguageData: (sortType) => {
+    sortData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType);
   },
 });
 

@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
+import SkillFilterSelect from './SkillFilter-Select';
 
-function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal }) {
+function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortSkillData }) {
+  const [sort, setSort] = useState('desc');
+
+  function chooseSort() {
+    sort === 'asc' ? setSort('desc') : setSort('asc');
+    sortSkillData(sort);
+  }
   return (
     <div className="table">
       <Table striped bordered hover>
         <thead>
+        <SkillFilterSelect themeList={themeList} languageList={languageList} />
         <tr>
-          <th>Title</th>
+          <th onClick={() => chooseSort()} className="sort__field">Title</th>
           <th>Description</th>
           <th>Img</th>
           <th>BgColor</th>
@@ -84,6 +92,7 @@ CareerTableTemplate.propTypes = {
   })),
   removeData: PropTypes.func,
   showModal: PropTypes.func,
+  sortSkillData: PropTypes.func,
 };
 
 export default CareerTableTemplate;
