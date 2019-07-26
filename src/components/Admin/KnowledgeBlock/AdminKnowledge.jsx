@@ -63,7 +63,7 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
         submitData={submitData}
       />}
 
-      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)}/>
+      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)} />
       {editModalShow && <KnowledgeFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -85,7 +85,6 @@ AdminKnowledge.propTypes = {
   createData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
-
 };
 
 const mapStateToProps = state => ({
@@ -105,7 +104,7 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeKnowledgeData(state, value));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminKnowledge);

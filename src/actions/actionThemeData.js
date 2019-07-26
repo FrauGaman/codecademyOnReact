@@ -28,7 +28,7 @@ export function CreateThemeData(payload) {
         link: item.link,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    }),
   );
   return {
     type: TYPE.CREATE_THEME_DATA,
@@ -52,5 +52,5 @@ export function ChangeThemeData(state, payload) {
   return {
     type: TYPE.CHANGE_THEME_DATA,
     payload,
-  }
+  };
 }

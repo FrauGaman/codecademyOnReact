@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { FormInput, FormTextarea } from '../Forms/FromParts';
 
-function ThemeFormModal ({ title, handleSubmit, submitData, onHide, show }) {
+function ThemeFormModal({ title, handleSubmit, submitData, onHide, show }) {
   return (
     <Modal
       size="lg"

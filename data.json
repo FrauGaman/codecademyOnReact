@@ -329,12 +329,6 @@
       "name": "PHP",
       "descr": "PHP is a widely used server-side programming language that’s become increasingly fast and powerful over the years. PHP works well with HTML and databases, making it a great language for anyone interested in building dynamic web applications.",
       "link": "/php"
-    },
-    {
-      "id": 1563877660826,
-      "name": "11",
-      "descr": "11",
-      "link": "/11"
     }
   ],
   "items": [
@@ -469,7 +463,7 @@
   ],
   "knowledge": [
     {
-      "name": "Computer Science Historydd",
+      "name": "Computer Science History",
       "id": 1
     },
     {
@@ -523,10 +517,6 @@
     {
       "id": 14,
       "name": "React"
-    },
-    {
-      "id": 1564054565357,
-      "name": "bb"
     }
   ]
 }

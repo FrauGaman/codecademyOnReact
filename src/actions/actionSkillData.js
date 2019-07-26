@@ -13,8 +13,8 @@ export function RemoveSkillData(id) {
   });
   return {
     type: TYPE.REMOVE_SKILL_DATA,
-    payload: {id},
-  }
+    payload: { id },
+  };
 }
 
 export function CreateSkillData(payload) {
@@ -32,7 +32,7 @@ export function CreateSkillData(payload) {
         language: item.language,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    }),
   );
   return {
     type: TYPE.CREATE_SKILL_DATA,
@@ -60,5 +60,5 @@ export function ChangeSkillData(state, payload) {
   return {
     type: TYPE.CHANGE_SKILL_DATA,
     payload,
-  }
+  };
 }

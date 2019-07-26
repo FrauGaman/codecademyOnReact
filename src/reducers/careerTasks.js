@@ -16,7 +16,7 @@ const careerTasks = (state = [], action) => {
         ...action.payload,
       ];
     case TYPE.CHANGE_CAREER_DATA:
-      state.map(item =>{
+      state.map(item => {
         if (item.id === action.payload.id) {
           item.title = action.payload.title;
           item.descr = action.payload.descr;

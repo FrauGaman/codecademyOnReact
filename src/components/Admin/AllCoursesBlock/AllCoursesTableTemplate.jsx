@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 
-
 function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal }) {
   return (
     <div className="table use__bootstrap">

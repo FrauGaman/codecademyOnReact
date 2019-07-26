@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function AdminButton({ className, innerBtn, position, onClick }) {
@@ -12,5 +13,12 @@ function AdminButton({ className, innerBtn, position, onClick }) {
     </Container>
   );
 }
+
+AdminButton.propTypes = {
+  className: PropTypes.string,
+  innerBtn: PropTypes.string,
+  position: PropTypes.object,
+  onClick: PropTypes.func,
+};
 
 export default AdminButton;

@@ -9,14 +9,14 @@ const skillTasks = (state = [], action) => {
         ...action.payload,
       ];
     case TYPE.REMOVE_SKILL_DATA:
-      return [...state].filter((item) => item.id !== action.payload.id);
+      return [...state].filter(item => item.id !== action.payload.id);
     case TYPE.CREATE_SKILL_DATA:
       return [
         ...state,
         ...action.payload,
       ];
     case TYPE.CHANGE_SKILL_DATA:
-      state.map(item =>{
+      state.map(item => {
         if (item.id === action.payload.id) {
           item.title = action.payload.title;
           item.descr = action.payload.descr;

@@ -26,7 +26,7 @@ export function CreateKnowledgeData(payload) {
         name: item.name,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    }),
   );
   return {
     type: TYPE.CREATE_KNOWLEDGE_DATA,
@@ -48,5 +48,5 @@ export function ChangeKnowledgeData(state, payload) {
   return {
     type: TYPE.CHANGE_KNOWLEDGE_DATA,
     payload,
-  }
+  };
 }

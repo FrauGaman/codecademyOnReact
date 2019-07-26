@@ -26,7 +26,6 @@ const languageTasks = (state = [], action) => {
       return state;
     default:
       return state;
-
   }
 };
 

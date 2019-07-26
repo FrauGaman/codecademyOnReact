@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-
 import careerTasks from './careerTasks';
 import skillTasks from './skillTasks';
 import coursesTasks from './coursesTask';

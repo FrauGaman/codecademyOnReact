@@ -1,6 +1,5 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
 
-
 export function AddCareerData(payload) {
   return {
     type: TYPE.ADD_CAREER_DATA,
@@ -33,7 +32,7 @@ export function CreateCareerData(payload) {
         knowledge: item.knowledge,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    }),
   );
   return {
     type: TYPE.CREATE_CAREER_DATA,
@@ -61,5 +60,5 @@ export function ChangeCareerData(state, payload) {
   return {
     type: TYPE.CHANGE_CAREER_DATA,
     payload,
-  }
-}
+  };
+};

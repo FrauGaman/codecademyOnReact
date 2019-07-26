@@ -126,7 +126,7 @@ AdminAllCourses.propTypes = {
   removeData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
-}
+};
 
 const mapStateToProps = state => ({
   allCoursesStatus: state.coursesTasks,
@@ -153,7 +153,7 @@ const mapStateToDispatch = dispatch => ({
   },
   editData: (state, value) => {
     dispatch(ChangeCoursesData(state, value));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminAllCourses);

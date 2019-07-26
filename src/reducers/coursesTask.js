@@ -16,7 +16,7 @@ const coursesTasks = (state = [], action) => {
         ...action.payload,
       ];
     case TYPE.CHANGE_COURSES_DATA:
-      state.map(item =>{
+      state.map(item => {
         if (item.id === action.payload.id) {
           item.importance = action.payload.importance;
           item.title = action.payload.title;

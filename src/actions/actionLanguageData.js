@@ -13,7 +13,7 @@ export function RemoveLanguageData(id) {
   });
   return {
     type: TYPE.REMOVE_LANGUAGE_DATA,
-    payload: {id},
+    payload: { id },
   };
 }
 
@@ -28,7 +28,7 @@ export function CreateLanguageData(payload) {
         link: item.link,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    }),
   );
   return {
     type: TYPE.CREATE_LANGUAGE_DATA,
@@ -52,5 +52,5 @@ export function ChangeLanguageData(state, payload) {
   return {
     type: TYPE.CHANGE_LANGUAGE_DATA,
     payload,
-  }
+  };
 }

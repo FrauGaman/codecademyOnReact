@@ -32,7 +32,7 @@ export function CreateCoursesData(payload) {
         language: item.language,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    }),
   );
   return {
     type: TYPE.CREATE_COURSES_DATA,
@@ -60,5 +60,5 @@ export function ChangeCoursesData(state, payload) {
   return {
     type: TYPE.CHANGE_COURSES_DATA,
     payload,
-  }
+  };
 }

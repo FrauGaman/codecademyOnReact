@@ -30,7 +30,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData, s
               <td>{item.theme.map(themeNumber =>
                 themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
-                  item !== ''
+                  item !== '',
                 )
               ).join(', ')
               }</td>
