@@ -7,17 +7,24 @@ import SkillFilterSelect from './SkillFilter-Select';
 function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortSkillData }) {
   const [sort, setSort] = useState('desc');
 
+  console.log(tableData);
+
   function chooseSort() {
     sort === 'asc' ? setSort('desc') : setSort('asc');
     sortSkillData(sort);
   }
   return (
     <div className="table">
+      {/*<SkillFilterSelect themeList={themeList} languageList={languageList} />*/}
       <Table striped bordered hover>
         <thead>
-        <SkillFilterSelect themeList={themeList} languageList={languageList} />
+
         <tr>
-          <th onClick={() => chooseSort()} className="sort__field">Title</th>
+          <th onClick={() => chooseSort()} className="sort__field">Title
+            {sort === 'asc' ?
+              <Icon iconName={'sortUp'} className={'sort__arrow'} />
+              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+          </th>
           <th>Description</th>
           <th>Img</th>
           <th>BgColor</th>
@@ -35,14 +42,14 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeData, s
               <td>{item.descr}</td>
               <td>{item.img}</td>
               <td>{item.bgColor}</td>
-              <td>{item.theme.map(themeNumber =>
+              <td>{item.theme && item.theme.map(themeNumber =>
                 themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== '',
                 )
               ).join(', ')
               }</td>
-              <td>{item.language.map(languageNumber =>
+              <td>{item.language && item.language.map(languageNumber =>
                 languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== ''

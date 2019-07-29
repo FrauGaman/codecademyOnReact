@@ -2,9 +2,10 @@ import React,  { useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
+import SearchByName from './SearchKnowledge';
 
-function KnowledgeTableTemplate({ tableData, removeData, showModal, sortKnowledgeData }) {
-  const [sort, setSort] = useState('desc');
+function KnowledgeTableTemplate({ tableData, removeData, showModal, sortKnowledgeData, filterDataByName }) {
+  const [sort, setSort] = useState('asc');
 
   function chooseSort() {
     sort === 'asc' ? setSort('desc') : setSort('asc');
@@ -13,10 +14,15 @@ function KnowledgeTableTemplate({ tableData, removeData, showModal, sortKnowledg
 
   return (
     <div className="table">
+      <SearchByName filterDataByName={filterDataByName} />
       <Table striped bordered hover>
         <thead>
         <tr>
-          <th onClick={() => chooseSort()} className="sort__field">Knowledge</th>
+          <th onClick={() => chooseSort()} className="sort__field">Knowledge
+            {sort === 'asc' ?
+              <Icon iconName={'sortUp'} className={'sort__arrow'} />
+              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+          </th>
           <th>Edit</th>
         </tr>
         </thead>

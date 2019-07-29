@@ -1,23 +1,23 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
 
-export function AddKnowledgeData(payload) {
+export function KNOWLEDGE_ADD_DATA(payload) {
   return {
-    type: TYPE.ADD_KNOWLEDGE_DATA,
+    type: TYPE.KNOWLEDGE_ADD_DATA,
     payload,
   };
 }
 
-export function RemoveKnowledgeData(id) {
+export function KNOWLEDGE_REMOVE_DATA(id) {
   fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${id}`, {
     method: 'DELETE',
   });
   return {
-    type: TYPE.REMOVE_KNOWLEDGE_DATA,
+    type: TYPE.KNOWLEDGE_REMOVE_DATA,
     payload: { id },
   };
 }
 
-export function CreateKnowledgeData(payload) {
+export function KNOWLEDGE_CREATE_DATA(payload) {
   payload.map(item =>
     fetch(`${BASE_PATH}${PATH.KNOWLEDGE}`, {
       method: 'POST',
@@ -29,12 +29,12 @@ export function CreateKnowledgeData(payload) {
     }),
   );
   return {
-    type: TYPE.CREATE_KNOWLEDGE_DATA,
+    type: TYPE.KNOWLEDGE_CREATE_DATA,
     payload,
   };
 }
 
-export function ChangeKnowledgeData(state, payload) {
+export function KNOWLEDGE_CHANGE_DATA(state, payload) {
   state.map(item =>
     item.id === payload.id ?
       fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${item.id}`, {
@@ -46,7 +46,7 @@ export function ChangeKnowledgeData(state, payload) {
       }) : '',
   );
   return {
-    type: TYPE.CHANGE_KNOWLEDGE_DATA,
+    type: TYPE.KNOWLEDGE_CHANGE_DATA,
     payload,
   };
 }

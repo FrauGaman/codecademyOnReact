@@ -41,6 +41,14 @@ function Icons({ iconName, className }) {
       return (
         <SVG src="../img/admin/del.svg" className={className} />
       );
+    case 'sortUp':
+      return (
+        <SVG src="../img/icons/arrow-sort-up.svg" className={className} />
+      );
+    case 'sortDown':
+      return (
+        <SVG src="../img/icons/arrow-sort-down.svg" className={className} />
+      );
     default:
       return (
         <SVG src="../img/icons/plugIcon.svg" className={className} />

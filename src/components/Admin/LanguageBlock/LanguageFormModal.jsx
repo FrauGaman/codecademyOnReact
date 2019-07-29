@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { FormInput, FormTextarea } from '../Forms/FromParts';
+import { requiredField, setMaxLength, stringValidator, linkValidator } from '../validator';
+
+
+const maxL = setMaxLength(300);
 
 function LanguageFormModal({ title, handleSubmit, submitData, onHide, show }) {
   return (
@@ -23,15 +27,15 @@ function LanguageFormModal({ title, handleSubmit, submitData, onHide, show }) {
         <Form id="languageForm" onSubmit={handleSubmit(submitData)}>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Name</Form.Label>
-            <Field name="name" component={FormInput} type="text" placeholder="Name" />
+            <Field name="name" component={FormInput} type="text" placeholder="Name" validate={[requiredField, stringValidator]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description</Form.Label>
-            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" />
+            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Link</Form.Label>
-            <Field name="link" component={FormInput} type="text" placeholder="/link" />
+            <Field name="link" component={FormInput} type="text" placeholder="/link" validate={[requiredField, linkValidator]} />
           </Form.Group>
         </Form>
       </Modal.Body>

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormSelector, FormMultiSelector } from '../Forms/FromParts';
+import { requiredField, setMaxLength, stringValidator } from '../validator';
+
+const maxL = setMaxLength(300);
 
 function AllCoursesFormModal({ title, handleSubmit, submitData, onHide, show, themeList, languageList }) {
   return (
@@ -23,15 +26,15 @@ function AllCoursesFormModal({ title, handleSubmit, submitData, onHide, show, th
         <Form id="allCoursesForm" onSubmit={handleSubmit(submitData)} >
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Title</Form.Label>
-            <Field name="title" component={FormInput} type="text" placeholder="Title" />
+            <Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description</Form.Label>
-            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" />
+            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Importance</Form.Label>
-            <Field name="importance" component={FormSelector}/>
+            <Field name="importance" component={FormSelector} validate={[requiredField]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Icon</Form.Label>
@@ -43,11 +46,11 @@ function AllCoursesFormModal({ title, handleSubmit, submitData, onHide, show, th
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Theme</Form.Label>
-            <Field name="theme" component={FormMultiSelector} dataArr={themeList} />
+            <Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Language</Form.Label>
-            <Field name="language" component={FormMultiSelector} dataArr={languageList} />
+            <Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]} />
           </Form.Group>
         </Form>
       </Modal.Body>

@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import AllCoursesFilterSelect from './AllCoursesFilter-Select';
 
-function AllCoursesTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortCoursesData }) {
+function AllCoursesTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortCoursesData,filterCoursesData }) {
   const [sort, setSort] = useState('desc');
   function chooseSort() {
     sort === 'asc' ? setSort('desc') : setSort('asc');
@@ -12,11 +12,15 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
   }
   return (
     <div className="table use__bootstrap">
+      <AllCoursesFilterSelect themeList={themeList} languageList={languageList} filterCoursesData={filterCoursesData} />
       <Table striped bordered hover>
         <thead>
-        <AllCoursesFilterSelect themeList={themeList} languageList={languageList} />
         <tr>
-          <th onClick={() => chooseSort()} className="sort__field">Title</th>
+          <th onClick={() => chooseSort()} className="sort__field">Title
+            {sort === 'asc' ?
+              <Icon iconName={'sortUp'} className={'sort__arrow'} />
+              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+          </th>
           <th>Description</th>
           <th>Importance</th>
           <th>Icon</th>
@@ -35,14 +39,14 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
               <td>{item.importance}</td>
               <td>{item.icon}</td>
               <td>{item.borderColor}</td>
-              <td>{item.theme.map(themeNumber =>
+              <td>{item.theme && item.theme.map(themeNumber =>
                 themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== ''
                 )
               ).join(', ')
               }</td>
-              <td>{item.language.map(languageNumber =>
+              <td>{item.language && item.language.map(languageNumber =>
                 languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== ''

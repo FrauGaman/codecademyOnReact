@@ -13,8 +13,7 @@ import {
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ThemeFormModal from './ThemeFormModal';
-import { sortData } from '../../../scripts/sortData';
-import { AddLanguageData } from '../../../actions/actionLanguageData';
+import { sortData } from '../../../scripts/changeData';
 
 function AdminTheme({ themeStatus, getThemeData, removeData, createData, editData, pristine, sortThemeData }) {
   const [modalShow, setModalShow] = useState(false);

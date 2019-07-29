@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormMultiSelector } from '../Forms/FromParts';
+import { requiredField, setMaxLength, stringValidator } from '../validator';
+
+const maxLDescr = setMaxLength(300);
 
 function CareerFormModal({ title, handleSubmit, submitData, onHide, show, themeList, languageList, knowledgeList }) {
   return (
@@ -23,11 +26,11 @@ function CareerFormModal({ title, handleSubmit, submitData, onHide, show, themeL
         <Form id="careerForm" onSubmit={handleSubmit(submitData)}>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Title</Form.Label>
-            <Field name="title" component={FormInput} type="text" placeholder="Title" />
+            <Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description</Form.Label>
-            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" />
+            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxLDescr]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Img</Form.Label>
@@ -39,7 +42,7 @@ function CareerFormModal({ title, handleSubmit, submitData, onHide, show, themeL
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Theme</Form.Label>
-            <Field name="theme" component={FormMultiSelector} dataArr={themeList} />
+            <Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Language</Form.Label>

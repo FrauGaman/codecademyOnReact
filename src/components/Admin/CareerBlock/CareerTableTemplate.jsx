@@ -13,11 +13,15 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
   }
   return (
     <div className="table">
+      {/*<CareerFilterSelect themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} />*/}
       <Table striped bordered hover>
         <thead>
-        <CareerFilterSelect themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} />
         <tr>
-          <th onClick={() => chooseSort()} className="sort__field">Title</th>
+          <th onClick={() => chooseSort()} className="sort__field">Title
+            {sort === 'asc' ?
+              <Icon iconName={'sortUp'} className={'sort__arrow'} />
+              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+          </th>
           <th>Description</th>
           <th>Img</th>
           <th>BgColor</th>
@@ -35,21 +39,21 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
                 <td>{item.descr}</td>
                 <td>{item.img}</td>
                 <td>{item.bgColor}</td>
-                <td>{item.theme.map(themeNumber =>
+                <td>{item.theme && item.theme.map(themeNumber =>
                   themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                   ).find(item =>
                     item !== ''
                   )
                 ).join(', ')
                 }</td>
-                <td>{item.language.map(languageNumber =>
+                <td>{item.language && item.language.map(languageNumber =>
                   languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                   ).find(item =>
                     item !== ''
                   )
                 ).join(', ')
                 }</td>
-                <td>{item.knowledge.map(knowledgeNumber =>
+                <td>{item.knowledge && item.knowledge.map(knowledgeNumber =>
                   knowledgeList.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
                   ).find(item =>
                     item !== ''

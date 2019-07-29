@@ -11,13 +11,13 @@ import {
   RemoveCoursesData,
 } from '../../../actions/actionCoursesData';
 import { AddThemeData } from '../../../actions/actionThemeData';
-import { AddLanguageData } from '../../../actions/actionLanguageData';
+import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import AllCoursesFormModal from './AllCoursesFormModal';
-import { sortData } from '../../../scripts/sortData';
+import { sortData, filterData } from '../../../scripts/changeData';
 
-function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData, editData, pristine, sortCoursesData }) {
+function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData, editData, pristine, sortCoursesData, filterCoursesData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -30,8 +30,8 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
 
   const submitData = value => {
     value.id = +new Date();
-    value.theme = value.theme.map(item => +item);
-    value.language = value.language.map(item => +item);
+    (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
+    (value.language !== undefined) && (value.language = value.language.map(item => +item));
     const stateArr = [...[value]];
     createData(stateArr);
     setModalShow(false);
@@ -83,6 +83,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
         removeData={removeData}
         showModal={(id) => showEditForm(id)}
         sortCoursesData={(sortType) => sortCoursesData(sortType)}
+        filterCoursesData={(filterStr) => filterCoursesData(filterStr)}
       />
       {editModalShow && <AllCoursesFormModal
         title={'Edit elements'}
@@ -146,7 +147,7 @@ const mapStateToDispatch = dispatch => ({
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
   },
   removeData: (id) => {
     dispatch(RemoveCoursesData(id));
@@ -159,6 +160,9 @@ const mapStateToDispatch = dispatch => ({
   },
   sortCoursesData: (sortType) => {
     sortData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType);
+  },
+  filterCoursesData: (filterStr) => {
+    filterData(PATH.COURSESLIST,(res) => dispatch(AddCoursesData(res)), filterStr)
   },
 });
 

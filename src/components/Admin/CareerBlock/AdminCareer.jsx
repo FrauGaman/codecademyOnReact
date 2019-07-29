@@ -11,13 +11,12 @@ import {
   RemoveCareerData,
 } from '../../../actions/actionCareerData';
 import { AddThemeData } from '../../../actions/actionThemeData';
-import { AddLanguageData } from '../../../actions/actionLanguageData';
-import { AddKnowledgeData } from '../../../actions/actionKnowledgeData';
+import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
+import { KNOWLEDGE_ADD_DATA } from '../../../actions/actionKnowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import CareerFormModal from './CareerFormModal';
-import { sortData } from '../../../scripts/sortData';
-import { AddCoursesData } from '../../../actions/actionCoursesData';
+import { sortData } from '../../../scripts/changeData';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, sortCareerData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -33,9 +32,9 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
 
   const submitData = value => {
     value.id = +new Date();
-    value.theme = value.theme.map(item => +item);
-    value.language = value.language.map(item => +item);
-    value.knowledge = value.knowledge.map(item => +item);
+    (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
+    (value.language !== undefined) && (value.language = value.language.map(item => +item));
+    (value.knowledge !== undefined) && (value.knowledge = value.knowledge.map(item => +item));
     const stateArr = [...[value]];
     createData(stateArr);
     setModalShow(false);
@@ -160,10 +159,10 @@ const mapStateToDispatch = dispatch => ({
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
   },
   getKnowledgeData: () => {
-    getData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)));
+    getData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)));
   },
   removeData: (id) => {
     dispatch(RemoveCareerData(id));

@@ -5,6 +5,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { FormInput } from '../Forms/FromParts';
 import { requiredField, stringValidator } from '../validator';
 
+
 function KnowledgeFormModal({ title, handleSubmit, submitData, onHide, show }) {
   return (
     <Modal

@@ -11,11 +11,11 @@ import {
   ChangeSkillData,
 } from '../../../actions/actionSkillData';
 import { AddThemeData } from '../../../actions/actionThemeData';
-import { AddLanguageData } from '../../../actions/actionLanguageData';
+import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import SkillFormModal from './SkillFormModal';
-import { sortData } from '../../../scripts/sortData';
+import { sortData } from '../../../scripts/changeData';
 
 function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getThemeData, getLanguageData, createData, removeData, editData, pristine, sortSkillData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -30,8 +30,8 @@ function AdminSkill({ skillStatus, themeList, languageList, getSkillsData, getTh
 
   const submitData = value => {
     value.id = +new Date();
-    value.theme = value.theme.map(item => +item);
-    value.language = value.language.map(item => +item);
+    (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
+    (value.language !== undefined) && (value.language = value.language.map(item => +item));
     const stateArr = [...[value]];
     createData(stateArr);
     setModalShow(false);
@@ -145,7 +145,7 @@ const mapStateToDispatch = dispatch => ({
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
   },
   removeData: (id) => {
     dispatch(RemoveSkillData(id));

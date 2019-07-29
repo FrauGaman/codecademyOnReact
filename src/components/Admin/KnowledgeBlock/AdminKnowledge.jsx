@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
 import getData from '../../../scripts/getData';
-import { sortData } from '../../../scripts/sortData';
+import { sortData, filterDataByName } from '../../../scripts/changeData';
 import { PATH } from '../../../scripts/const';
 import {
-  AddKnowledgeData,
-  ChangeKnowledgeData,
-  CreateKnowledgeData,
-  RemoveKnowledgeData,
+  KNOWLEDGE_ADD_DATA,
+  KNOWLEDGE_CHANGE_DATA,
+  KNOWLEDGE_CREATE_DATA,
+  KNOWLEDGE_REMOVE_DATA,
 } from '../../../actions/actionKnowledgeData';
 import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import KnowledgeFormModal from './KnowledgeFormModal';
 
-function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData, editData, pristine, sortKnowledgeData }) {
+function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData, editData, pristine, sortKnowledgeData, filterDataByName }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -64,7 +64,13 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
         submitData={submitData}
       />}
 
-      <KnowledgeTableTemplate removeData={removeData} tableData={knowledgeStatus} showModal={(id) => showEditForm(id)} sortKnowledgeData={(sortType) => sortKnowledgeData(sortType)} />
+      <KnowledgeTableTemplate
+        removeData={removeData}
+        tableData={knowledgeStatus}
+        showModal={(id) => showEditForm(id)}
+        sortKnowledgeData={(sortType) => sortKnowledgeData(sortType)}
+        filterDataByName={(name) => filterDataByName(name)}
+      />
       {editModalShow && <KnowledgeFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -96,20 +102,23 @@ const mapStateToProps = state => ({
 
 const mapStateToDispatch = dispatch => ({
   getKnowledgeData: () => {
-    getData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)));
+    getData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)));
   },
   removeData: (id) => {
-    dispatch(RemoveKnowledgeData(id));
+    dispatch(KNOWLEDGE_REMOVE_DATA(id));
   },
   createData: (newData) => {
-    dispatch(CreateKnowledgeData(newData));
+    dispatch(KNOWLEDGE_CREATE_DATA(newData));
   },
   editData: (state, value) => {
-    dispatch(ChangeKnowledgeData(state, value));
+    dispatch(KNOWLEDGE_CHANGE_DATA(state, value));
   },
   sortKnowledgeData: (sortType) => {
-    sortData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType);
+    sortData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', sortType);
   },
+  filterDataByName: (name) => {
+    filterDataByName(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', name);
+  }
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminKnowledge);

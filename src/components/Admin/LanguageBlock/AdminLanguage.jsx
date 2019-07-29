@@ -5,15 +5,15 @@ import { isPristine } from 'redux-form';
 import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import {
-  AddLanguageData,
-  RemoveLanguageData,
+  LANGUAGE_ADD_DATA,
+  LANGUAGE_REMOVE_DATA,
   CreateLanguageData,
   ChangeLanguageData,
 } from '../../../actions/actionLanguageData';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import LanguageFormModal from './LanguageFormModal';
-import { sortData } from '../../../scripts/sortData';
+import { sortData } from '../../../scripts/changeData';
 
 function AdminLanguage({ languageStatus, getLanguageData, removeData, createData, editData, pristine, sortLanguageData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -99,10 +99,10 @@ const mapStateToProps = state => ({
 });
 const mapStateToDispatch = dispatch => ({
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
   },
   removeData: (id) => {
-    dispatch(RemoveLanguageData(id));
+    dispatch(LANGUAGE_REMOVE_DATA(id));
   },
   createData: (newData) => {
     dispatch(CreateLanguageData(newData));
@@ -111,7 +111,7 @@ const mapStateToDispatch = dispatch => ({
     dispatch(ChangeLanguageData(state, value));
   },
   sortLanguageData: (sortType) => {
-    sortData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType);
+    sortData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)), 'name', sortType);
   },
 });
 

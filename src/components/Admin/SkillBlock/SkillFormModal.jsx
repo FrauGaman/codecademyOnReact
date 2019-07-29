@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormMultiSelector } from '../Forms/FromParts';
+import { requiredField, setMaxLength, stringValidator } from '../validator';
+
+const maxLDescr = setMaxLength(300);
+const maxLPeriod = setMaxLength(20);
 
 function SkillFormModal({ title, handleSubmit, submitData, onHide, show, themeList, languageList }) {
   return (
@@ -23,11 +27,11 @@ function SkillFormModal({ title, handleSubmit, submitData, onHide, show, themeLi
         <Form id="skillForm" onSubmit={handleSubmit(submitData)}>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Title</Form.Label>
-            <Field name="title" component={FormInput} type="text" placeholder="Title" />
+            <Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description</Form.Label>
-            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" />
+            <Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxLDescr]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Img</Form.Label>
@@ -43,11 +47,11 @@ function SkillFormModal({ title, handleSubmit, submitData, onHide, show, themeLi
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect2">
             <Form.Label>Language</Form.Label>
-            <Field name="language" component={FormMultiSelector} dataArr={languageList} />
+            <Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]} />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label>Period</Form.Label>
-            <Field name="period" component={FormInput} type="text" placeholder="Period" />
+            <Field name="period" component={FormInput} type="text" placeholder="Period" validate={[requiredField, maxLPeriod]} />
           </Form.Group>
 
         </Form>

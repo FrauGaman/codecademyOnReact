@@ -15,7 +15,11 @@ function ThemeTableTemplate({ tableData, removeData, showModal, sortThemeData })
       <Table striped bordered hover>
         <thead>
         <tr>
-          <th onClick={() => chooseSort()} className="sort__field">Name</th>
+          <th onClick={() => chooseSort()} className="sort__field">Name
+            {sort === 'asc' ?
+              <Icon iconName={'sortUp'} className={'sort__arrow'} />
+              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+          </th>
           <th>Description</th>
           <th>Link</th>
           <th>Edit</th>
