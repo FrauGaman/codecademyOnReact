@@ -267,7 +267,7 @@
     {
       "name": "HTML & CSSJ",
       "descr": "HTML is the foundation behind all web pages. It’s used to add structure and form to text, images, and more. CSS is the language used to style HTML content. In this first course, you’ll learn the fundamentals of both languages so that you can create visually appealing web pages.",
-      "link": "HTML is the foundation behind all web pages. It’s used to add structure and form to text, images, and more. CSS is the language used to style HTML content. In this first course, you’ll learn the fundamentals of both languages so that you can create visually appealing web pages.",
+      "link": "/html-css",
       "id": 1
     },
     {
@@ -395,7 +395,7 @@
     {
       "name": "Full Catalog",
       "descr": "Whether you’re trying to level up your career, build your side project, or simply play around with programming, you’ve found the right place to start. Explore our programs and courses, try an exercise or two, and join our community of 45 million learners.",
-      "link": "Whether you’re trying to level up your career, build your side project, or simply play around with programming, you’ve found the right place to start. Explore our programs and courses, try an exercise or two, and join our community of 45 million learners.",
+      "link": "/all",
       "id": 1
     },
     {

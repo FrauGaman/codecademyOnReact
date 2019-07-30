@@ -37,14 +37,14 @@ export function CreateLanguageData(payload) {
 }
 
 export function ChangeLanguageData(state, payload) {
-  state.map(item =>
+  state.data.map(item =>
     item.id === payload.id ?
       fetch(`${BASE_PATH}${PATH.LANGUAGE}/${item.id}`, {
         method: 'PUT',
         body: JSON.stringify({
           name: payload.name,
           descr: payload.descr,
-          link: payload.descr,
+          link: payload.link,
         }),
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
       }) : '',

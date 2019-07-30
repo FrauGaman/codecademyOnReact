@@ -16,9 +16,10 @@ import { KNOWLEDGE_ADD_DATA } from '../../../actions/actionKnowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import CareerFormModal from './CareerFormModal';
-import { sortData } from '../../../scripts/changeData';
+import { changeData, sortData } from '../../../scripts/changeData';
+import { AddSkillData } from '../../../actions/actionSkillData';
 
-function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, sortCareerData }) {
+function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -88,7 +89,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         knowledgeList={knowledgeList}
         tableData={careerStatus}
         showModal={(id) => showEditForm(id)}
-        sortCareerData={(sortType) => sortCareerData(sortType)}
+        findData={(sortType, filterStr, name) => findData(sortType, filterStr, name)}
       />
       {editModalShow && <CareerFormModal
         title={'Edit elements'}
@@ -140,7 +141,7 @@ AdminCareer.propTypes = {
   removeData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
-  sortCareerData: PropTypes.func,
+  findData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -173,8 +174,8 @@ const mapStateToDispatch = dispatch => ({
   editData: (state, value) => {
     dispatch(ChangeCareerData(state, value));
   },
-  sortCareerData: (sortType) => {
-    sortData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType);
+  findData: (sortType, filterStr, name) => {
+    changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name);
   },
 });
 

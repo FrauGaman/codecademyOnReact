@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
+import SearchByName from './SearchTheme';
 
-function ThemeTableTemplate({ tableData, removeData, showModal, sortThemeData }) {
+function ThemeTableTemplate({ tableData, removeData, showModal, findData }) {
   const [sort, setSort] = useState('desc');
+  const [search, setSearch] = useState('');
 
-  function chooseSort() {
-    sort === 'asc' ? setSort('desc') : setSort('asc');
-    sortThemeData(sort);
-  }
+  useEffect(() => {
+    findData(sort, search);
+    }, [sort, search]);
+
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+
   return (
     <div className="table">
+      <SearchByName searchState={searchState} />
       <Table striped bordered hover>
         <thead>
         <tr>
@@ -58,7 +64,7 @@ ThemeTableTemplate.propTypes = {
   })),
   removeData: PropTypes.func,
   showModal: PropTypes.func,
-  sortThemeData: PropTypes.func,
+  findData: PropTypes.func,
 };
 
 export default ThemeTableTemplate;

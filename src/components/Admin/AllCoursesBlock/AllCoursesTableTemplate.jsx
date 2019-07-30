@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import AllCoursesFilterSelect from './AllCoursesFilter-Select';
+import SearchByName from './SearchCourse';
 
-function AllCoursesTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortCoursesData,filterCoursesData }) {
+function AllCoursesTableTemplate({ tableData, themeList, languageList, removeData, showModal, findData }) {
   const [sort, setSort] = useState('desc');
-  function chooseSort() {
-    sort === 'asc' ? setSort('desc') : setSort('asc');
-    sortCoursesData(sort);
-  }
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    findData(sort, filter, search);
+  }, [sort, filter, search]);
+
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+  const filterState = (filterValue) => setFilter(filterValue);
+
   return (
     <div className="table use__bootstrap">
-      <AllCoursesFilterSelect themeList={themeList} languageList={languageList} filterCoursesData={filterCoursesData} />
+      <SearchByName searchState={searchState} />
+      <AllCoursesFilterSelect themeList={themeList} languageList={languageList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>
         <tr>
@@ -42,14 +51,14 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
               <td>{item.theme && item.theme.map(themeNumber =>
                 themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
-                  item !== ''
+                  item !== '',
                 )
               ).join(', ')
               }</td>
               <td>{item.language && item.language.map(languageNumber =>
                 languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
-                  item !== ''
+                  item !== '',
                 )
               ).join(', ')
               }</td>
@@ -95,7 +104,7 @@ AllCoursesTableTemplate.propTypes = {
   })),
   removeData: PropTypes.func,
   showModal: PropTypes.func,
-  sortCoursesData: PropTypes.func,
+  findData: PropTypes.func,
 };
 
 export default AllCoursesTableTemplate;

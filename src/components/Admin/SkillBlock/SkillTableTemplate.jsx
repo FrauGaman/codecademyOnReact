@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import SkillFilterSelect from './SkillFilter-Select';
+import SearchByName from './SearchSkill';
 
-function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal, sortSkillData }) {
+function CareerTableTemplate({ tableData, themeList, languageList, removeData, showModal, findData }) {
   const [sort, setSort] = useState('desc');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
 
-  console.log(tableData);
+  useEffect(() => {
+    findData(sort, filter, search);
+  }, [sort, filter, search]);
 
-  function chooseSort() {
-    sort === 'asc' ? setSort('desc') : setSort('asc');
-    sortSkillData(sort);
-  }
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+  const filterState = (filterValue) => setFilter(filterValue);
+
   return (
     <div className="table">
-      {/*<SkillFilterSelect themeList={themeList} languageList={languageList} />*/}
+      <SearchByName searchState={searchState} />
+      <SkillFilterSelect themeList={themeList} languageList={languageList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>
 

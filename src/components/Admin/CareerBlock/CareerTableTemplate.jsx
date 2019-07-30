@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import CareerFilterSelect from './CareerFilter-Select';
+import SearchByName from './SearchCareer';
 
-function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeData, showModal, sortCareerData }) {
+function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeData, showModal, findData }) {
   const [sort, setSort] = useState('desc');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
 
-  function chooseSort() {
-    sort === 'asc' ? setSort('desc') : setSort('asc');
-    sortCareerData(sort);
-  }
+  useEffect(() => {
+    findData(sort, filter, search);
+  }, [sort, filter, search]);
+
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+  const filterState = (filterValue) => setFilter(filterValue);
+
   return (
     <div className="table">
-      {/*<CareerFilterSelect themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} />*/}
+      <SearchByName searchState={searchState} />
+      <CareerFilterSelect themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>
         <tr>

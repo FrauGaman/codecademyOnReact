@@ -1,6 +1,5 @@
 import React  from 'react';
 import { Form } from 'react-bootstrap';
-// import './formPartsStyle.sass';
 
 export function FormInput(props) {
   const hasError = props.meta.touched && props.meta.error;

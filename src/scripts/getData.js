@@ -6,7 +6,8 @@ export default function getData(path,  addData) {
       if (res.status < 200 || res.status >= 300) {
         throw new Error('error');
       }
-      return res.json()})
+      return res.json()
+    })
     .then(res => addData(res))
     .catch(error => console.log(error));
 }

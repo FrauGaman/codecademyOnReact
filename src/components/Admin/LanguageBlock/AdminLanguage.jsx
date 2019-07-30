@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import {
   LANGUAGE_ADD_DATA,
@@ -13,16 +12,12 @@ import {
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import LanguageFormModal from './LanguageFormModal';
-import { sortData } from '../../../scripts/changeData';
+import { changeData } from '../../../scripts/changeData';
 
-function AdminLanguage({ languageStatus, getLanguageData, removeData, createData, editData, pristine, sortLanguageData }) {
+function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
-
-  useEffect(() => {
-    getLanguageData();
-  }, []);
 
   const submitData = value => {
     value.id = +new Date();
@@ -44,7 +39,7 @@ function AdminLanguage({ languageStatus, getLanguageData, removeData, createData
   };
 
   const showEditForm = (id) => {
-    setInitial(languageStatus.find(item => item.id === id));
+    setInitial(languageStatus.data.find(item => item.id === id));
     setEditModalShow(true);
   };
 
@@ -66,7 +61,12 @@ function AdminLanguage({ languageStatus, getLanguageData, removeData, createData
         createdata={createData}
       />}
 
-      <LanguageTableTemplate tableData={languageStatus} removeData={removeData} showModal={(id) => showEditForm(id)} sortLanguageData={(sortType) => sortLanguageData(sortType)} />
+      <LanguageTableTemplate
+        tableData={languageStatus}
+        removeData={removeData}
+        showModal={(id) => showEditForm(id)}
+        findData={(sortType, name, pageNumber, limitNumber) => findData(sortType, name, pageNumber, limitNumber)}
+      />
       {editModalShow && <LanguageFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -90,7 +90,7 @@ AdminLanguage.propTypes = {
   createData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
-  sortLanguageData: PropTypes.func,
+  findData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -98,9 +98,6 @@ const mapStateToProps = state => ({
   pristine: isPristine('changeLanguage')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
-  },
   removeData: (id) => {
     dispatch(LANGUAGE_REMOVE_DATA(id));
   },
@@ -110,8 +107,8 @@ const mapStateToDispatch = dispatch => ({
   editData: (state, value) => {
     dispatch(ChangeLanguageData(state, value));
   },
-  sortLanguageData: (sortType) => {
-    sortData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)), 'name', sortType);
+  findData: (sortType, name, pageNumber, limitNumber) => {
+    changeData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
   },
 });
 

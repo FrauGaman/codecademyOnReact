@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import getData from '../../../scripts/getData';
-import { sortData, filterDataByName } from '../../../scripts/changeData';
+import { changeData } from '../../../scripts/changeData';
 import { PATH } from '../../../scripts/const';
 import {
   KNOWLEDGE_ADD_DATA,
@@ -15,14 +14,10 @@ import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import KnowledgeFormModal from './KnowledgeFormModal';
 
-function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createData, editData, pristine, sortKnowledgeData, filterDataByName }) {
+function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
-
-  useEffect(() => {
-    getKnowledgeData();
-  }, []);
 
   const submitData = value => {
     value.id = +new Date();
@@ -44,7 +39,7 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
   };
 
   const showEditForm = (id) => {
-    setInitial(knowledgeStatus.find(item => item.id === id));
+    setInitial(knowledgeStatus.data.find(item => item.id === id));
     setEditModalShow(true);
   };
 
@@ -68,8 +63,7 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
         removeData={removeData}
         tableData={knowledgeStatus}
         showModal={(id) => showEditForm(id)}
-        sortKnowledgeData={(sortType) => sortKnowledgeData(sortType)}
-        filterDataByName={(name) => filterDataByName(name)}
+        findData={(sortType, name, pageNumber, limitNumber) => findData(sortType, name, pageNumber, limitNumber)}
       />
       {editModalShow && <KnowledgeFormModal
         title={'Edit elements'}
@@ -82,18 +76,18 @@ function AdminKnowledge({ knowledgeStatus, getKnowledgeData, removeData, createD
   );
 }
 
-AdminKnowledge.propTypes = {
-  knowledgeStatus: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })),
-  getKnowledgeData: PropTypes.func,
-  removeData: PropTypes.func,
-  createData: PropTypes.func,
-  editData: PropTypes.func,
-  pristine: PropTypes.bool,
-  sortKnowledgeData: PropTypes.func,
-};
+// AdminKnowledge.propTypes = {
+//   knowledgeStatus: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.number,
+//     name: PropTypes.string,
+//   })),
+//   getKnowledgeData: PropTypes.func,
+//   removeData: PropTypes.func,
+//   createData: PropTypes.func,
+//   editData: PropTypes.func,
+//   pristine: PropTypes.bool,
+//   sortKnowledgeData: PropTypes.func,
+// };
 
 const mapStateToProps = state => ({
   knowledgeStatus: state.knowledgeTask,
@@ -101,9 +95,6 @@ const mapStateToProps = state => ({
 });
 
 const mapStateToDispatch = dispatch => ({
-  getKnowledgeData: () => {
-    getData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)));
-  },
   removeData: (id) => {
     dispatch(KNOWLEDGE_REMOVE_DATA(id));
   },
@@ -113,12 +104,9 @@ const mapStateToDispatch = dispatch => ({
   editData: (state, value) => {
     dispatch(KNOWLEDGE_CHANGE_DATA(state, value));
   },
-  sortKnowledgeData: (sortType) => {
-    sortData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', sortType);
+  findData: (sortType, name, pageNumber, limitNumber) => {
+    changeData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
   },
-  filterDataByName: (name) => {
-    filterDataByName(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', name);
-  }
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(AdminKnowledge);

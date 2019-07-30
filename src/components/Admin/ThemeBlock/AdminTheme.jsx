@@ -13,9 +13,9 @@ import {
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ThemeFormModal from './ThemeFormModal';
-import { sortData } from '../../../scripts/changeData';
+import { changeData } from '../../../scripts/changeData';
 
-function AdminTheme({ themeStatus, getThemeData, removeData, createData, editData, pristine, sortThemeData }) {
+function AdminTheme({ themeStatus, getThemeData, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -66,7 +66,12 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
         createdata={createData}
       />}
 
-      <ThemeTableTemplate tableData={themeStatus} removeData={removeData} showModal={(id) => showEditForm(id)} sortThemeData={(sortType) => sortThemeData(sortType)} />
+      <ThemeTableTemplate
+        tableData={themeStatus}
+        removeData={removeData}
+        showModal={(id) => showEditForm(id)}
+        findData={(sortType, name) => findData(sortType, name)}
+      />
       {editModalShow && <ThemeFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -90,7 +95,7 @@ AdminTheme.propTypes = {
   createData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
-  sortThemeData: PropTypes.func,
+  findData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -110,8 +115,8 @@ const mapStateToDispatch = dispatch => ({
   editData: (state, value) => {
     dispatch(ChangeThemeData(state, value));
   },
-  sortThemeData: (sortType) => {
-    sortData(PATH.THEME, (res) => dispatch(AddThemeData(res)), 'name', sortType);
+  findData: (sortType, name) => {
+    changeData(PATH.THEME, (res) => dispatch(AddThemeData(res)), 'name', sortType, '', 'name', name);
   },
 });
 

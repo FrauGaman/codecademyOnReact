@@ -35,7 +35,7 @@ export function KNOWLEDGE_CREATE_DATA(payload) {
 }
 
 export function KNOWLEDGE_CHANGE_DATA(state, payload) {
-  state.map(item =>
+  state.data.map(item =>
     item.id === payload.id ?
       fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${item.id}`, {
         method: 'PUT',

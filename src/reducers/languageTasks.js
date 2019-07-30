@@ -3,20 +3,22 @@ import { TYPE } from '../scripts/const';
 const languageTasks = (state = [], action) => {
   switch (action.type) {
     case TYPE.LANGUAGE_ADD_DATA:
-      state = [];
-      return [
-        ...state,
-        ...action.payload,
-      ];
+      return {
+        data: action.payload.data,
+        count: action.payload.count,
+      };
     case TYPE.LANGUAGE_REMOVE_DATA:
-      return [...state].filter((item) => item.id !== action.payload.id);
+      return {
+        data: [...state.data].filter((item) => item.id !== action.payload.id),
+        count: action.payload.count,
+      };
     case TYPE.CREATE_LANGUAGE_DATA:
-      return [
-        ...state,
-        ...action.payload,
-      ];
+      return {
+        data: [...state.data, ...action.payload],
+        count: action.payload.count,
+      };
     case TYPE.CHANGE_LANGUAGE_DATA:
-      state.map(item =>{
+      state.data.map(item =>{
         if (item.id === action.payload.id) {
           item.name = action.payload.name;
           item.descr = action.payload.descr;
