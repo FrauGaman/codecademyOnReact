@@ -1,4 +1,5 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { LANGUAGE_ADD_DATA } from './actionLanguageData';
 
 export function AddThemeData(payload) {
   return {
@@ -8,36 +9,40 @@ export function AddThemeData(payload) {
 }
 
 export function RemoveThemeData(id) {
-  fetch(`${BASE_PATH}${PATH.THEME}/${id}`, {
-    method: 'DELETE',
-  });
-  return {
-    type: TYPE.REMOVE_THEME_DATA,
-    payload: { id },
+  return dispatch => {
+    dispatch(AddThemeData);
+    return fetch(`${BASE_PATH}${PATH.THEME}/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      return {
+        type: TYPE.REMOVE_THEME_DATA,
+        payload: { id },
+      };
+    });
   };
 }
 
 export function CreateThemeData(payload) {
-  payload.map(item =>
-    fetch(`${BASE_PATH}${PATH.THEME}`, {
+  return dispatch => {
+    dispatch(LANGUAGE_ADD_DATA);
+    return fetch(`${BASE_PATH}${PATH.THEME}`, {
       method: 'POST',
       body: JSON.stringify({
-        id: item.id,
-        name: item.name,
-        descr: item.descr,
-        link: item.link,
+        id: +new Date(),
+        ...payload,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }),
-  );
-  return {
-    type: TYPE.CREATE_THEME_DATA,
-    payload,
+    }).then(() => {
+      return {
+        type: TYPE.CREATE_THEME_DATA,
+        payload,
+      };
+    });
   };
 }
 
 export function ChangeThemeData(state, payload) {
-  state.map(item =>
+  state.data.map(item =>
     item.id === payload.id ?
       fetch(`${BASE_PATH}${PATH.THEME}/${item.id}`, {
         method: 'PUT',

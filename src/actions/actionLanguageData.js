@@ -8,31 +8,35 @@ export function LANGUAGE_ADD_DATA(payload) {
 }
 
 export function LANGUAGE_REMOVE_DATA(id) {
-  fetch (`${BASE_PATH}${PATH.LANGUAGE}/${id}`, {
-    method: 'DELETE',
-  });
-  return {
-    type: TYPE.LANGUAGE_REMOVE_DATA,
-    payload: { id },
+  return dispatch => {
+    dispatch(LANGUAGE_ADD_DATA);
+    return fetch(`${BASE_PATH}${PATH.LANGUAGE}/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      return {
+        type: TYPE.LANGUAGE_REMOVE_DATA,
+        payload: { id },
+      };
+    });
   };
 }
 
 export function CreateLanguageData(payload) {
-  payload.map(item =>
-    fetch(`${BASE_PATH}${PATH.LANGUAGE}`, {
+  return dispatch => {
+    dispatch(LANGUAGE_ADD_DATA);
+    return fetch(`${BASE_PATH}${PATH.LANGUAGE}`, {
       method: 'POST',
       body: JSON.stringify({
-        id: item.id,
-        name: item.name,
-        descr: item.descr,
-        link: item.link,
+        id: +new Date(),
+        ...payload,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }),
-  );
-  return {
-    type: TYPE.CREATE_LANGUAGE_DATA,
-    payload,
+    }).then(() => {
+      return {
+        type: TYPE.CREATE_LANGUAGE_DATA,
+        payload,
+      };
+    });
   };
 }
 

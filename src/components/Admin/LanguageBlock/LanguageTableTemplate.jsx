@@ -1,43 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import SearchByName from '../SearchByName';
+import SelectPageLimit from '../SelectPageLimit';
 
-function LanguageTableTemplate({ tableData, removeData, showModal, findData }) {
-  const [sort, setSort] = useState('asc');
-  const [search, setSearch] = useState('');
-  const [limitNumber, setLimitNumber] = useState(10);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pageArr, setPageArr] = useState([]);
-
-  useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber);
-  }, [sort, search, pageNumber, limitNumber]);
-
-  useEffect(() => {
-    const helpArr = [];
-    for (let i = 0; i < Math.ceil(tableData.count/limitNumber); i++) {
-      helpArr.push(i);
-    }
-    setPageArr(helpArr);
-  }, [pageNumber, limitNumber]);
-
-  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
-  const searchState = (searchValue) => setSearch(searchValue);
-  const selectLimitNumber = (event) => {
-    setLimitNumber(event.target.value);
-    setPageNumber(1);
-  };
-
+function LanguageTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort  }) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
-      <select className="page__selector" value={limitNumber} onChange={selectLimitNumber}>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="25">25</option>
-      </select>
+      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
       <Table striped bordered hover>
         <thead>
         <tr>
@@ -62,7 +34,7 @@ function LanguageTableTemplate({ tableData, removeData, showModal, findData }) {
                 <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />
                 </div>
-                <div onClick={() => removeData(item.id)}>
+                <div onClick={() => removeTableData(item.id)}>
                   <Icon iconName={'delete'} className={'delIcon'} />
                 </div>
               </td>
@@ -85,16 +57,16 @@ function LanguageTableTemplate({ tableData, removeData, showModal, findData }) {
   );
 }
 
-LanguageTableTemplate.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  removeData: PropTypes.func,
-  showModal: PropTypes.func,
-  findData: PropTypes.func,
-};
+// LanguageTableTemplate.propTypes = {
+//   tableData: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.number,
+//     name: PropTypes.string,
+//     descr: PropTypes.string,
+//     link: PropTypes.string,
+//   })),
+//   removeData: PropTypes.func,
+//   showModal: PropTypes.func,
+//   findData: PropTypes.func,
+// };
 
 export default LanguageTableTemplate;

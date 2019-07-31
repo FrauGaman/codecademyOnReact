@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const languageTasks = (state = [], action) => {
+const languageTasks = (state = {}, action) => {
   switch (action.type) {
     case TYPE.LANGUAGE_ADD_DATA:
       return {
@@ -10,7 +10,7 @@ const languageTasks = (state = [], action) => {
     case TYPE.LANGUAGE_REMOVE_DATA:
       return {
         data: [...state.data].filter((item) => item.id !== action.payload.id),
-        count: action.payload.count,
+        count: (state.count > 0) && state.count - 1,
       };
     case TYPE.CREATE_LANGUAGE_DATA:
       return {

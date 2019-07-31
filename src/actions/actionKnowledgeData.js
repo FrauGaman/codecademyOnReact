@@ -8,29 +8,35 @@ export function KNOWLEDGE_ADD_DATA(payload) {
 }
 
 export function KNOWLEDGE_REMOVE_DATA(id) {
-  fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${id}`, {
-    method: 'DELETE',
-  });
-  return {
-    type: TYPE.KNOWLEDGE_REMOVE_DATA,
-    payload: { id },
+  return dispatch => {
+    dispatch(KNOWLEDGE_ADD_DATA);
+    return fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      return {
+        type: TYPE.KNOWLEDGE_REMOVE_DATA,
+        payload: { id },
+      }
+    });
   };
 }
 
 export function KNOWLEDGE_CREATE_DATA(payload) {
-  payload.map(item =>
-    fetch(`${BASE_PATH}${PATH.KNOWLEDGE}`, {
+  return dispatch => {
+    dispatch(KNOWLEDGE_ADD_DATA);
+    return fetch(`${BASE_PATH}${PATH.KNOWLEDGE}`, {
       method: 'POST',
       body: JSON.stringify({
         id: +new Date(),
-        name: item.name,
+        ...payload,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }),
-  );
-  return {
-    type: TYPE.KNOWLEDGE_CREATE_DATA,
-    payload,
+    }).then(() => {
+      return {
+        type: TYPE.KNOWLEDGE_CREATE_DATA,
+        payload,
+      };
+    });
   };
 }
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import {
   AddThemeData,
@@ -19,10 +18,42 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
+  const [sort, setSort] = useState('asc');
+  const [search, setSearch] = useState('');
+  const [limitNumber, setLimitNumber] = useState(10);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageArr, setPageArr] = useState([]);
 
   useEffect(() => {
-    getThemeData();
-  }, []);
+    findData(sort, search, pageNumber, limitNumber);
+  }, [sort, search, pageNumber, limitNumber]);
+
+  useEffect(() => {
+    const helpArr = [];
+    for (let i = 0; i < Math.ceil(languageStatus.count / limitNumber); i++) {
+      helpArr.push(i);
+    }
+    setPageArr(helpArr);
+  }, [languageStatus.count, pageNumber, limitNumber]);
+
+  useEffect(() => {
+    if (languageStatus.data !== undefined) {
+      if (languageStatus.data.length === 0) {
+        if (pageNumber >= 1) {
+          let clonePageNumber = pageNumber;
+          clonePageNumber = clonePageNumber - 1;
+          setPageNumber(clonePageNumber);
+        }
+      }
+    }
+  }, [languageStatus.count]);
+
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+  const selectLimitNumber = (event) => {
+    setLimitNumber(event.target.value);
+    setPageNumber(1);
+  };
 
   const submitData = value => {
     value.id = +new Date();

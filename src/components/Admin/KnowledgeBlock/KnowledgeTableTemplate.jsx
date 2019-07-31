@@ -1,36 +1,11 @@
-import React,  { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import SearchByName from '../SearchByName';
 import SelectPageLimit from '../SelectPageLimit';
 
-function KnowledgeTableTemplate({ tableData, removeData, showModal, findData }) {
-  const [sort, setSort] = useState('asc');
-  const [search, setSearch] = useState('');
-  const [limitNumber, setLimitNumber] = useState(10);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pageArr, setPageArr] = useState([]);
-
-  useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber);
-  }, [sort, search, pageNumber, limitNumber]);
-
-  useEffect(() => {
-    const helpArr = [];
-    for (let i = 0; i < Math.ceil(tableData.count/limitNumber); i++) {
-      helpArr.push(i);
-    }
-    setPageArr(helpArr);
-  }, [pageNumber, limitNumber]);
-
-  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
-  const searchState = (searchValue) => setSearch(searchValue);
-  const selectLimitNumber = (event) => {
-    setLimitNumber(event.target.value);
-    setPageNumber(1);
-  };
-
+function KnowledgeTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
   return (
     <React.Fragment>
       <div className="table">
@@ -56,7 +31,7 @@ function KnowledgeTableTemplate({ tableData, removeData, showModal, findData }) 
                   <div onClick={() => showModal(item.id)}>
                     <Icon iconName={'edit'} className={'editIcon'} />
                   </div>
-                  <div onClick={() => removeData(item.id)}>
+                  <div onClick={() => removeTableData(item.id)}>
                     <Icon iconName={'delete'} className={'delIcon'} />
                   </div>
                 </td>
@@ -71,27 +46,27 @@ function KnowledgeTableTemplate({ tableData, removeData, showModal, findData }) 
               key={item}
               className="page"
               onClick={() => setPageNumber(item + 1)}>
-              {item+1}
+              {item + 1}
             </button>
           )
         }
       </div>
     </React.Fragment>
-
   );
 }
 
-// KnowledgeTableTemplate.propTypes = {
-//   tableData: PropTypes.objectOf(PropTypes.shape({
-//     count: PropTypes.string,
-//     data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.shape({
-//       id: PropTypes.number,
-//       name: PropTypes.string,
-//     }))),
-//   })),
-//   removeData: PropTypes.func,
-//   showModal: PropTypes.func,
-//   findData: PropTypes.func,
-// };
+KnowledgeTableTemplate.propTypes = {
+  tableData: PropTypes.object,
+  removeTableData: PropTypes.func,
+  showModal: PropTypes.func,
+  searchState: PropTypes.func,
+  selectLimitNumber: PropTypes.func,
+  chooseSort: PropTypes.func,
+  pageArr: PropTypes.array,
+  setPageNumber: PropTypes.func,
+  limitNumber: PropTypes.number,
+  sort: PropTypes.string,
+
+};
 
 export default KnowledgeTableTemplate;

@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const knowledgeTasks = (state = [], action) => {
+const knowledgeTasks = (state = {}, action) => {
   switch (action.type) {
     case TYPE.KNOWLEDGE_ADD_DATA:
       return {
@@ -10,7 +10,7 @@ const knowledgeTasks = (state = [], action) => {
     case TYPE.KNOWLEDGE_REMOVE_DATA:
       return {
         data: [...state.data].filter((item) => item.id !== action.payload.id),
-        count: action.payload.count,
+        count: (state.count > 0) && state.count - 1,
       };
     case TYPE.KNOWLEDGE_CREATE_DATA:
       return {
