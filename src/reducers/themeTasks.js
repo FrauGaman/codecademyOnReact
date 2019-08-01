@@ -11,7 +11,7 @@ const themeTasks = (state = {}, action) => {
       return {
         data: [...state.data].filter((item) => item.id !== action.payload.id),
         count: (state.count > 0) && state.count - 1,
-      }
+      };
     case TYPE.CREATE_THEME_DATA:
       return {
         data: [...state.data, ...action.payload],

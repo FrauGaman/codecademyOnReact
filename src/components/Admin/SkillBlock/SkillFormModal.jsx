@@ -64,25 +64,25 @@ function SkillFormModal({ title, handleSubmit, submitData, onHide, show, themeLi
   );
 }
 
-SkillFormModal.propTypes = {
-  title: PropTypes.string,
-  handleSubmit: PropTypes.func,
-  submitData: PropTypes.func,
-  onHide: PropTypes.func,
-  show: PropTypes.bool,
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-};
+// SkillFormModal.propTypes = {
+//   title: PropTypes.string,
+//   handleSubmit: PropTypes.func,
+//   submitData: PropTypes.func,
+//   onHide: PropTypes.func,
+//   show: PropTypes.bool,
+//   themeList: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.number,
+//     name: PropTypes.string,
+//     descr: PropTypes.string,
+//     link: PropTypes.string,
+//   })),
+//   languageList: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.number,
+//     name: PropTypes.string,
+//     descr: PropTypes.string,
+//     link: PropTypes.string,
+//   })),
+// };
 
 SkillFormModal = reduxForm({
   form: 'changeSkill',

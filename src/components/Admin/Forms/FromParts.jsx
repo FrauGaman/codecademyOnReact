@@ -62,7 +62,7 @@ export function FormMultiSelector(props) {
         value={props.input.value || []}
         onChange={props.input.onChange}
       >
-        {props.dataArr.map(item =>
+        {props.dataArr.data.map(item =>
           <option value={item.id} key={item.id}>{item.name}</option>
         )}
       </Form.Control>

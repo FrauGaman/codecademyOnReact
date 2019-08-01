@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import CareerFilterSelect from './CareerFilter-Select';
-import SearchByName from './SearchCareer';
+import SearchByName from '../SearchByName';
+import SelectPageLimit from '../SelectPageLimit';
 
-function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeData, showModal, findData }) {
-  const [sort, setSort] = useState('desc');
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    findData(sort, filter, search);
-  }, [sort, filter, search]);
-
-  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
-  const searchState = (searchValue) => setSearch(searchValue);
-  const filterState = (filterValue) => setFilter(filterValue);
-
+function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeTableData, filterState, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
+      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
       <CareerFilterSelect themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>
@@ -41,28 +31,28 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
         </thead>
         <tbody>
         {
-          tableData.map(item =>
+          tableData.data && tableData.data.map(item =>
               <tr key={item.id}>
                 <td>{item.title}</td>
                 <td>{item.descr}</td>
                 <td>{item.img}</td>
                 <td>{item.bgColor}</td>
                 <td>{item.theme && item.theme.map(themeNumber =>
-                  themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
+                  themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                   ).find(item =>
                     item !== ''
                   )
                 ).join(', ')
                 }</td>
                 <td>{item.language && item.language.map(languageNumber =>
-                  languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
+                  languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                   ).find(item =>
                     item !== ''
                   )
                 ).join(', ')
                 }</td>
                 <td>{item.knowledge && item.knowledge.map(knowledgeNumber =>
-                  knowledgeList.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
+                  knowledgeList.data && knowledgeList.data.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
                   ).find(item =>
                     item !== ''
                   )
@@ -72,7 +62,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
                   <div onClick={() => showModal(item.id)}>
                     <Icon iconName={'edit'} className={'editIcon'} />
                   </div>
-                  <div onClick={() => removeData(item.id)}>
+                  <div onClick={() => removeTableData(item.id)}>
                     <Icon iconName={'delete'} className={'delIcon'} />
                   </div>
                 </td>
@@ -81,40 +71,69 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
         }
         </tbody>
       </Table>
+      {
+        (pageArr.length > 1) && pageArr.map(item =>
+          <button
+            key={item}
+            className="page"
+            onClick={() => setPageNumber(item + 1)}>
+            {item+1}
+          </button>
+        )
+      }
     </div>
   );
 }
 
 CareerTableTemplate.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    img: PropTypes.img,
-    title: PropTypes.string,
-    descr: PropTypes.string,
-    bgColor: PropTypes.string,
-    period: PropTypes.string,
-    theme: PropTypes.array,
-    language: PropTypes.array,
-  })),
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  knowledgeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })),
-  removeData: PropTypes.func,
+  tableData: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      img: PropTypes.img,
+      bgColor: PropTypes.string,
+      title: PropTypes.string,
+      descr: PropTypes.string,
+      theme: PropTypes.array,
+      language: PropTypes.array,
+      knowledge: PropTypes.array,
+    })),
+    count: PropTypes.string,
+  }),
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  knowledgeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  removeTableData: PropTypes.func,
   showModal: PropTypes.func,
-  sortCareerData: PropTypes.func,
+  searchState: PropTypes.func,
+  selectLimitNumber: PropTypes.func,
+  chooseSort: PropTypes.func,
+  pageArr: PropTypes.array,
+  setPageNumber: PropTypes.func,
+  limitNumber: PropTypes.string,
+  sort: PropTypes.string,
+  filterState: PropTypes.func,
 };
 
 export default CareerTableTemplate;

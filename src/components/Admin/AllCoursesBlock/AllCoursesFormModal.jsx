@@ -68,18 +68,24 @@ AllCoursesFormModal.propTypes = {
   submitData: PropTypes.func,
   onHide: PropTypes.func,
   show: PropTypes.bool,
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
 };
 
 AllCoursesFormModal = reduxForm({

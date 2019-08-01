@@ -16,8 +16,8 @@ function KnowledgeTableTemplate({ tableData, removeTableData, showModal, searchS
           <tr>
             <th onClick={() => chooseSort()} className="sort__field">Knowledge
               {sort === 'asc' ?
-                <Icon iconName={'sortUp'} className={'sort__arrow'} />
-                : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+                <Icon iconName={'sortDown'} className={'sort__arrow'} />
+                : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
             </th>
             <th>Edit</th>
           </tr>
@@ -56,7 +56,13 @@ function KnowledgeTableTemplate({ tableData, removeTableData, showModal, searchS
 }
 
 KnowledgeTableTemplate.propTypes = {
-  tableData: PropTypes.object,
+  tableData: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
   removeTableData: PropTypes.func,
   showModal: PropTypes.func,
   searchState: PropTypes.func,
@@ -64,9 +70,8 @@ KnowledgeTableTemplate.propTypes = {
   chooseSort: PropTypes.func,
   pageArr: PropTypes.array,
   setPageNumber: PropTypes.func,
-  limitNumber: PropTypes.number,
+  limitNumber: PropTypes.string,
   sort: PropTypes.string,
-
 };
 
 export default KnowledgeTableTemplate;

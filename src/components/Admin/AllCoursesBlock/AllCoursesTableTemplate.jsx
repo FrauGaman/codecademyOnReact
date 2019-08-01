@@ -1,34 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import AllCoursesFilterSelect from './AllCoursesFilter-Select';
-import SearchByName from './SearchCourse';
+import SearchByName from '../SearchByName';
+import SelectPageLimit from '../SelectPageLimit';
 
-function AllCoursesTableTemplate({ tableData, themeList, languageList, removeData, showModal, findData }) {
-  const [sort, setSort] = useState('desc');
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    findData(sort, filter, search);
-  }, [sort, filter, search]);
-
-  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
-  const searchState = (searchValue) => setSearch(searchValue);
-  const filterState = (filterValue) => setFilter(filterValue);
-
+function AllCoursesTableTemplate({ tableData, themeList, languageList, filterState, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
   return (
     <div className="table use__bootstrap">
       <SearchByName searchState={searchState} />
+      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
       <AllCoursesFilterSelect themeList={themeList} languageList={languageList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>
         <tr>
           <th onClick={() => chooseSort()} className="sort__field">Title
             {sort === 'asc' ?
-              <Icon iconName={'sortUp'} className={'sort__arrow'} />
-              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+              <Icon iconName={'sortDown'} className={'sort__arrow'} />
+              : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
           </th>
           <th>Description</th>
           <th>Importance</th>
@@ -41,7 +31,7 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
         </thead>
         <tbody>
         {
-          tableData.map(item =>
+          tableData.data && tableData.data.map(item =>
             <tr key={item.title}>
               <td>{item.title}</td>
               <td>{item.descr}</td>
@@ -49,14 +39,14 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
               <td>{item.icon}</td>
               <td>{item.borderColor}</td>
               <td>{item.theme && item.theme.map(themeNumber =>
-                themeList.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
+                themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== '',
                 )
               ).join(', ')
               }</td>
               <td>{item.language && item.language.map(languageNumber =>
-                languageList.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
+                languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== '',
                 )
@@ -66,7 +56,7 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
                 <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />
                 </div>
-                <div onClick={() => removeData(item.id)}>
+                <div onClick={() => removeTableData(item.id)}>
                   <Icon iconName={'delete'} className={'delIcon'} />
                 </div>
               </td>
@@ -75,36 +65,62 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, removeDat
         }
         </tbody>
       </Table>
+      {
+        (pageArr.length > 1) && pageArr.map(item =>
+          <button
+            key={item}
+            className="page"
+            onClick={() => setPageNumber(item + 1)}>
+            {item+1}
+          </button>
+        )
+      }
     </div>
   );
 }
 
 AllCoursesTableTemplate.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    importance: PropTypes.string,
-    title: PropTypes.string,
-    descr: PropTypes.string,
-    icon: PropTypes.string,
-    borderColor: PropTypes.string,
-    theme: PropTypes.array,
-    language: PropTypes.array,
-  })),
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  removeData: PropTypes.func,
+  tableData: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      importance: PropTypes.string,
+      title: PropTypes.string,
+      descr: PropTypes.string,
+      icon: PropTypes.string,
+      borderColor: PropTypes.string,
+      theme: PropTypes.array,
+      language: PropTypes.array,
+    })),
+    count: PropTypes.string,
+  }),
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  removeTableData: PropTypes.func,
   showModal: PropTypes.func,
-  findData: PropTypes.func,
+  searchState: PropTypes.func,
+  selectLimitNumber: PropTypes.func,
+  chooseSort: PropTypes.func,
+  pageArr: PropTypes.array,
+  setPageNumber: PropTypes.func,
+  limitNumber: PropTypes.string,
+  sort: PropTypes.string,
+  filterState: PropTypes.func,
 };
 
 export default AllCoursesTableTemplate;

@@ -17,8 +17,8 @@ function AllCoursesFilterSelect({ themeList, languageList, filterState }) {
 
   const selectedThemeValue = (value) => setThemeValue(value);
   const selectedLanguageValue = (value) => setLanguageValue(value);
-  const themeOptions = themeList.map(item => { return { value: item.id, label: item.name}});
-  const languageOptions = languageList.map(item => { return { value: item.id, label: item.name}});
+  const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
+  const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
 
   return (
     <React.Fragment>
@@ -32,18 +32,24 @@ function AllCoursesFilterSelect({ themeList, languageList, filterState }) {
 }
 
 AllCoursesFilterSelect.propTypes = {
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
   filterState: PropTypes.func,
 };
 

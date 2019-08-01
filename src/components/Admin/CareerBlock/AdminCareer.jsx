@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import {
   AddCareerData,
@@ -16,28 +15,62 @@ import { KNOWLEDGE_ADD_DATA } from '../../../actions/actionKnowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import CareerFormModal from './CareerFormModal';
-import { changeData, sortData } from '../../../scripts/changeData';
-import { AddSkillData } from '../../../actions/actionSkillData';
+import { changeData, getData } from '../../../scripts/changeData';
 
-function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getCareerData, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
+function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
+  const [sort, setSort] = useState('asc');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
+  const [limitNumber, setLimitNumber] = useState('10');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageArr, setPageArr] = useState([]);
 
   useEffect(() => {
-    getCareerData();
+    findData(sort, filter, search, pageNumber, limitNumber);
+  }, [sort, filter, search, pageNumber, limitNumber]);
+
+  useEffect(() => {
     getThemeData();
     getLanguageData();
     getKnowledgeData();
   }, []);
 
+  useEffect(() => {
+    const helpArr = [];
+    for (let i = 0; i < Math.ceil(careerStatus.count / limitNumber); i++) {
+      helpArr.push(i);
+    }
+    setPageArr(helpArr);
+  }, [careerStatus.count, pageNumber, limitNumber]);
+
+  useEffect(() => {
+    if (careerStatus.data !== undefined) {
+      if (careerStatus.data.length === 0) {
+        if (pageNumber >= 1) {
+          let clonePageNumber = pageNumber;
+          clonePageNumber = clonePageNumber - 1;
+          setPageNumber(clonePageNumber);
+        }
+      }
+    }
+  }, [careerStatus.count]);
+
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+  const filterState = (filterValue) => setFilter(filterValue);
+  const selectLimitNumber = (event) => {
+    setLimitNumber(event.target.value);
+    setPageNumber(1);
+  };
+
   const submitData = value => {
-    value.id = +new Date();
     (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
     (value.language !== undefined) && (value.language = value.language.map(item => +item));
     (value.knowledge !== undefined) && (value.knowledge = value.knowledge.map(item => +item));
-    const stateArr = [...[value]];
-    createData(stateArr);
+    createData(value, sort, filter, search, pageNumber, limitNumber);
     setModalShow(false);
   };
 
@@ -57,8 +90,12 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
   };
 
   const showEditForm = (id) => {
-    setInitial(careerStatus.find(item => item.id === id));
+    setInitial(careerStatus.data.find(item => item.id === id));
     setEditModalShow(true);
+  };
+
+  const removeTableData = (id) => {
+    removeData(id, sort, filter, search, pageNumber, limitNumber);
   };
 
   return (
@@ -83,13 +120,20 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
       />}
 
       <CareerTableTemplate
-        removeData={removeData}
+        removeTableData={removeTableData}
         themeList={themeList}
         languageList={languageList}
         knowledgeList={knowledgeList}
         tableData={careerStatus}
         showModal={(id) => showEditForm(id)}
-        findData={(sortType, filterStr, name) => findData(sortType, filterStr, name)}
+        searchState={searchState}
+        limitNumber={limitNumber}
+        selectLimitNumber={selectLimitNumber}
+        chooseSort={chooseSort}
+        sort={sort}
+        pageArr={pageArr}
+        setPageNumber={setPageNumber}
+        filterState={filterState}
       />
       {editModalShow && <CareerFormModal
         title={'Edit elements'}
@@ -107,32 +151,44 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
 }
 
 AdminCareer.propTypes = {
-  careerStatus: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    img: PropTypes.img,
-    title: PropTypes.string,
-    bgColor: PropTypes.string,
-    descr: PropTypes.string,
-    theme: PropTypes.array,
-    language: PropTypes.array,
-    knowledge: PropTypes.array,
-  })),
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  knowledgeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })),
+  careerStatus: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      img: PropTypes.img,
+      bgColor: PropTypes.string,
+      title: PropTypes.string,
+      descr: PropTypes.string,
+      theme: PropTypes.array,
+      language: PropTypes.array,
+      knowledge: PropTypes.array,
+    })),
+    count: PropTypes.string,
+  }),
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  knowledgeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
   getCareerData: PropTypes.func,
   getThemeData: PropTypes.func,
   getLanguageData: PropTypes.func,
@@ -153,9 +209,6 @@ const mapStateToProps = state => ({
 });
 
 const mapStateToDispatch = dispatch => ({
-  getCareerData: () => {
-    getData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)));
-  },
   getThemeData: () => {
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
@@ -165,17 +218,17 @@ const mapStateToDispatch = dispatch => ({
   getKnowledgeData: () => {
     getData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)));
   },
-  removeData: (id) => {
-    dispatch(RemoveCareerData(id));
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
+    dispatch(RemoveCareerData(id)).then(() => changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
   },
-  createData: (newData) => {
-    dispatch(CreateCareerData(newData));
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber) => {
+    dispatch(CreateCareerData(newData)).then(() => changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
   },
   editData: (state, value) => {
     dispatch(ChangeCareerData(state, value));
   },
-  findData: (sortType, filterStr, name) => {
-    changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name);
+  findData: (sortType, filterStr, name, pageNumber, limitNumber) => {
+    changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber);
   },
 });
 

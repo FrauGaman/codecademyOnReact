@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import MultiSelect from '../Multiselector';
 
 function CareerFilterSelect({ themeList, languageList, knowledgeList, filterState }) {
@@ -19,9 +20,9 @@ function CareerFilterSelect({ themeList, languageList, knowledgeList, filterStat
   const selectedThemeValue = (value) => setThemeValue(value);
   const selectedLanguageValue = (value) => setLanguageValue(value);
   const selectedKnowledgeValue = (value) => setKnowledgeValue(value);
-  const themeOptions = themeList.map(item =>{ return { value: item.id, label: item.name, }});
-  const languageOptions = languageList.map(item => { return { value: item.id, label: item.name, }});
-  const knowledgeOptions = knowledgeList.map(item => { return { value: item.id, label: item.name, }});
+  const themeOptions = themeList.data && themeList.data.map(item =>{ return { value: item.id, label: item.name, }});
+  const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name, }});
+  const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name, }});
 
   return (
     <React.Fragment>
@@ -35,5 +36,34 @@ function CareerFilterSelect({ themeList, languageList, knowledgeList, filterStat
     </React.Fragment>
   );
 }
+
+CareerFilterSelect.propTypes = {
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  knowledgeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  filterState: PropTypes.func,
+};
 
 export default CareerFilterSelect;

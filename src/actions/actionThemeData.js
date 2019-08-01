@@ -1,5 +1,4 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
-import { LANGUAGE_ADD_DATA } from './actionLanguageData';
 
 export function AddThemeData(payload) {
   return {
@@ -24,7 +23,7 @@ export function RemoveThemeData(id) {
 
 export function CreateThemeData(payload) {
   return dispatch => {
-    dispatch(LANGUAGE_ADD_DATA);
+    dispatch(AddThemeData);
     return fetch(`${BASE_PATH}${PATH.THEME}`, {
       method: 'POST',
       body: JSON.stringify({

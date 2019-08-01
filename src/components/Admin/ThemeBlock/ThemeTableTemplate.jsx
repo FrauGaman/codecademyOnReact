@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
-import SearchByName from './SearchTheme';
+import SearchByName from '../SearchByName';
+import SelectPageLimit from '../SelectPageLimit';
 
-function ThemeTableTemplate({ tableData, removeData, showModal, findData }) {
-  const [sort, setSort] = useState('desc');
-  const [search, setSearch] = useState('');
-
-  useEffect(() => {
-    findData(sort, search);
-    }, [sort, search]);
-
-  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
-  const searchState = (searchValue) => setSearch(searchValue);
-
+function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
+      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
       <Table striped bordered hover>
         <thead>
         <tr>
           <th onClick={() => chooseSort()} className="sort__field">Name
             {sort === 'asc' ?
-              <Icon iconName={'sortUp'} className={'sort__arrow'} />
-              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+              <Icon iconName={'sortDown'} className={'sort__arrow'} />
+              : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
           </th>
           <th>Description</th>
           <th>Link</th>
@@ -33,7 +25,7 @@ function ThemeTableTemplate({ tableData, removeData, showModal, findData }) {
         </thead>
         <tbody>
         {
-          tableData.map(item =>
+          tableData.data && tableData.data.map(item =>
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.descr}</td>
@@ -42,7 +34,7 @@ function ThemeTableTemplate({ tableData, removeData, showModal, findData }) {
                 <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />
                 </div>
-                <div onClick={() => removeData(item.id)}>
+                <div onClick={() => removeTableData(item.id)}>
                   <Icon iconName={'delete'} className={'delIcon'} />
                 </div>
               </td>
@@ -51,20 +43,39 @@ function ThemeTableTemplate({ tableData, removeData, showModal, findData }) {
         }
         </tbody>
       </Table>
+      {
+        (pageArr.length > 1) && pageArr.map(item =>
+          <button
+            key={item}
+            className="page"
+            onClick={() => setPageNumber(item + 1)}>
+            {item+1}
+          </button>
+        )
+      }
     </div>
   );
 }
 
 ThemeTableTemplate.propTypes = {
-  tableData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  removeData: PropTypes.func,
+  tableData: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  removeTableData: PropTypes.func,
   showModal: PropTypes.func,
-  findData: PropTypes.func,
+  searchState: PropTypes.func,
+  selectLimitNumber: PropTypes.func,
+  chooseSort: PropTypes.func,
+  pageArr: PropTypes.array,
+  setPageNumber: PropTypes.func,
+  limitNumber: PropTypes.string,
+  sort: PropTypes.string,
 };
 
 export default ThemeTableTemplate;

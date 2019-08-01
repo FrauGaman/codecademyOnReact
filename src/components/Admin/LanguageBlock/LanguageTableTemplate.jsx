@@ -5,7 +5,7 @@ import Icon from '../../Icons/Icons';
 import SearchByName from '../SearchByName';
 import SelectPageLimit from '../SelectPageLimit';
 
-function LanguageTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort  }) {
+function LanguageTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
@@ -15,8 +15,8 @@ function LanguageTableTemplate({ tableData, removeTableData, showModal, searchSt
         <tr>
           <th onClick={() => chooseSort()} className="sort__field">Name
             {sort === 'asc' ?
-              <Icon iconName={'sortUp'} className={'sort__arrow'} />
-              : <Icon iconName={'sortDown'} className={'sort__arrow'} />}
+              <Icon iconName={'sortDown'} className={'sort__arrow'} />
+              : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
           </th>
           <th>Description</th>
           <th>Link</th>
@@ -57,16 +57,25 @@ function LanguageTableTemplate({ tableData, removeTableData, showModal, searchSt
   );
 }
 
-// LanguageTableTemplate.propTypes = {
-//   tableData: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.number,
-//     name: PropTypes.string,
-//     descr: PropTypes.string,
-//     link: PropTypes.string,
-//   })),
-//   removeData: PropTypes.func,
-//   showModal: PropTypes.func,
-//   findData: PropTypes.func,
-// };
+LanguageTableTemplate.propTypes = {
+  tableData: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  removeTableData: PropTypes.func,
+  showModal: PropTypes.func,
+  searchState: PropTypes.func,
+  selectLimitNumber: PropTypes.func,
+  chooseSort: PropTypes.func,
+  pageArr: PropTypes.array,
+  setPageNumber: PropTypes.func,
+  limitNumber: PropTypes.string,
+  sort: PropTypes.string,
+};
 
 export default LanguageTableTemplate;

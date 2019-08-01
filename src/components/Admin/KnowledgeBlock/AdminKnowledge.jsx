@@ -20,7 +20,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   const [initial, setInitial] = useState([]);
   const [sort, setSort] = useState('asc');
   const [search, setSearch] = useState('');
-  const [limitNumber, setLimitNumber] = useState(10);
+  const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
 
@@ -97,18 +97,18 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         submitData={submitData}
       />}
 
-      <KnowledgeTableTemplate
-        removeTableData={removeTableData}
-        tableData={knowledgeStatus}
-        showModal={(id) => showEditForm(id)}
-        searchState={searchState}
-        limitNumber={limitNumber}
-        selectLimitNumber={selectLimitNumber}
-        chooseSort={chooseSort}
-        sort={sort}
-        pageArr={pageArr}
-        setPageNumber={setPageNumber}
-      />
+      {/*<KnowledgeTableTemplate*/}
+      {/*  removeTableData={removeTableData}*/}
+      {/*  tableData={knowledgeStatus}*/}
+      {/*  showModal={(id) => showEditForm(id)}*/}
+      {/*  searchState={searchState}*/}
+      {/*  limitNumber={limitNumber}*/}
+      {/*  selectLimitNumber={selectLimitNumber}*/}
+      {/*  chooseSort={chooseSort}*/}
+      {/*  sort={sort}*/}
+      {/*  pageArr={pageArr}*/}
+      {/*  setPageNumber={setPageNumber}*/}
+      {/*/>*/}
       {editModalShow && <KnowledgeFormModal
         title={'Edit elements'}
         show={editModalShow}
@@ -120,18 +120,22 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   );
 }
 
-// AdminKnowledge.propTypes = {
-//   knowledgeStatus: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.number,
-//     name: PropTypes.string,
-//   })),
-//   getKnowledgeData: PropTypes.func,
-//   removeData: PropTypes.func,
-//   createData: PropTypes.func,
-//   editData: PropTypes.func,
-//   pristine: PropTypes.bool,
-//   sortKnowledgeData: PropTypes.func,
-// };
+AdminKnowledge.propTypes = {
+  knowledgeStatus: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  getKnowledgeData: PropTypes.func,
+  removeData: PropTypes.func,
+  createData: PropTypes.func,
+  editData: PropTypes.func,
+  pristine: PropTypes.bool,
+  sortKnowledgeData: PropTypes.func,
+  findData: PropTypes.func,
+};
 
 const mapStateToProps = state => ({
   knowledgeStatus: state.knowledgeTask,

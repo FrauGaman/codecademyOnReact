@@ -1,4 +1,5 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { AddSkillData } from './actionSkillData';
 
 export function AddCareerData(payload) {
   return {
@@ -8,40 +9,40 @@ export function AddCareerData(payload) {
 }
 
 export function RemoveCareerData(id) {
-  fetch (`${BASE_PATH}${PATH.CAREERPATH}/${id}`, {
-    method: 'DELETE',
-  });
-  return {
-    type: TYPE.REMOVE_CAREER_DATA,
-    payload: {id},
-  }
+  return dispatch => {
+    dispatch(AddSkillData);
+    return fetch(`${BASE_PATH}${PATH.CAREERPATH}/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      return {
+        type: TYPE.REMOVE_CAREER_DATA,
+        payload: { id },
+      };
+    });
+  };
 }
 
 export function CreateCareerData(payload) {
-  payload.map(item =>
-    fetch(`${BASE_PATH}${PATH.CAREERPATH}`, {
+  return dispatch => {
+    dispatch(AddSkillData);
+    return fetch(`${BASE_PATH}${PATH.CAREERPATH}`, {
       method: 'POST',
       body: JSON.stringify({
-        id: item.id,
-        img: item.img,
-        bgColor: item.bgColor,
-        title: item.title,
-        descr: item.descr,
-        theme: item.theme,
-        language: item.language,
-        knowledge: item.knowledge,
+        id: +new Date(),
+        ...payload,
       }),
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }),
-  );
-  return {
-    type: TYPE.CREATE_CAREER_DATA,
-    payload,
+    }).then(() => {
+      return {
+        type: TYPE.CREATE_CAREER_DATA,
+        payload,
+      };
+    });
   };
 }
 
 export function ChangeCareerData(state, payload) {
-  state.map(item =>
+  state.data.map(item =>
     item.id === payload.id ?
       fetch(`${BASE_PATH}${PATH.CAREERPATH}/${item.id}`, {
         method: 'PUT',
@@ -61,4 +62,4 @@ export function ChangeCareerData(state, payload) {
     type: TYPE.CHANGE_CAREER_DATA,
     payload,
   };
-};
+}

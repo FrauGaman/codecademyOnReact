@@ -14,13 +14,13 @@ import AdminBtn from '../AdminButton/AdminButton';
 import ThemeFormModal from './ThemeFormModal';
 import { changeData } from '../../../scripts/changeData';
 
-function AdminTheme({ themeStatus, getThemeData, removeData, createData, editData, pristine, findData }) {
+function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
   const [sort, setSort] = useState('asc');
   const [search, setSearch] = useState('');
-  const [limitNumber, setLimitNumber] = useState(10);
+  const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
 
@@ -30,15 +30,15 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
 
   useEffect(() => {
     const helpArr = [];
-    for (let i = 0; i < Math.ceil(languageStatus.count / limitNumber); i++) {
+    for (let i = 0; i < Math.ceil(themeStatus.count / limitNumber); i++) {
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [languageStatus.count, pageNumber, limitNumber]);
+  }, [themeStatus.count, pageNumber, limitNumber]);
 
   useEffect(() => {
-    if (languageStatus.data !== undefined) {
-      if (languageStatus.data.length === 0) {
+    if (themeStatus.data !== undefined) {
+      if (themeStatus.data.length === 0) {
         if (pageNumber >= 1) {
           let clonePageNumber = pageNumber;
           clonePageNumber = clonePageNumber - 1;
@@ -46,7 +46,7 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
         }
       }
     }
-  }, [languageStatus.count]);
+  }, [themeStatus.count]);
 
   const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
   const searchState = (searchValue) => setSearch(searchValue);
@@ -56,9 +56,7 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
   };
 
   const submitData = value => {
-    value.id = +new Date();
-    const stateArr = [...[value]];
-    createData(stateArr);
+    createData(value, sort, search, pageNumber, limitNumber);
     setModalShow(false);
   };
 
@@ -75,8 +73,12 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
   };
 
   const showEditForm = (id) => {
-    setInitial(themeStatus.find(item => item.id === id));
+    setInitial(themeStatus.data.find(item => item.id === id));
     setEditModalShow(true);
+  };
+
+  const removeTableData = (id) => {
+    removeData(id, sort, search, pageNumber, limitNumber)
   };
 
   return (
@@ -99,9 +101,15 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
 
       <ThemeTableTemplate
         tableData={themeStatus}
-        removeData={removeData}
+        removeTableData={removeTableData}
         showModal={(id) => showEditForm(id)}
-        findData={(sortType, name) => findData(sortType, name)}
+        searchState={searchState}
+        limitNumber={limitNumber}
+        selectLimitNumber={selectLimitNumber}
+        chooseSort={chooseSort}
+        sort={sort}
+        pageArr={pageArr}
+        setPageNumber={setPageNumber}
       />
       {editModalShow && <ThemeFormModal
         title={'Edit elements'}
@@ -115,12 +123,15 @@ function AdminTheme({ themeStatus, getThemeData, removeData, createData, editDat
 }
 
 AdminTheme.propTypes = {
-  themeStatus: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
+  themeStatus: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
   getThemeData: PropTypes.func,
   removeData: PropTypes.func,
   createData: PropTypes.func,
@@ -134,20 +145,17 @@ const mapStateToProps = state => ({
   pristine: isPristine('changeTheme')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  getThemeData: () => {
-    getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
+  removeData: (id, sortType, name, pageNumber, limitNumber) => {
+    dispatch(RemoveThemeData(id)).then(() => changeData(PATH.THEME, (res) => dispatch(AddThemeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
   },
-  removeData: (id) => {
-    dispatch(RemoveThemeData(id));
-  },
-  createData: (newData) => {
-    dispatch(CreateThemeData(newData));
+  createData: (newData, sortType, name, pageNumber, limitNumber) => {
+    dispatch(CreateThemeData(newData)).then(() => changeData(PATH.THEME, (res) => dispatch(AddThemeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
   },
   editData: (state, value) => {
     dispatch(ChangeThemeData(state, value));
   },
-  findData: (sortType, name) => {
-    changeData(PATH.THEME, (res) => dispatch(AddThemeData(res)), 'name', sortType, '', 'name', name);
+  findData: (sortType, name, pageNumber, limitNumber) => {
+    changeData(PATH.THEME, (res) => dispatch(AddThemeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
   },
 });
 

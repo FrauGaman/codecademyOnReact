@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import getData from '../../../scripts/getData';
 import { PATH } from '../../../scripts/const';
 import {
   AddCoursesData,
@@ -15,25 +14,60 @@ import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import AllCoursesFormModal from './AllCoursesFormModal';
-import { changeData } from '../../../scripts/changeData';
+import { changeData, getData } from '../../../scripts/changeData';
 
-function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCoursesData, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
+function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
+  const [sort, setSort] = useState('asc');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
+  const [limitNumber, setLimitNumber] = useState('10');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageArr, setPageArr] = useState([]);
 
   useEffect(() => {
-    getCoursesData();
+    findData(sort, filter, search, pageNumber, limitNumber);
+  }, [sort, filter, search, pageNumber, limitNumber]);
+
+  useEffect(() => {
     getThemeData();
     getLanguageData();
   }, []);
 
+  useEffect(() => {
+    const helpArr = [];
+    for (let i = 0; i < Math.ceil(allCoursesStatus.count / limitNumber); i++) {
+      helpArr.push(i);
+    }
+    setPageArr(helpArr);
+  }, [allCoursesStatus.count, pageNumber, limitNumber]);
+
+  useEffect(() => {
+    if (allCoursesStatus.data !== undefined) {
+      if (allCoursesStatus.data.length === 0) {
+        if (pageNumber >= 1) {
+          let clonePageNumber = pageNumber;
+          clonePageNumber = clonePageNumber - 1;
+          setPageNumber(clonePageNumber);
+        }
+      }
+    }
+  }, [allCoursesStatus.count]);
+
+  const chooseSort = () => (sort === 'asc') ? setSort('desc') : setSort('asc');
+  const searchState = (searchValue) => setSearch(searchValue);
+  const filterState = (filterValue) => setFilter(filterValue);
+  const selectLimitNumber = (event) => {
+    setLimitNumber(event.target.value);
+    setPageNumber(1);
+  };
+
   const submitData = value => {
-    value.id = +new Date();
     (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
     (value.language !== undefined) && (value.language = value.language.map(item => +item));
-    const stateArr = [...[value]];
-    createData(stateArr);
+    createData(value, sort, filter, search, pageNumber, limitNumber);
     setModalShow(false);
   };
 
@@ -52,8 +86,12 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
   };
 
   const showEditForm = (id) => {
-    setInitial(allCoursesStatus.find(item => item.id === id));
+    setInitial(allCoursesStatus.data.find(item => item.id === id));
     setEditModalShow(true);
+  };
+
+  const removeTableData = (id) => {
+    removeData(id, sort, filter, search, pageNumber, limitNumber);
   };
 
   return (
@@ -75,14 +113,20 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
         submitData={submitData}
         createdata={createData}
       />}
-
       <AllCoursesTableTemplate
         tableData={allCoursesStatus}
         themeList={themeList}
         languageList={languageList}
-        removeData={removeData}
+        removeTableData={removeTableData}
         showModal={(id) => showEditForm(id)}
-        findData={(sortType, filterStr, name) => findData(sortType, filterStr, name)}
+        searchState={searchState}
+        limitNumber={limitNumber}
+        selectLimitNumber={selectLimitNumber}
+        chooseSort={chooseSort}
+        sort={sort}
+        pageArr={pageArr}
+        setPageNumber={setPageNumber}
+        filterState={filterState}
       />
       {editModalShow && <AllCoursesFormModal
         title={'Edit elements'}
@@ -99,28 +143,37 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getCourses
 }
 
 AdminAllCourses.propTypes = {
-  allCoursesStatus: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    importance: PropTypes.string,
-    title: PropTypes.string,
-    descr: PropTypes.string,
-    icon: PropTypes.string,
-    borderColor: PropTypes.string,
-    theme: PropTypes.array,
-    language: PropTypes.array,
-  })),
-  themeList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
-  languageList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    descr: PropTypes.string,
-    link: PropTypes.string,
-  })),
+  allCoursesStatus: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      importance: PropTypes.string,
+      title: PropTypes.string,
+      descr: PropTypes.string,
+      icon: PropTypes.string,
+      borderColor: PropTypes.string,
+      theme: PropTypes.array,
+      language: PropTypes.array,
+    })),
+    count: PropTypes.string,
+  }),
+  themeList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  languageList: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
   getCoursesData: PropTypes.func,
   getThemeData: PropTypes.func,
   getLanguageData: PropTypes.func,
@@ -129,6 +182,7 @@ AdminAllCourses.propTypes = {
   editData: PropTypes.func,
   pristine: PropTypes.bool,
   sortCoursesData: PropTypes.func,
+  findData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -139,26 +193,23 @@ const mapStateToProps = state => ({
 });
 
 const mapStateToDispatch = dispatch => ({
-  getCoursesData: () => {
-    getData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)));
-  },
   getThemeData: () => {
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
     getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
   },
-  removeData: (id) => {
-    dispatch(RemoveCoursesData(id));
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
+    dispatch(RemoveCoursesData(id)).then(() => changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
   },
-  createData: (newData) => {
-    dispatch(CreateCoursesData(newData));
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber) => {
+    dispatch(CreateCoursesData(newData)).then(() => changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
   },
   editData: (state, value) => {
     dispatch(ChangeCoursesData(state, value));
   },
-  findData: (sortType, filterStr, name) => {
-    changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name);
+  findData: (sortType, filterStr, name, pageNumber, limitNumber) => {
+    changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber);
   },
 });
 

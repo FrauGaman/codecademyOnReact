@@ -13,7 +13,6 @@ import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import LanguageFormModal from './LanguageFormModal';
 import { changeData } from '../../../scripts/changeData';
-import { changeData } from '../../../scripts/changeData';
 
 function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -21,7 +20,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   const [initial, setInitial] = useState([]);
   const [sort, setSort] = useState('asc');
   const [search, setSearch] = useState('');
-  const [limitNumber, setLimitNumber] = useState(10);
+  const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
 
@@ -123,20 +122,23 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   );
 }
 
-// AdminLanguage.propTypes = {
-//   languageStatus: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.number,
-//     name: PropTypes.string,
-//     descr: PropTypes.string,
-//     link: PropTypes.string,
-//   })),
-//   getLanguageData: PropTypes.func,
-//   removeData: PropTypes.func,
-//   createData: PropTypes.func,
-//   editData: PropTypes.func,
-//   pristine: PropTypes.bool,
-//   findData: PropTypes.func,
-// };
+AdminLanguage.propTypes = {
+  languageStatus: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      descr: PropTypes.string,
+      link: PropTypes.string,
+    })),
+    count: PropTypes.string,
+  }),
+  getLanguageData: PropTypes.func,
+  removeData: PropTypes.func,
+  createData: PropTypes.func,
+  editData: PropTypes.func,
+  pristine: PropTypes.bool,
+  findData: PropTypes.func,
+};
 
 const mapStateToProps = state => ({
   languageStatus: state.languageTask,

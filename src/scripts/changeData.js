@@ -18,3 +18,22 @@ export function changeData(path, addData, sortField = '', sortType = '', filterS
     .then(res => addData(res))
     .catch(error => console.log(error));
 }
+
+export function getData(path, addData) {
+  fetch(`${BASE_PATH}${path}`)
+    .then(res => {
+      if (res.status < 200 || res.status >= 300) {
+        throw new Error('error');
+      }
+      const count = res.headers.get('X-Total-Count');
+      return res.json()
+        .then(res => {
+          return {
+            count: count,
+            data: res,
+          };
+        });
+    })
+    .then(res => addData(res))
+    .catch(error => console.log(error));
+}

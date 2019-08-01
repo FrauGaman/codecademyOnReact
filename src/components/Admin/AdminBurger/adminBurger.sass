@@ -1,0 +1,83 @@
+@import '../../../style/variables.sass'
+
+.admin__burger
+  display: none
+  width: 100%
+  height: 100%
+  padding-top: 17px
+  background-color: #fff
+  z-index: 1000
+  @media screen and (max-width: 960px)
+    display: flex
+  .mobMenu
+    position: fixed
+    width: 50px
+    height: 50px
+    margin-left: 40px
+    margin-top: 20px
+    border-radius: 50%
+    background-color: rgba(100, 0, 228, .5)
+    border-color: #e75f28
+    z-index: 999
+    span, span::before, span::after
+      position: absolute
+      display: block
+      width: 20px
+      height: 2px
+      background-color: #fff
+      top: 50%
+      left: 50%
+      margin-top: -1px
+      margin-left: -10px
+    span::before
+      transition: all 0.2s
+      content: ''
+      margin-top: -6px
+    span::after
+      transition: all 0.2s
+      content: ''
+      margin-top: 4px
+    &_active
+      background-color: rgba(244, 149, 38, 1)
+      z-index: 999
+      span
+        background-color: transparent
+        &::before
+          margin-top: 0
+          transform: rotate(135deg)
+        &::after
+          margin-top: 0
+          transform: rotate(-135deg)
+  .admin__burger__menu
+    display: none
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    padding-top: 15px
+    background-color: rgba(0, 0, 0, 0.9)
+    z-index: 990
+    .menu__link__container
+      display: block
+      text-align: center
+      margin-top: 10%
+      padding: 20px 80px
+      list-style: none
+      .admin__burger__li
+        display: block
+        margin-bottom: 10px
+        .admin__burger__link
+          padding: 5px
+          border-radius: 5px
+          text-transform: uppercase
+          font-family: "Open Sans", sans-serif
+          font-weight: 400
+          font-size: 30px
+          color: #fff
+          &:hover
+            background-color: rgba(255, 255, 255, 0.5)
+          @media screen and (max-width: 576px)
+            font-size: 20px
+      &_active
+      display: block
