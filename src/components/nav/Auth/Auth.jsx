@@ -5,7 +5,7 @@ import SignUpBtn from './SignUpBtn';
 function Auth() {
   return (
     <div>
-      <a href="{null}" className="logIn__btn">Log in</a>
+      <a href={null} className="logIn__btn">Log in</a>
       <SignUpBtn signUpBtnClass={'signUp__btn'} />
     </div>
   )

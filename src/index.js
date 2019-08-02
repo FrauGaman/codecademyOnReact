@@ -1,3 +1,5 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
@@ -15,6 +17,8 @@ import AdminAllCourses from './components/Admin/AllCoursesBlock/AdminAllCourses'
 import AdminTheme from './components/Admin/ThemeBlock/AdminTheme';
 import AdminLanguage from './components/Admin/LanguageBlock/AdminLanguage';
 import AdminKnowledge from './components/Admin/KnowledgeBlock/AdminKnowledge';
+import NotFound from './components/404Admin';
+import NotFoundFront from './components/404Front';
 
 ReactDOM.render((
   <Provider store={store}>
@@ -22,30 +26,36 @@ ReactDOM.render((
       <Switch>
         <Route path="/admin">
           <AdminPanel>
-            <Route path="/admin/career" component={AdminCareer} />
-            <Route path="/admin/skill" component={AdminSkill} />
-            <Route path="/admin/allcourses" component={AdminAllCourses} />
-            <Route path="/admin/subject" component={AdminTheme} />
-            <Route path="/admin/language" component={AdminLanguage} />
-            <Route path="/admin/knowledge" component={AdminKnowledge} />
-            <Route exact path="/admin" render={() => (
-              <Redirect to="/admin/career" />
-            )} />
-            <Route path="*/linkPlug" render={() => (
-              <Redirect to="/admin/career" />
-            )} />
+            <Switch>
+              <Route path="/admin/career" component={AdminCareer} />
+              <Route path="/admin/skill" component={AdminSkill} />
+              <Route path="/admin/allcourses" component={AdminAllCourses} />
+              <Route path="/admin/subject" component={AdminTheme} />
+              <Route path="/admin/language" component={AdminLanguage} />
+              <Route path="/admin/knowledge" component={AdminKnowledge} />
+              <Route exact path="/admin" render={() => (
+                <Redirect to="/admin/career" />
+              )} />
+              <Route path="*/linkPlug" render={() => (
+                <Redirect to="/admin/career" />
+              )} />
+              <Route component={NotFound} />
+            </Switch>
           </AdminPanel>
         </Route>
         <Route path="/">
           <App>
-            <Route path="/theme/:link" component={FullCatalogPage} />
-            <Route path="/language/:linkLang" component={FullCatalogPage} />
-            <Route exact path="/" render={() => (
-              <Redirect to="/theme/all" />
-            )} />
-            <Route path="*/linkPlug" render={() => (
-              <Redirect to="/theme/all" />
-            )} />
+            <Switch>
+              <Route exact path="/theme/:link" component={FullCatalogPage} />
+              <Route exact path="/language/:linkLang" component={FullCatalogPage} />
+              <Route exact path="/" render={() => (
+                <Redirect to="/theme/all" />
+              )} />
+              <Route path="*/linkPlug" render={() => (
+                <Redirect to="/theme/all" />
+              )} />
+              <Route component={NotFoundFront} />
+            </Switch>
           </App>
         </Route>
       </Switch>

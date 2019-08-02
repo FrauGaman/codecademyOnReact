@@ -4,7 +4,7 @@ import './logo.sass';
 
 function Logo() {
   return (
-    <a href="{null}">
+    <a href={null}>
       <LogoIcon iconName={'logo'} className={'logo__icon'} />
     </a>
   );

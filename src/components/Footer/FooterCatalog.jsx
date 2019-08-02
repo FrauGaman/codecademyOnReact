@@ -9,7 +9,7 @@ function FooterCatalog({ theme, language }) {
         <ul className="footer__list">
           { theme.length ?
             theme.map(({ id, name = 'LinkPlug' }) =>
-                <li key={id}><a href="{null}" className="footer__li">{name}</a></li>
+                <li key={id}><a href={null} className="footer__li">{name}</a></li>
               )
             : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
           }
@@ -20,7 +20,7 @@ function FooterCatalog({ theme, language }) {
         <ul className="footer__list">
           {language.length ?
             language.map(({ id, name = 'LinkPlug' }) =>
-              <li key={id}><a href="{null}" className="footer__li">{name}</a></li>
+              <li key={id}><a href={null} className="footer__li">{name}</a></li>
             )
             : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
           }

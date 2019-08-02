@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import MultiSelect from '../Multiselector';
+import MultiSelect from '../ComponentsPieces/Multiselector';
 
 function CareerFilterSelect({ themeList, languageList, knowledgeList, filterState }) {
   const [themeValue, setThemeValue] = useState([]);

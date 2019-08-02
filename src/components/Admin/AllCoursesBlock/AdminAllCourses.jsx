@@ -8,9 +8,9 @@ import {
   ChangeCoursesData,
   CreateCoursesData,
   RemoveCoursesData,
-} from '../../../actions/actionCoursesData';
-import { AddThemeData } from '../../../actions/actionThemeData';
-import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
+} from '../../../actions/coursesData';
+import { AddThemeData } from '../../../actions/themeData';
+import { AddLanguageData } from '../../../actions/languageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import AllCoursesFormModal from './AllCoursesFormModal';
@@ -197,7 +197,7 @@ const mapStateToDispatch = dispatch => ({
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
     dispatch(RemoveCoursesData(id)).then(() => changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));

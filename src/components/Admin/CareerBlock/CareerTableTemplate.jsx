@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Icon from '../../Icons/Icons';
 import CareerFilterSelect from './CareerFilter-Select';
-import SearchByName from '../SearchByName';
-import SelectPageLimit from '../SelectPageLimit';
+import SearchByName from '../ComponentsPieces/SearchByName';
+import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
+import PaginationButton from '../ComponentsPieces/PaginationButton';
 
 function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeTableData, filterState, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
   return (
@@ -71,16 +72,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
         }
         </tbody>
       </Table>
-      {
-        (pageArr.length > 1) && pageArr.map(item =>
-          <button
-            key={item}
-            className="page"
-            onClick={() => setPageNumber(item + 1)}>
-            {item+1}
-          </button>
-        )
-      }
+      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} />
     </div>
   );
 }

@@ -17,7 +17,7 @@ function CareerCoursesMap({ careerArr, knowledgeArr }) {
               <div key={knowItem} className="know__item">
                 <DoneIcon iconName={'doneIcon'} className="done__icon" />
                 {knowledgeArr.map(elem =>
-                  knowItem === elem.id ? knowItem = elem.name : ''
+                  knowItem === elem.id ? knowItem = elem.name : '',
                 )}
               </div>
             )}

@@ -24,4 +24,4 @@ yarn-error.log*
 .idea
 
 # data
-data.json
+public/data/data.json

@@ -22,7 +22,7 @@ function BurgerMenu({ menu, hideMenu }) {
               <li key={id}><a href={URL} className="burger__menu__link">{linkName}</a></li>
           ) : []}
         </ul>
-        <a href="{null}" className="burger__menu__link">Log in</a>
+        <a href={null} className="burger__menu__link">Log in</a>
         <UpgradeBtn />
         <SignUpBtn signUpBtnClass={"signUp__btn signUp__btn__menu"}/>
       </div>

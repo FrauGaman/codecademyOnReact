@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import MultiSelect from '../Multiselector';
+import MultiSelect from '../ComponentsPieces/Multiselector';
 
 function AllCoursesFilterSelect({ themeList, languageList, filterState }) {
   const [themeValue, setThemeValue] = useState([]);

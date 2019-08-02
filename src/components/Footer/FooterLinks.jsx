@@ -6,20 +6,20 @@ function SiteNav({ footerNav }) {
     <div className="footer__list footer__list__down">
       <ul>
         {footerNav.map(({ title = 'TitlePlug' }) =>
-          <li key={title}><a href="{null}" className="footer__li">{title}</a></li>
+          <li key={title}><a href={null} className="footer__li">{title}</a></li>
         )}
       </ul>
       <div className="images">
-        <a href="{null}">
+        <a href={null}>
           <div className="twitter__icon"></div>
         </a>
-        <a href="{null}">
+        <a href={null}>
           <div className="facebook__icon"></div>
         </a>
-        <a href="{null}">
+        <a href={null}>
           <div className="insta__icon"></div>
         </a>
-        <a href="{null}">
+        <a href={null}>
           <div className="youtube__icon"></div>
         </a>
       </div>

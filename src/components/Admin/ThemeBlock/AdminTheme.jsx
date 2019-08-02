@@ -8,7 +8,7 @@ import {
   RemoveThemeData,
   CreateThemeData,
   ChangeThemeData,
-} from '../../../actions/actionThemeData';
+} from '../../../actions/themeData';
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ThemeFormModal from './ThemeFormModal';

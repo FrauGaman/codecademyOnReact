@@ -7,8 +7,11 @@ import CoursesList from './CoursesList/CoursesList';
 import { PATH } from '../scripts/const';
 import getData from '../scripts/getData';
 import '../style/basic.sass';
+import NotFoundFront from './404Front';
 
 function FullCatalogPage({ match }) {
+  const [initialize, setInitialize] = useState(false);
+  const [pageIsFound, setPageIsFound] = useState(true);
   let currentThemeId;
   let currentLanguageId;
   let activeLink;
@@ -29,17 +32,11 @@ function FullCatalogPage({ match }) {
   };
 
   useEffect(() => {
-    getData(PATH.THEME, addDataTheme);
+    const themeData = getData(PATH.THEME, addDataTheme);
+    const languageData = getData(PATH.LANGUAGE, addDataLang);
+    const knowledgeData = getData(PATH.KNOWLEDGE, addDataKnow);
+    Promise.all([themeData, languageData, knowledgeData]).then(() => setInitialize(true))
   }, []);
-
-  useEffect(() => {
-    getData(PATH.LANGUAGE, addDataLang);
-  }, []);
-
-  useEffect(() => {
-    getData(PATH.KNOWLEDGE, addDataKnow);
-  }, []);
-
 
   const themeArr = themeResult;
   const languageArr = langResult;
@@ -69,14 +66,31 @@ function FullCatalogPage({ match }) {
     }
   }
 
+  useEffect(() => {
+    if (initialize) {
+      let flag;
+      if (match.params.link !== undefined && match.params.linkLang === undefined) {
+        flag = themeArr.some(item => item.link === `/${match.params.link}`);
+      } else {
+        flag = languageArr.some(item => item.link === `/${match.params.linkLang}`);
+      }
+      setPageIsFound(flag);
+    }
+  }, [initialize, match.params.link, match.params.linkLang]);
+
   return (
     <div>
-      <div className="content__wrapper">
-        <MainDescr filterArr={filterArr} activeLink={activeLink} />
-        <CareerCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} knowledgeArr={knowResult} />
-        <SkillCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
-        <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
-      </div>
+      {
+        pageIsFound ?
+          <div className="content__wrapper">
+
+            <MainDescr filterArr={filterArr} activeLink={activeLink} />
+            <CareerCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} knowledgeArr={knowResult} />
+            <SkillCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
+            <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
+          </div>
+            : <NotFoundFront />
+      }
     </div>
   );
 }

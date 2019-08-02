@@ -9,7 +9,7 @@ function CoursesListMap({ coursesArr }) {
           <div className="importance__box">
             {importance === 'Exclusive Course' ?
               <div>
-                <img className="importance__icon" src='/img/icons/proIcon.webp' alt=""/>
+                <img className="importance__icon" src="/img/icons/proIcon.webp" alt="" />
                 <div className="course__importance" style={{ marginLeft: '49px' }}>{importance}</div>
               </div>
               : <div className="course__importance">{importance}</div>

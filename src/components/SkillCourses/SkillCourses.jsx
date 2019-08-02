@@ -31,7 +31,7 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
       <div>
         <div className="course__title">
           <h2>skill paths</h2>
-          <a href="{null}">
+          <a href={null}>
             <ProIcon iconName={'proIcon'} />
           </a>
         </div>

@@ -2,22 +2,22 @@ import { TYPE } from '../scripts/const';
 
 const careerTasks = (state = {}, action) => {
   switch (action.type) {
-    case TYPE.ADD_CAREER_DATA:
+    case TYPE.CAREER_ADD_DATA:
       return {
         data: action.payload.data,
         count: action.payload.count,
       };
-    case TYPE.REMOVE_CAREER_DATA:
+    case TYPE.CAREER_REMOVE_DATA:
       return {
         data: [...state.data].filter((item) => item.id !== action.payload.id),
         count: (state.count > 0) && state.count - 1,
       };
-    case TYPE.CREATE_CAREER_DATA:
+    case TYPE.CAREER_CREATE_DATA:
       return {
         data: [...state.data, ...action.payload],
         count: action.payload.count,
       };
-    case TYPE.CHANGE_CAREER_DATA:
+    case TYPE.CAREER_CHANGE_DATA:
       state.data.map(item => {
         if (item.id === action.payload.id) {
           item.title = action.payload.title;

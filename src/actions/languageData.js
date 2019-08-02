@@ -1,15 +1,15 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
 
-export function LANGUAGE_ADD_DATA(payload) {
+export function AddLanguageData(payload) {
   return {
     type: TYPE.LANGUAGE_ADD_DATA,
     payload,
   };
 }
 
-export function LANGUAGE_REMOVE_DATA(id) {
+export function RemoveLanguageData(id) {
   return dispatch => {
-    dispatch(LANGUAGE_ADD_DATA);
+    dispatch(AddLanguageData);
     return fetch(`${BASE_PATH}${PATH.LANGUAGE}/${id}`, {
       method: 'DELETE',
     }).then(() => {
@@ -23,7 +23,7 @@ export function LANGUAGE_REMOVE_DATA(id) {
 
 export function CreateLanguageData(payload) {
   return dispatch => {
-    dispatch(LANGUAGE_ADD_DATA);
+    dispatch(AddLanguageData);
     return fetch(`${BASE_PATH}${PATH.LANGUAGE}`, {
       method: 'POST',
       body: JSON.stringify({
@@ -33,7 +33,7 @@ export function CreateLanguageData(payload) {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     }).then(() => {
       return {
-        type: TYPE.CREATE_LANGUAGE_DATA,
+        type: TYPE.LANGUAGE_CREATE_DATA,
         payload,
       };
     });
@@ -42,7 +42,7 @@ export function CreateLanguageData(payload) {
 
 export function ChangeLanguageData(state, payload) {
   state.data.map(item =>
-    item.id === payload.id ?
+    item.id === payload.id &&
       fetch(`${BASE_PATH}${PATH.LANGUAGE}/${item.id}`, {
         method: 'PUT',
         body: JSON.stringify({
@@ -51,10 +51,10 @@ export function ChangeLanguageData(state, payload) {
           link: payload.link,
         }),
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }) : '',
+      }),
   );
   return {
-    type: TYPE.CHANGE_LANGUAGE_DATA,
+    type: TYPE.LANGUAGE_CHANGE_DATA,
     payload,
   };
 }

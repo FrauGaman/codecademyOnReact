@@ -5,11 +5,11 @@ import { isPristine } from 'redux-form';
 import { changeData } from '../../../scripts/changeData';
 import { PATH } from '../../../scripts/const';
 import {
-  KNOWLEDGE_ADD_DATA,
-  KNOWLEDGE_CHANGE_DATA,
-  KNOWLEDGE_CREATE_DATA,
-  KNOWLEDGE_REMOVE_DATA,
-} from '../../../actions/actionKnowledgeData';
+  AddKnowledgeData,
+  ChangeKnowledgeData,
+  CreateKnowledgeData,
+  RemoveKnowledgeData,
+} from '../../../actions/knowledgeData';
 import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import KnowledgeFormModal from './KnowledgeFormModal';
@@ -144,16 +144,16 @@ const mapStateToProps = state => ({
 
 const mapStateToDispatch = dispatch => ({
   removeData: (id, sortType, name, pageNumber, limitNumber) => {
-    dispatch(KNOWLEDGE_REMOVE_DATA(id)).then(() => changeData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+    dispatch(RemoveKnowledgeData(id)).then(() => changeData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
   },
   createData: (newData, sortType, name, pageNumber, limitNumber) => {
-    dispatch(KNOWLEDGE_CREATE_DATA(newData)).then(() => changeData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+    dispatch(CreateKnowledgeData(newData)).then(() => changeData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
   },
   editData: (state, value) => {
-    dispatch(KNOWLEDGE_CHANGE_DATA(state, value));
+    dispatch(ChangeKnowledgeData(state, value));
   },
   findData: (sortType, name, pageNumber, limitNumber) => {
-    changeData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
+    changeData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
   },
 });
 

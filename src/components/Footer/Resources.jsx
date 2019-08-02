@@ -5,7 +5,7 @@ function Resources({ res }) {
   return (
     <ul className="footer__list footer__list__down">
       {res.map(({ title = 'LinkPlug' }) =>
-        <li key={title}><a href="{null}" className="footer__li">{title}</a></li>)}
+        <li key={title}><a href={null} className="footer__li">{title}</a></li>)}
     </ul>
   );
 }

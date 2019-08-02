@@ -1,30 +1,30 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
 
-export function KNOWLEDGE_ADD_DATA(payload) {
+export function AddThemeData(payload) {
   return {
-    type: TYPE.KNOWLEDGE_ADD_DATA,
+    type: TYPE.THEME_ADD_DATA,
     payload,
   };
 }
 
-export function KNOWLEDGE_REMOVE_DATA(id) {
+export function RemoveThemeData(id) {
   return dispatch => {
-    dispatch(KNOWLEDGE_ADD_DATA);
-    return fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${id}`, {
+    dispatch(AddThemeData);
+    return fetch(`${BASE_PATH}${PATH.THEME}/${id}`, {
       method: 'DELETE',
     }).then(() => {
       return {
-        type: TYPE.KNOWLEDGE_REMOVE_DATA,
+        type: TYPE.THEME_REMOVE_DATA,
         payload: { id },
-      }
+      };
     });
   };
 }
 
-export function KNOWLEDGE_CREATE_DATA(payload) {
+export function CreateThemeData(payload) {
   return dispatch => {
-    dispatch(KNOWLEDGE_ADD_DATA);
-    return fetch(`${BASE_PATH}${PATH.KNOWLEDGE}`, {
+    dispatch(AddThemeData);
+    return fetch(`${BASE_PATH}${PATH.THEME}`, {
       method: 'POST',
       body: JSON.stringify({
         id: +new Date(),
@@ -33,26 +33,28 @@ export function KNOWLEDGE_CREATE_DATA(payload) {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     }).then(() => {
       return {
-        type: TYPE.KNOWLEDGE_CREATE_DATA,
+        type: TYPE.THEME_CREATE_DATA,
         payload,
       };
     });
   };
 }
 
-export function KNOWLEDGE_CHANGE_DATA(state, payload) {
+export function ChangeThemeData(state, payload) {
   state.data.map(item =>
-    item.id === payload.id ?
-      fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${item.id}`, {
+    item.id === payload.id &&
+      fetch(`${BASE_PATH}${PATH.THEME}/${item.id}`, {
         method: 'PUT',
         body: JSON.stringify({
           name: payload.name,
+          descr: payload.descr,
+          link: payload.link,
         }),
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }) : '',
+      }),
   );
   return {
-    type: TYPE.KNOWLEDGE_CHANGE_DATA,
+    type: TYPE.THEME_CHANGE_DATA,
     payload,
   };
 }

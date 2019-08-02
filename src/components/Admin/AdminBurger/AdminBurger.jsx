@@ -6,7 +6,7 @@ import './adminBurger.sass';
 
 function AdminBurger() {
   const [navList, setNavList] = useState('');
-  const [showAdminBurger, setAdminBurger] = useState(false);
+  const [showAdminBurger, setAdminBurger] = useState('mobMenu');
   const addListData = (res) => {
     setNavList(res);
   };
@@ -18,7 +18,7 @@ function AdminBurger() {
   }, []);
   return (
     <div className="admin__burger">
-      <a href="#menu" className="mobMenu" onClick={() => setAdminBurger(!showAdminBurger)}>
+      <a href="#menu" className={showAdminBurger} onClick={() => setAdminBurger('mobMenu_active')}>
         <span></span>
       </a>
       <div className="admin__burger__menu">

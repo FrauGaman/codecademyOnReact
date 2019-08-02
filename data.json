@@ -88,11 +88,18 @@
       "id": 1564654997387
     },
     {
-      "id": 1564655200395,
-      "title": "uigyuiqqq",
-      "descr": "111111111111111111111111111111",
+      "id": 1564733431160,
+      "title": "123",
+      "descr": "yku",
+      "img": "f",
       "theme": [
-        1
+        3
+      ],
+      "language": [
+        3
+      ],
+      "knowledge": [
+        2
       ]
     }
   ],
@@ -196,18 +203,6 @@
       "language": [
         4
       ]
-    },
-    {
-      "id": 1564655495126,
-      "title": "12313",
-      "descr": "sfg пакаы п",
-      "importance": "Exclusive Course",
-      "language": [
-        3
-      ],
-      "theme": [
-        1
-      ]
     }
   ],
   "skillPath": [
@@ -296,29 +291,6 @@
         2
       ],
       "language": [
-        1
-      ]
-    },
-    {
-      "id": 1564655283848,
-      "img": "https://bipbap.ru/wp-content/uploads/2017/10/0_8eb56_842bba74_XL-640x400.jpg",
-      "title": "drty",
-      "descr": "rtuy",
-      "language": [
-        3
-      ],
-      "period": "123"
-    },
-    {
-      "id": 1564655332229,
-      "title": "енро г",
-      "descr": "анг о",
-      "img": "https://bipbap.ru/wp-content/uploads/2017/10/0_8eb56_842bba74_XL-640x400.jpg",
-      "language": [
-        3
-      ],
-      "period": "у каук",
-      "theme": [
         1
       ]
     }
@@ -531,8 +503,8 @@
       "name": "Career Exploration"
     },
     {
-      "id": 3,
-      "name": "Applications"
+      "name": "Applications",
+      "id": 3
     },
     {
       "id": 4,
@@ -577,10 +549,6 @@
     {
       "id": 14,
       "name": "React"
-    },
-    {
-      "id": 1564654833216,
-      "name": "111111111111111"
     }
   ]
 }

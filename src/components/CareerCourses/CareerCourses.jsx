@@ -8,7 +8,6 @@ import './careerCourses.sass';
 
 function CareerCourse({ currentThemeId, currentLanguageId, knowledgeArr }) {
   const [result, setResult] = useState([]);
-
   const addData = (res) => {
     setResult(res);
   };
@@ -16,7 +15,6 @@ function CareerCourse({ currentThemeId, currentLanguageId, knowledgeArr }) {
   useEffect(() => {
     getData(PATH.CAREERPATH, addData);
   }, []);
-
 
   const careerPathArr = result || [];
   let careerArr;
@@ -32,7 +30,7 @@ function CareerCourse({ currentThemeId, currentLanguageId, knowledgeArr }) {
         <div>
           <div className="course__title">
             <h2>Career path</h2>
-            <a href="{null}">
+            <a href={null}>
               <ProIcon iconName={'proIcon'} />
             </a>
           </div>

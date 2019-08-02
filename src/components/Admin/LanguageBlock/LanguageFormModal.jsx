@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { FormInput, FormTextarea } from '../Forms/FromParts';
+import { FormInput, FormTextarea } from '../ComponentsPieces/Forms/FromParts';
 import { requiredField, setMaxLength, stringValidator, linkValidator } from '../validator';
 
 

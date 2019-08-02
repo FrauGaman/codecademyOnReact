@@ -8,9 +8,9 @@ import {
   RemoveSkillData,
   CreateSkillData,
   ChangeSkillData,
-} from '../../../actions/actionSkillData';
-import { AddThemeData } from '../../../actions/actionThemeData';
-import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
+} from '../../../actions/skillData';
+import { AddThemeData } from '../../../actions/themeData';
+import { AddLanguageData } from '../../../actions/languageData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import SkillFormModal from './SkillFormModal';
@@ -196,7 +196,7 @@ const mapStateToDispatch = dispatch => ({
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
     dispatch(RemoveSkillData(id)).then(() => changeData(PATH.SKILLPATH, (res) => dispatch(AddSkillData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));

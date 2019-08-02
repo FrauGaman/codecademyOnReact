@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
 import { PATH } from '../../../scripts/const';
 import {
-  LANGUAGE_ADD_DATA,
-  LANGUAGE_REMOVE_DATA,
+  AddLanguageData,
+  RemoveLanguageData,
   CreateLanguageData,
   ChangeLanguageData,
-} from '../../../actions/actionLanguageData';
+} from '../../../actions/languageData';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import LanguageFormModal from './LanguageFormModal';
@@ -146,16 +146,16 @@ const mapStateToProps = state => ({
 });
 const mapStateToDispatch = dispatch => ({
   removeData: (id, sortType, name, pageNumber, limitNumber) => {
-    dispatch(LANGUAGE_REMOVE_DATA(id)).then(() => changeData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+    dispatch(RemoveLanguageData(id)).then(() => changeData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
   },
   createData: (newData, sortType, name, pageNumber, limitNumber) => {
-    dispatch(CreateLanguageData(newData)).then(() => changeData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+    dispatch(CreateLanguageData(newData)).then(() => changeData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
   },
   editData: (state, value) => {
     dispatch(ChangeLanguageData(state, value));
   },
   findData: (sortType, name, pageNumber, limitNumber) => {
-    changeData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
+    changeData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
   },
 });
 

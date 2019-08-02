@@ -8,10 +8,10 @@ import {
   ChangeCareerData,
   CreateCareerData,
   RemoveCareerData,
-} from '../../../actions/actionCareerData';
-import { AddThemeData } from '../../../actions/actionThemeData';
-import { LANGUAGE_ADD_DATA } from '../../../actions/actionLanguageData';
-import { KNOWLEDGE_ADD_DATA } from '../../../actions/actionKnowledgeData';
+} from '../../../actions/careerData';
+import { AddThemeData } from '../../../actions/themeData';
+import { AddLanguageData } from '../../../actions/languageData';
+import { AddKnowledgeData } from '../../../actions/knowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import CareerFormModal from './CareerFormModal';
@@ -213,10 +213,10 @@ const mapStateToDispatch = dispatch => ({
     getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
   },
   getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(LANGUAGE_ADD_DATA(res)));
+    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
   },
   getKnowledgeData: () => {
-    getData(PATH.KNOWLEDGE, (res) => dispatch(KNOWLEDGE_ADD_DATA(res)));
+    getData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)));
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
     dispatch(RemoveCareerData(id)).then(() => changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));

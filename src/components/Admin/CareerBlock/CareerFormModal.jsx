@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import { FormInput, FormTextarea, FormMultiSelector } from '../Forms/FromParts';
+import { FormInput, FormTextarea, FormMultiSelector } from '../ComponentsPieces/Forms/FromParts';
 import { requiredField, setMaxLength, stringValidator } from '../validator';
 
 const maxLDescr = setMaxLength(300);

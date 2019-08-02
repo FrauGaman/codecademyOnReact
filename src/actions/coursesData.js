@@ -1,31 +1,30 @@
 import { BASE_PATH, PATH, TYPE } from '../scripts/const';
-import { AddSkillData } from './actionSkillData';
 
-export function AddCareerData(payload) {
+export function AddCoursesData(payload) {
   return {
-    type: TYPE.ADD_CAREER_DATA,
+    type: TYPE.COURSES_ADD_DATA,
     payload,
   };
 }
 
-export function RemoveCareerData(id) {
+export function RemoveCoursesData(id) {
   return dispatch => {
-    dispatch(AddSkillData);
-    return fetch(`${BASE_PATH}${PATH.CAREERPATH}/${id}`, {
+    dispatch(AddCoursesData);
+    return fetch(`${BASE_PATH}${PATH.COURSESLIST}/${id}`, {
       method: 'DELETE',
     }).then(() => {
       return {
-        type: TYPE.REMOVE_CAREER_DATA,
+        type: TYPE.COURSES_REMOVE_DATA,
         payload: { id },
       };
     });
   };
 }
 
-export function CreateCareerData(payload) {
+export function CreateCoursesData(payload) {
   return dispatch => {
-    dispatch(AddSkillData);
-    return fetch(`${BASE_PATH}${PATH.CAREERPATH}`, {
+    dispatch(AddCoursesData);
+    return fetch(`${BASE_PATH}${PATH.COURSESLIST}`, {
       method: 'POST',
       body: JSON.stringify({
         id: +new Date(),
@@ -34,32 +33,33 @@ export function CreateCareerData(payload) {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     }).then(() => {
       return {
-        type: TYPE.CREATE_CAREER_DATA,
+        type: TYPE.COURSES_CREATE_DATA,
         payload,
       };
     });
   };
 }
 
-export function ChangeCareerData(state, payload) {
+
+export function ChangeCoursesData(state, payload) {
   state.data.map(item =>
-    item.id === payload.id ?
-      fetch(`${BASE_PATH}${PATH.CAREERPATH}/${item.id}`, {
+    item.id === payload.id &&
+      fetch(`${BASE_PATH}${PATH.COURSESLIST}/${item.id}`, {
         method: 'PUT',
         body: JSON.stringify({
+          importance: payload.importance,
           title: payload.title,
           descr: payload.descr,
-          img: payload.img,
-          bgColor: payload.bgColor,
+          icon: payload.icon,
+          borderColor: payload.borderColor,
           theme: payload.theme,
           language: payload.language,
-          knowledge: payload.knowledge,
         }),
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }) : '',
+      }),
   );
   return {
-    type: TYPE.CHANGE_CAREER_DATA,
+    type: TYPE.COURSES_CHANGE_DATA,
     payload,
   };
 }
