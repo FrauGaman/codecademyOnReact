@@ -11,8 +11,9 @@ import {
 } from '../../../actions/themeData';
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import ThemeFormModal from './ThemeFormModal';
 import { changeData } from '../../../scripts/changeData';
+import ModalWindow from '../../ModalWindow';
+import ThemeModalInner from './ThemeModalInner';
 
 function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -60,7 +61,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
     setModalShow(false);
   };
 
-  const changeData = value => {
+  const editFormData = value => {
     if (pristine) {
       const notChange = window.confirm('do you really want to leave without change?');
       if (notChange) {
@@ -90,14 +91,14 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
         variant="primary"
         onClick={() => setModalShow(true)}
       />
-      {modalShow && <ThemeFormModal
+      <ModalWindow
         title={'Create new element'}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        tabledata={themeStatus}
-        submitData={submitData}
-        createdata={createData}
-      />}
+        formname={'themeForm'}
+      >
+        <ThemeModalInner submitData={submitData} />
+      </ModalWindow>
 
       <ThemeTableTemplate
         tableData={themeStatus}
@@ -111,13 +112,14 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
         pageArr={pageArr}
         setPageNumber={setPageNumber}
       />
-      {editModalShow && <ThemeFormModal
+      <ModalWindow
         title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        initialValues={initial}
-        submitData={changeData}
-      />}
+        formname={'themeForm'}
+      >
+        <ThemeModalInner initialValues={initial} submitData={editFormData} />
+      </ModalWindow>
     </React.Fragment>
   );
 }

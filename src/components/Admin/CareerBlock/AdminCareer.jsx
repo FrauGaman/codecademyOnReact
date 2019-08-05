@@ -14,8 +14,9 @@ import { AddLanguageData } from '../../../actions/languageData';
 import { AddKnowledgeData } from '../../../actions/knowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import CareerFormModal from './CareerFormModal';
 import { changeData, getData } from '../../../scripts/changeData';
+import ModalWindow from '../../ModalWindow';
+import CareerModalInner from './CareerModalInner';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -74,7 +75,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
     setModalShow(false);
   };
 
-  const changeData = value => {
+  const editFormData = value => {
     if (pristine) {
       const notChange = window.confirm('do you really want to leave without change?');
       if (notChange) {
@@ -107,17 +108,14 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         variant="primary"
         onClick={() => setModalShow(true)}
       />
-      {modalShow && <CareerFormModal
+      <ModalWindow
         title={'Create new element'}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        themeList={themeList}
-        languageList={languageList}
-        knowledgeList={knowledgeList}
-        tabledata={careerStatus}
-        submitData={submitData}
-        createdata={createData}
-      />}
+        formname={'careerForm'}
+      >
+        <CareerModalInner themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} submitData={submitData} />
+      </ModalWindow>
 
       <CareerTableTemplate
         removeTableData={removeTableData}
@@ -135,17 +133,14 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         setPageNumber={setPageNumber}
         filterState={filterState}
       />
-      {editModalShow && <CareerFormModal
+      <ModalWindow
         title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        themeList={themeList}
-        languageList={languageList}
-        knowledgeList={knowledgeList}
-        tabledata={careerStatus}
-        initialValues={initial}
-        submitData={changeData}
-      />}
+        formname={'careerForm'}
+      >
+        <CareerModalInner themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} initialValues={initial} submitData={editFormData} />
+      </ModalWindow>
     </React.Fragment>
   );
 }

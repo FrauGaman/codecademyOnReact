@@ -11,8 +11,9 @@ import {
 } from '../../../actions/languageData';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import LanguageFormModal from './LanguageFormModal';
 import { changeData } from '../../../scripts/changeData';
+import ModalWindow from '../../ModalWindow';
+import LanguageModalInner from './LanguageModalInner';
 
 function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -60,7 +61,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
     setModalShow(false);
   };
 
-  const changeData = value => {
+  const editFormData = value => {
     if (pristine) {
       const notChange = window.confirm('do you really want to leave without change?');
       if (notChange) {
@@ -90,14 +91,14 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         variant="primary"
         onClick={() => setModalShow(true)}
       />
-      {modalShow && <LanguageFormModal
+      <ModalWindow
         title={'Create new element'}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        tabledata={languageStatus}
-        submitData={submitData}
-        createdata={createData}
-      />}
+        formname={'languageForm'}
+      >
+        <LanguageModalInner submitData={submitData} />
+      </ModalWindow>
 
       <LanguageTableTemplate
         removeTableData={removeTableData}
@@ -111,13 +112,14 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         pageArr={pageArr}
         setPageNumber={setPageNumber}
       />
-      {editModalShow && <LanguageFormModal
+      <ModalWindow
         title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        initialValues={initial}
-        submitData={changeData}
-      />}
+        formname={'languageForm'}
+      >
+        <LanguageModalInner initialValues={initial} submitData={editFormData} />
+      </ModalWindow>
     </React.Fragment>
   );
 }

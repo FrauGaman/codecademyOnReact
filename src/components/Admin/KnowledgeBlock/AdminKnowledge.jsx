@@ -12,7 +12,8 @@ import {
 } from '../../../actions/knowledgeData';
 import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import KnowledgeFormModal from './KnowledgeFormModal';
+import ModalWindow from '../../ModalWindow';
+import KnowledgeModalInner from './KnowledgeModalInner';
 
 function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -60,7 +61,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
     setModalShow(false);
   };
 
-  const changeData = value => {
+  const editFormData = value => {
     if (pristine) {
       const notChange = window.confirm('do you really want to leave without change?');
       if (notChange) {
@@ -78,7 +79,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber)
+    removeData(id, sort, search, pageNumber, limitNumber);
   };
 
   return (
@@ -90,32 +91,36 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         variant="primary"
         onClick={() => setModalShow(true)}
       />
-      {modalShow && <KnowledgeFormModal
+      <ModalWindow
         title={'Create new element'}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        submitData={submitData}
-      />}
+        formname={'knowledgeForm'}
+      >
+        <KnowledgeModalInner submitData={submitData} />
+      </ModalWindow>
 
-      {/*<KnowledgeTableTemplate*/}
-      {/*  removeTableData={removeTableData}*/}
-      {/*  tableData={knowledgeStatus}*/}
-      {/*  showModal={(id) => showEditForm(id)}*/}
-      {/*  searchState={searchState}*/}
-      {/*  limitNumber={limitNumber}*/}
-      {/*  selectLimitNumber={selectLimitNumber}*/}
-      {/*  chooseSort={chooseSort}*/}
-      {/*  sort={sort}*/}
-      {/*  pageArr={pageArr}*/}
-      {/*  setPageNumber={setPageNumber}*/}
-      {/*/>*/}
-      {editModalShow && <KnowledgeFormModal
+      <KnowledgeTableTemplate
+        removeTableData={removeTableData}
+        tableData={knowledgeStatus}
+        showModal={(id) => showEditForm(id)}
+        searchState={searchState}
+        limitNumber={limitNumber}
+        selectLimitNumber={selectLimitNumber}
+        chooseSort={chooseSort}
+        sort={sort}
+        pageArr={pageArr}
+        setPageNumber={setPageNumber}
+      />
+
+      <ModalWindow
         title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        initialValues={initial}
-        submitData={changeData}
-      />}
+        formname={'knowledgeForm'}
+      >
+        <KnowledgeModalInner initialValues={initial} submitData={editFormData} />
+      </ModalWindow>
     </React.Fragment>
   );
 }

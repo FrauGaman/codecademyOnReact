@@ -13,8 +13,9 @@ import { AddThemeData } from '../../../actions/themeData';
 import { AddLanguageData } from '../../../actions/languageData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import SkillFormModal from './SkillFormModal';
 import { changeData, getData } from '../../../scripts/changeData';
+import ModalWindow from '../../ModalWindow';
+import SkillModalInner from './SkillModalInner';
 
 function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -71,7 +72,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
     setModalShow(false);
   };
 
-  const changeData = value => {
+  const editFormData = value => {
     if (pristine) {
       const notChange = window.confirm('do you really want to leave without change?');
       if (notChange) {
@@ -103,16 +104,14 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
         variant="primary"
         onClick={() => setModalShow(true)}
       />
-      {modalShow && <SkillFormModal
+      <ModalWindow
         title={'Create new element'}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        themeList={themeList}
-        languageList={languageList}
-        tabledata={skillStatus}
-        submitData={submitData}
-        createdata={createData}
-      />}
+        formname={'skillForm'}
+      >
+        <SkillModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
+      </ModalWindow>
 
       <SkillTableTemplate
         tableData={skillStatus}
@@ -129,16 +128,14 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
         setPageNumber={setPageNumber}
         filterState={filterState}
       />
-      {editModalShow && <SkillFormModal
+      <ModalWindow
         title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        themeList={themeList}
-        languageList={languageList}
-        tabledata={skillStatus}
-        initialValues={initial}
-        submitData={changeData}
-      />}
+        formname={'skillForm'}
+      >
+        <SkillModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
+      </ModalWindow>
     </React.Fragment>
   );
 }

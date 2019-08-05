@@ -13,8 +13,9 @@ import { AddThemeData } from '../../../actions/themeData';
 import { AddLanguageData } from '../../../actions/languageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import AllCoursesFormModal from './AllCoursesFormModal';
 import { changeData, getData } from '../../../scripts/changeData';
+import ModalWindow from '../../ModalWindow';
+import AllCoursesModalInner from './AllCoursesModalInner';
 
 function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -71,7 +72,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     setModalShow(false);
   };
 
-  const changeData = value => {
+  const editFormData = value => {
     if (pristine) {
       const notChange = window.confirm('do you really want to leave without change?');
       if (notChange) {
@@ -103,16 +104,14 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
         variant="primary"
         onClick={() => setModalShow(true)}
       />
-      {modalShow && <AllCoursesFormModal
+      <ModalWindow
         title={'Create new element'}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        themeList={themeList}
-        languageList={languageList}
-        tabledata={allCoursesStatus}
-        submitData={submitData}
-        createdata={createData}
-      />}
+        formname={'allCoursesForm'}
+      >
+        <AllCoursesModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
+      </ModalWindow>
       <AllCoursesTableTemplate
         tableData={allCoursesStatus}
         themeList={themeList}
@@ -128,16 +127,14 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
         setPageNumber={setPageNumber}
         filterState={filterState}
       />
-      {editModalShow && <AllCoursesFormModal
+      <ModalWindow
         title={'Edit elements'}
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
-        themeList={themeList}
-        languageList={languageList}
-        tabledata={allCoursesStatus}
-        initialValues={initial}
-        submitData={changeData}
-      />}
+        formname={'allCoursesForm'}
+      >
+        <AllCoursesModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
+      </ModalWindow>
     </React.Fragment>
   );
 }
