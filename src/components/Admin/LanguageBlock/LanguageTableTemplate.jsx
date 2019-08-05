@@ -19,8 +19,8 @@ function LanguageTableTemplate({ tableData, removeTableData, showModal, searchSt
               <Icon iconName={'sortDown'} className={'sort__arrow'} />
               : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
           </th>
-          <th>Description</th>
-          <th>Link</th>
+          <th className="hidden__col">Description</th>
+          <th className="hidden__col">Link</th>
           <th>Edit</th>
         </tr>
         </thead>
@@ -29,8 +29,8 @@ function LanguageTableTemplate({ tableData, removeTableData, showModal, searchSt
           tableData.data && tableData.data.map(item =>
             <tr key={item.id}>
               <td>{item.name}</td>
-              <td>{item.descr}</td>
-              <td>{item.link}</td>
+              <td className="hidden__col">{item.descr}</td>
+              <td className="hidden__col">{item.link}</td>
               <td>
                 <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />

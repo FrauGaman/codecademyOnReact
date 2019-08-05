@@ -12,7 +12,9 @@ function AdminPanel({ children }) {
       <div className="admin__nav__burger">
         <AdminBurger />
       </div>
-      {children}
+      <div className="admin__panel__content">
+        {children}
+      </div>
     </div>
   );
 }

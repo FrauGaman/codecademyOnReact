@@ -21,12 +21,12 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeTableDa
               <Icon iconName={'sortDown'} className={'sort__arrow'} />
               : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
           </th>
-          <th>Description</th>
-          <th>Img</th>
-          <th>BgColor</th>
-          <th>Theme</th>
-          <th>Language</th>
-          <th>Period</th>
+          <th className="hidden__col__big">Description</th>
+          <th className="hidden__col__big">Img</th>
+          <th className="hidden__col">BgColor</th>
+          <th className="hidden__col">Theme</th>
+          <th className="hidden__col">Language</th>
+          <th className="hidden__col">Period</th>
           <th>Edit</th>
         </tr>
         </thead>
@@ -35,24 +35,24 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeTableDa
           tableData.data && tableData.data.map(item =>
             <tr key={item.id}>
               <td>{item.title}</td>
-              <td>{item.descr}</td>
-              <td>{item.img}</td>
-              <td>{item.bgColor}</td>
-              <td>{item.theme && item.theme.map(themeNumber =>
+              <td className="hidden__col__big">{item.descr}</td>
+              <td className="hidden__col__big">{item.img}</td>
+              <td className="hidden__col">{item.bgColor}</td>
+              <td className="hidden__col">{item.theme && item.theme.map(themeNumber =>
                 themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== '',
                 )
               ).join(', ')
               }</td>
-              <td>{item.language && item.language.map(languageNumber =>
+              <td className="hidden__col">{item.language && item.language.map(languageNumber =>
                 languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
                 ).find(item =>
                   item !== ''
                 )
               ).join(', ')
               }</td>
-              <td>{item.period}</td>
+              <td className="hidden__col">{item.period}</td>
               <td>
                 <div onClick={() => showModal(item.id)}>
                   <Icon iconName={'edit'} className={'editIcon'} />

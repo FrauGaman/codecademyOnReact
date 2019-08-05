@@ -1,4 +1,5 @@
-import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { PATH, TYPE } from '../scripts/const';
+import { deleteData, postData, putData } from '../scripts/changeData';
 
 export function AddLanguageData(payload) {
   return {
@@ -10,9 +11,7 @@ export function AddLanguageData(payload) {
 export function RemoveLanguageData(id) {
   return dispatch => {
     dispatch(AddLanguageData);
-    return fetch(`${BASE_PATH}${PATH.LANGUAGE}/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
+    return deleteData(PATH.LANGUAGE, id).then(() => {
       return {
         type: TYPE.LANGUAGE_REMOVE_DATA,
         payload: { id },
@@ -24,14 +23,7 @@ export function RemoveLanguageData(id) {
 export function CreateLanguageData(payload) {
   return dispatch => {
     dispatch(AddLanguageData);
-    return fetch(`${BASE_PATH}${PATH.LANGUAGE}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: +new Date(),
-        ...payload,
-      }),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }).then(() => {
+    return postData(PATH.LANGUAGE, payload).then(() => {
       return {
         type: TYPE.LANGUAGE_CREATE_DATA,
         payload,
@@ -41,18 +33,16 @@ export function CreateLanguageData(payload) {
 }
 
 export function ChangeLanguageData(state, payload) {
-  state.data.map(item =>
+  let body = {};
+  state.data.map(item => {
     item.id === payload.id &&
-      fetch(`${BASE_PATH}${PATH.LANGUAGE}/${item.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          name: payload.name,
-          descr: payload.descr,
-          link: payload.link,
-        }),
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }),
-  );
+    (body = {
+      name: payload.name,
+      descr: payload.descr,
+      link: payload.link,
+    });
+    putData(PATH.LANGUAGE, item.id, body);
+  });
   return {
     type: TYPE.LANGUAGE_CHANGE_DATA,
     payload,

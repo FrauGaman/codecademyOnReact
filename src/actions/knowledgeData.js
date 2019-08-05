@@ -1,4 +1,5 @@
-import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { PATH, TYPE } from '../scripts/const';
+import { deleteData, postData, putData } from '../scripts/changeData';
 
 export function AddKnowledgeData(payload) {
   return {
@@ -10,13 +11,11 @@ export function AddKnowledgeData(payload) {
 export function RemoveKnowledgeData(id) {
   return dispatch => {
     dispatch(AddKnowledgeData);
-    return fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
+    return deleteData(PATH.KNOWLEDGE, id).then(() => {
       return {
         type: TYPE.KNOWLEDGE_REMOVE_DATA,
         payload: { id },
-      }
+      };
     });
   };
 }
@@ -24,14 +23,7 @@ export function RemoveKnowledgeData(id) {
 export function CreateKnowledgeData(payload) {
   return dispatch => {
     dispatch(AddKnowledgeData);
-    return fetch(`${BASE_PATH}${PATH.KNOWLEDGE}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: +new Date(),
-        ...payload,
-      }),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }).then(() => {
+    return postData(PATH.KNOWLEDGE, payload).then(() => {
       return {
         type: TYPE.KNOWLEDGE_CREATE_DATA,
         payload,
@@ -41,15 +33,9 @@ export function CreateKnowledgeData(payload) {
 }
 
 export function ChangeKnowledgeData(state, payload) {
-  state.data.map(item =>
-    item.id === payload.id &&
-      fetch(`${BASE_PATH}${PATH.KNOWLEDGE}/${item.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          name: payload.name,
-        }),
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }),
+  state.data.map(item => {
+    item.id === payload.id && putData(PATH.KNOWLEDGE, item.id, payload);
+  },
   );
   return {
     type: TYPE.KNOWLEDGE_CHANGE_DATA,

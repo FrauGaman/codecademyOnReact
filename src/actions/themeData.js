@@ -1,4 +1,5 @@
-import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { PATH, TYPE } from '../scripts/const';
+import {deleteData, postData, putData} from '../scripts/changeData';
 
 export function AddThemeData(payload) {
   return {
@@ -10,9 +11,7 @@ export function AddThemeData(payload) {
 export function RemoveThemeData(id) {
   return dispatch => {
     dispatch(AddThemeData);
-    return fetch(`${BASE_PATH}${PATH.THEME}/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
+    return deleteData(PATH.THEME, id).then(() => {
       return {
         type: TYPE.THEME_REMOVE_DATA,
         payload: { id },
@@ -24,14 +23,7 @@ export function RemoveThemeData(id) {
 export function CreateThemeData(payload) {
   return dispatch => {
     dispatch(AddThemeData);
-    return fetch(`${BASE_PATH}${PATH.THEME}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: +new Date(),
-        ...payload,
-      }),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }).then(() => {
+    return postData(PATH.THEME, payload).then(() => {
       return {
         type: TYPE.THEME_CREATE_DATA,
         payload,
@@ -41,18 +33,16 @@ export function CreateThemeData(payload) {
 }
 
 export function ChangeThemeData(state, payload) {
-  state.data.map(item =>
+  let body = {};
+  state.data.map(item => {
     item.id === payload.id &&
-      fetch(`${BASE_PATH}${PATH.THEME}/${item.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          name: payload.name,
-          descr: payload.descr,
-          link: payload.link,
-        }),
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }),
-  );
+    (body = {
+      name: payload.name,
+      descr: payload.descr,
+      link: payload.link,
+    });
+    putData(PATH.THEME, item.id, body);
+  });
   return {
     type: TYPE.THEME_CHANGE_DATA,
     payload,
