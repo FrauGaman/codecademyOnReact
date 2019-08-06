@@ -8,10 +8,10 @@ export function AddKnowledgeData(payload) {
   };
 }
 
-export function RemoveKnowledgeData(id) {
+export function RemoveKnowledgeData(id, setGetDataStatus) {
   return dispatch => {
     dispatch(AddKnowledgeData);
-    return deleteData(PATH.KNOWLEDGE, id).then(() => {
+    return deleteData(PATH.KNOWLEDGE, id, setGetDataStatus).then(() => {
       return {
         type: TYPE.KNOWLEDGE_REMOVE_DATA,
         payload: { id },
@@ -20,10 +20,10 @@ export function RemoveKnowledgeData(id) {
   };
 }
 
-export function CreateKnowledgeData(payload) {
+export function CreateKnowledgeData(payload, setGetDataStatus) {
   return dispatch => {
     dispatch(AddKnowledgeData);
-    return postData(PATH.KNOWLEDGE, payload).then(() => {
+    return postData(PATH.KNOWLEDGE, payload, setGetDataStatus).then(() => {
       return {
         type: TYPE.KNOWLEDGE_CREATE_DATA,
         payload,
@@ -32,11 +32,8 @@ export function CreateKnowledgeData(payload) {
   };
 }
 
-export function ChangeKnowledgeData(state, payload) {
-  state.data.map(item => {
-    item.id === payload.id && putData(PATH.KNOWLEDGE, item.id, payload);
-  },
-  );
+export function ChangeKnowledgeData(state, payload, setGetDataStatus) {
+  state.data.map(item => item.id === payload.id && putData(PATH.KNOWLEDGE, item.id, payload, setGetDataStatus));
   return {
     type: TYPE.KNOWLEDGE_CHANGE_DATA,
     payload,

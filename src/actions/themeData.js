@@ -33,16 +33,7 @@ export function CreateThemeData(payload) {
 }
 
 export function ChangeThemeData(state, payload) {
-  let body = {};
-  state.data.map(item => {
-    item.id === payload.id &&
-    (body = {
-      name: payload.name,
-      descr: payload.descr,
-      link: payload.link,
-    });
-    putData(PATH.THEME, item.id, body);
-  });
+  state.data.map(item => item.id === payload.id && putData(PATH.THEME, item.id, payload));
   return {
     type: TYPE.THEME_CHANGE_DATA,
     payload,

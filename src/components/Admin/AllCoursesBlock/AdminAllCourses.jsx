@@ -16,6 +16,7 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData, getData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import AllCoursesModalInner from './AllCoursesModalInner';
+import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -27,9 +28,11 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
+  const [getDataStatus, setGetDataStatus] = useState(true);
+  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber);
+    findData(sort, filter, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -68,7 +71,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   const submitData = value => {
     (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
     (value.language !== undefined) && (value.language = value.language.map(item => +item));
-    createData(value, sort, filter, search, pageNumber, limitNumber);
+    createData(value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
     setModalShow(false);
   };
 
@@ -81,7 +84,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     } else {
       value.theme = value.theme.map(item => +item);
       value.language = value.language.map(item => +item);
-      editData(allCoursesStatus, value);
+      editData(allCoursesStatus, value, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -92,50 +95,57 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber);
+    removeData(id, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
   };
 
   return (
-    <React.Fragment>
-      <AdminBtn
-        className={'create__btn'}
-        innerBtn={'Create'}
-        position={{ span: 2, offset: 10 }}
-        variant="primary"
-        onClick={() => setModalShow(true)}
-      />
-      <ModalWindow
-        title={'Create new element'}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        formname={'allCoursesForm'}
-      >
-        <AllCoursesModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
-      </ModalWindow>
-      <AllCoursesTableTemplate
-        tableData={allCoursesStatus}
-        themeList={themeList}
-        languageList={languageList}
-        removeTableData={removeTableData}
-        showModal={(id) => showEditForm(id)}
-        searchState={searchState}
-        limitNumber={limitNumber}
-        selectLimitNumber={selectLimitNumber}
-        chooseSort={chooseSort}
-        sort={sort}
-        pageArr={pageArr}
-        setPageNumber={setPageNumber}
-        filterState={filterState}
-      />
-      <ModalWindow
-        title={'Edit elements'}
-        show={editModalShow}
-        onHide={() => setEditModalShow(false)}
-        formname={'allCoursesForm'}
-      >
-        <AllCoursesModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
-      </ModalWindow>
-    </React.Fragment>
+    <div>
+      {
+        !getDataStatus && <PreloaderMini />
+      }
+      <div>
+        <AdminBtn
+          className={'create__btn'}
+          innerBtn={'Create'}
+          position={{ span: 2, offset: 10 }}
+          variant="primary"
+          onClick={() => setModalShow(true)}
+        />
+        <ModalWindow
+          title={'Create new element'}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          formname={'allCoursesForm'}
+        >
+          <AllCoursesModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
+        </ModalWindow>
+        <AllCoursesTableTemplate
+          tableData={allCoursesStatus}
+          themeList={themeList}
+          languageList={languageList}
+          removeTableData={removeTableData}
+          showModal={(id) => showEditForm(id)}
+          searchState={searchState}
+          limitNumber={limitNumber}
+          selectLimitNumber={selectLimitNumber}
+          chooseSort={chooseSort}
+          sort={sort}
+          pageArr={pageArr}
+          setPageNumber={setPageNumber}
+          filterState={filterState}
+          errorBlock={errorBlock}
+        />
+        <ModalWindow
+          title={'Edit elements'}
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          formname={'allCoursesForm'}
+        >
+          <AllCoursesModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
+        </ModalWindow>
+      </div>
+    </div>
+
   );
 }
 
@@ -196,17 +206,53 @@ const mapStateToDispatch = dispatch => ({
   getLanguageData: () => {
     getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
   },
-  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
-    dispatch(RemoveCoursesData(id)).then(() => changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.COURSESLIST,
+      addData: (res) => dispatch(AddCoursesData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+    };
+    dispatch(RemoveCoursesData(id, setGetDataStatus)).then(() => changeData(options));
   },
-  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber) => {
-    dispatch(CreateCoursesData(newData)).then(() => changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.COURSESLIST,
+      addData: (res) => dispatch(AddCoursesData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(CreateCoursesData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value) => {
-    dispatch(ChangeCoursesData(state, value));
+  editData: (state, value, setGetDataStatus) => {
+    dispatch(ChangeCoursesData(state, value, setGetDataStatus));
   },
-  findData: (sortType, filterStr, name, pageNumber, limitNumber) => {
-    changeData(PATH.COURSESLIST, (res) => dispatch(AddCoursesData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber);
+  findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+    const options = {
+      path: PATH.COURSESLIST,
+      addData: (res) => dispatch(AddCoursesData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+      setErrorBlock,
+    };
+    changeData(options);
   },
 });
 

@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import SkillCoursesMap from './SkillCoursesMap';
 import ProIcon from '../Icons/Icons';
-import { PATH } from '../../scripts/const';
-import getData from '../../scripts/getData';
 import './skillCourses.sass';
 
-function SkillCourses({ currentThemeId, currentLanguageId }) {
-  const [result, setResult] = useState([]);
-  const addData = (res) => {
-    setResult(res);
-  };
-
-  useEffect(() => {
-    getData(PATH.SKILLPATH, addData);
-  }, []);
-
-  const skillPathArr = result || [];
-
+function SkillCourses({ skillResult, currentThemeId, currentLanguageId }) {
+  const skillPathArr = skillResult || [];
   let skillArr;
   if (skillPathArr.length) {
     skillArr = skillPathArr.filter(item => (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
@@ -49,6 +37,13 @@ function SkillCourses({ currentThemeId, currentLanguageId }) {
 }
 
 SkillCourses.propTypes = {
+  skillResult: PropTypes.arrayOf(PropTypes.shape({
+    img: PropTypes.string,
+    bgColor: PropTypes.string,
+    title: PropTypes.string,
+    descr: PropTypes.string,
+    period: PropTypes.string,
+  })),
   currentThemeId: PropTypes.number,
   currentLanguageId: PropTypes.number,
 };

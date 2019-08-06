@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CareerCoursesMap from './CareerCoursesMap';
 import ProIcon from '../Icons/Icons';
-import { PATH } from '../../scripts/const';
-import getData from '../../scripts/getData';
 import './careerCourses.sass';
 
-function CareerCourse({ currentThemeId, currentLanguageId, knowledgeArr }) {
-  const [result, setResult] = useState([]);
-  const addData = (res) => {
-    setResult(res);
-  };
-
-  useEffect(() => {
-    getData(PATH.CAREERPATH, addData);
-  }, []);
-
-  const careerPathArr = result || [];
+function CareerCourse({ careerResult, currentThemeId, currentLanguageId, knowledgeArr }) {
+  const careerPathArr = careerResult || [];
   let careerArr;
   if (careerPathArr.length) {
     careerArr = careerPathArr.filter(item => item.theme && item.theme.includes(currentThemeId));
@@ -48,6 +37,13 @@ function CareerCourse({ currentThemeId, currentLanguageId, knowledgeArr }) {
 }
 
 CareerCourse.propTypes = {
+	careerResult: PropTypes.arrayOf(PropTypes.shape({
+		img: PropTypes.string,
+		bgColor: PropTypes.string,
+		title: PropTypes.string,
+		descr: PropTypes.string,
+		knowledge: PropTypes.array,
+	})),
   currentThemeId: PropTypes.number,
   currentLanguageId: PropTypes.number,
   knowledgeArr: PropTypes.array,

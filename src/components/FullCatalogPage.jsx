@@ -8,6 +8,7 @@ import { PATH } from '../scripts/const';
 import getData from '../scripts/getData';
 import '../style/basic.sass';
 import NotFoundFront from './404Front';
+import PreloaderMini from './Preloader/PreloaderMini';
 
 function FullCatalogPage({ match }) {
   const [initialize, setInitialize] = useState(false);
@@ -31,11 +32,29 @@ function FullCatalogPage({ match }) {
     setKnowResult(res);
   };
 
+  const [careerResult, setcareerResult] = useState([]);
+  const addCareerData = (res) => {
+    setcareerResult(res);
+  };
+
+	const [skillResult, setSkillResult] = useState([]);
+	const addSkillData = (res) => {
+		setSkillResult(res);
+	};
+
+	const [coursesRresult, setCoursesResult] = useState([]);
+	const addCoursesData = (res) => {
+		setCoursesResult(res);
+	};
+
   useEffect(() => {
     const themeData = getData(PATH.THEME, addDataTheme);
     const languageData = getData(PATH.LANGUAGE, addDataLang);
     const knowledgeData = getData(PATH.KNOWLEDGE, addDataKnow);
-    Promise.all([themeData, languageData, knowledgeData]).then(() => setInitialize(true))
+    const career = getData(PATH.CAREERPATH, addCareerData);
+    const skill = getData(PATH.SKILLPATH, addSkillData);
+    const courses = getData(PATH.COURSESLIST, addCoursesData);
+    Promise.all([themeData, languageData, knowledgeData, career, skill, courses]).then(() => setInitialize(true))
   }, []);
 
   const themeArr = themeResult;
@@ -81,15 +100,17 @@ function FullCatalogPage({ match }) {
   return (
     <div>
       {
-        pageIsFound ?
-          <div className="content__wrapper">
+        initialize ?
+          pageIsFound ?
+            <div className="content__wrapper">
+              <MainDescr filterArr={filterArr} activeLink={activeLink} />
+              <CareerCourses careerResult={careerResult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} knowledgeArr={knowResult} />
+              <SkillCourses skillResult={skillResult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
+              <CoursesList coursesRresult={coursesRresult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
+            </div>
+              : <NotFoundFront />
 
-            <MainDescr filterArr={filterArr} activeLink={activeLink} />
-            <CareerCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} knowledgeArr={knowResult} />
-            <SkillCourses currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
-            <CoursesList currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
-          </div>
-            : <NotFoundFront />
+              : <PreloaderMini />
       }
     </div>
   );

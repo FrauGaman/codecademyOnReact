@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Nav from './components/nav/Nav';
 import Filter from './components/Filter/Filter';
 import Footer from './components/Footer/Footer';
+import Preloader from './components/Preloader/Preloader';
 
 import { PATH } from './scripts/const';
 import getData from './scripts/getData';
@@ -14,6 +15,7 @@ function App({ children }) {
   const [languageState, setLanguage] = useState([]);
   const [footerNavState, setFooterNav] = useState([]);
   const [resourcesState, setResourses] = useState([]);
+  const [initialize, setInitialize] = useState(false);
 
   const addDataMenu = (res) => {
     setMenu(res);
@@ -32,26 +34,35 @@ function App({ children }) {
   };
 
   useEffect(() => {
-    getData(PATH.ITEMS, addDataMenu);
-    getData(PATH.THEME, addDataTheme);
-    getData(PATH.LANGUAGE, addDataLanguage);
-    getData(PATH.FOOTERSITENAVIGATION, addDataFooterNav);
-    getData(PATH.SITENAVIGATION, addDataResourses);
+    const menu = getData(PATH.ITEMS, addDataMenu);
+    const theme = getData(PATH.THEME, addDataTheme);
+    const language = getData(PATH.LANGUAGE, addDataLanguage);
+    const footerNav = getData(PATH.FOOTERSITENAVIGATION, addDataFooterNav);
+    const resourses = getData(PATH.SITENAVIGATION, addDataResourses);
+    Promise.all([menu, theme, language, footerNav, resourses]).then(() => setInitialize(true));
   }, []);
 
   return (
     <React.Fragment>
-      <Nav menu={menuState} />
-      <Filter theme={themeState} language={languageState} />
-      {children}
-      <section className="footer">
-        <Footer
-          footerNav={footerNavState}
-          theme={themeState}
-          language={languageState}
-          resources={resourcesState}
-        />
-      </section>
+      {
+        initialize ?
+          <div>
+            <Nav menu={menuState} />
+            <Filter theme={themeState} language={languageState} />
+            {children}
+            <section className="footer">
+              <Footer
+                footerNav={footerNavState}
+                theme={themeState}
+                language={languageState}
+                resources={resourcesState}
+              />
+            </section>
+          </div>
+          :
+          <Preloader />
+      }
+
     </React.Fragment>
   );
 }

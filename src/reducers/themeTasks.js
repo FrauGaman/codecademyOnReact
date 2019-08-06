@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const themeTasks = (state = {}, action) => {
+const themeTasks = (state = {data: [], count: '0'}, action) => {
   switch (action.type) {
     case TYPE.THEME_ADD_DATA:
       return {

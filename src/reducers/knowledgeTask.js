@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const knowledgeTasks = (state = {}, action) => {
+const knowledgeTasks = (state = {data: [], count: '0'}, action) => {
   switch (action.type) {
     case TYPE.KNOWLEDGE_ADD_DATA:
       return {

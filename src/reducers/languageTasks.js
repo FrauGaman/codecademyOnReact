@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const languageTasks = (state = {}, action) => {
+const languageTasks = (state = {data: [], count: '0'}, action) => {
   switch (action.type) {
     case TYPE.LANGUAGE_ADD_DATA:
       return {

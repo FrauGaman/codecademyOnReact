@@ -17,6 +17,8 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData, getData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import CareerModalInner from './CareerModalInner';
+import {AddSkillData} from '../../../actions/skillData';
+import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -28,9 +30,11 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
+  const [getDataStatus, setGetDataStatus] = useState(true);
+  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber);
+    findData(sort, filter, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -71,7 +75,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
     (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
     (value.language !== undefined) && (value.language = value.language.map(item => +item));
     (value.knowledge !== undefined) && (value.knowledge = value.knowledge.map(item => +item));
-    createData(value, sort, filter, search, pageNumber, limitNumber);
+    createData(value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
     setModalShow(false);
   };
 
@@ -85,7 +89,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
       value.theme = value.theme.map(item => +item);
       value.language = value.language.map(item => +item);
       value.knowledge = value.knowledge.map(item => +item);
-      editData(careerStatus, value);
+      editData(careerStatus, value, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -96,52 +100,59 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber);
+    removeData(id, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
   };
 
   return (
-    <React.Fragment>
-      <AdminBtn
-        className={'create__btn'}
-        innerBtn={'Create'}
-        position={{ span: 2, offset: 10 }}
-        variant="primary"
-        onClick={() => setModalShow(true)}
-      />
-      <ModalWindow
-        title={'Create new element'}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        formname={'careerForm'}
-      >
-        <CareerModalInner themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} submitData={submitData} />
-      </ModalWindow>
+    <div>
+      {
+        !getDataStatus && <PreloaderMini />
+      }
+      <div>
+        <AdminBtn
+          className={'create__btn'}
+          innerBtn={'Create'}
+          position={{ span: 2, offset: 10 }}
+          variant="primary"
+          onClick={() => setModalShow(true)}
+        />
+        <ModalWindow
+          title={'Create new element'}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          formname={'careerForm'}
+        >
+          <CareerModalInner themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} submitData={submitData} />
+        </ModalWindow>
 
-      <CareerTableTemplate
-        removeTableData={removeTableData}
-        themeList={themeList}
-        languageList={languageList}
-        knowledgeList={knowledgeList}
-        tableData={careerStatus}
-        showModal={(id) => showEditForm(id)}
-        searchState={searchState}
-        limitNumber={limitNumber}
-        selectLimitNumber={selectLimitNumber}
-        chooseSort={chooseSort}
-        sort={sort}
-        pageArr={pageArr}
-        setPageNumber={setPageNumber}
-        filterState={filterState}
-      />
-      <ModalWindow
-        title={'Edit elements'}
-        show={editModalShow}
-        onHide={() => setEditModalShow(false)}
-        formname={'careerForm'}
-      >
-        <CareerModalInner themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} initialValues={initial} submitData={editFormData} />
-      </ModalWindow>
-    </React.Fragment>
+        <CareerTableTemplate
+          removeTableData={removeTableData}
+          themeList={themeList}
+          languageList={languageList}
+          knowledgeList={knowledgeList}
+          tableData={careerStatus}
+          showModal={(id) => showEditForm(id)}
+          searchState={searchState}
+          limitNumber={limitNumber}
+          selectLimitNumber={selectLimitNumber}
+          chooseSort={chooseSort}
+          sort={sort}
+          pageArr={pageArr}
+          setPageNumber={setPageNumber}
+          filterState={filterState}
+          errorBlock={errorBlock}
+        />
+        <ModalWindow
+          title={'Edit elements'}
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          formname={'careerForm'}
+        >
+          <CareerModalInner themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} initialValues={initial} submitData={editFormData} />
+        </ModalWindow>
+      </div>
+    </div>
+
   );
 }
 
@@ -213,17 +224,54 @@ const mapStateToDispatch = dispatch => ({
   getKnowledgeData: () => {
     getData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)));
   },
-  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
-    dispatch(RemoveCareerData(id)).then(() => changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.CAREERPATH,
+      addData: (res) => dispatch(AddCareerData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus
+    };
+    dispatch(RemoveCareerData(id, setGetDataStatus)).then(() => changeData(options));
   },
-  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber) => {
-    dispatch(CreateCareerData(newData)).then(() => changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.CAREERPATH,
+      addData: (res) => dispatch(AddCareerData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus
+    };
+    dispatch(CreateCareerData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value) => {
-    dispatch(ChangeCareerData(state, value));
+  editData: (state, value, setGetDataStatus) => {
+    dispatch(ChangeCareerData(state, value, setGetDataStatus));
   },
-  findData: (sortType, filterStr, name, pageNumber, limitNumber) => {
-    changeData(PATH.CAREERPATH, (res) => dispatch(AddCareerData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber);
+  findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+    const options = {
+      path: PATH.CAREERPATH,
+      addData: (res) => dispatch(AddCareerData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+      setErrorBlock,
+    };
+    changeData(options);
   },
 });
 

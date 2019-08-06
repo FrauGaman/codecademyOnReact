@@ -1,4 +1,5 @@
-import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { PATH, TYPE } from '../scripts/const';
+import { deleteData, postData, putData } from '../scripts/changeData';
 
 export function AddSkillData(payload) {
   return {
@@ -7,12 +8,10 @@ export function AddSkillData(payload) {
   };
 }
 
-export function RemoveSkillData(id) {
+export function RemoveSkillData(id, setGetDataStatus) {
   return dispatch => {
     dispatch(AddSkillData);
-    return fetch(`${BASE_PATH}${PATH.SKILLPATH}/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
+    return deleteData(PATH.SKILLPATH, id, setGetDataStatus).then(() => {
       return {
         type: TYPE.SKILL_REMOVE_DATA,
         payload: { id },
@@ -21,17 +20,10 @@ export function RemoveSkillData(id) {
   };
 }
 
-export function CreateSkillData(payload) {
+export function CreateSkillData(payload, setGetDataStatus) {
   return dispatch => {
     dispatch(AddSkillData);
-    return fetch(`${BASE_PATH}${PATH.SKILLPATH}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: +new Date(),
-        ...payload,
-      }),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }).then(() => {
+    return postData(PATH.SKILLPATH, payload, setGetDataStatus).then(() => {
       return {
         type: TYPE.SKILL_CREATE_DATA,
         payload,
@@ -40,23 +32,8 @@ export function CreateSkillData(payload) {
   };
 }
 
-export function ChangeSkillData(state, payload) {
-  state.data.map(item =>
-    item.id === payload.id &&
-      fetch(`${BASE_PATH}${PATH.SKILLPATH}/${item.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          title: payload.title,
-          descr: payload.descr,
-          img: payload.img,
-          bgColor: payload.bgColor,
-          period: payload.period,
-          theme: payload.theme,
-          language: payload.language,
-        }),
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }),
-  );
+export function ChangeSkillData(state, payload, setGetDataStatus) {
+  state.data.map(item => item.id === payload.id && putData(PATH.SKILLPATH, item.id, payload, setGetDataStatus));
   return {
     type: TYPE.SKILL_CHANGE_DATA,
     payload,

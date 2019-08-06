@@ -6,8 +6,10 @@ import AllCoursesFilterSelect from './AllCoursesFilter-Select';
 import SearchByName from '../ComponentsPieces/SearchByName';
 import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
 import PaginationButton from '../ComponentsPieces/PaginationButton';
+import EmptyData from '../../ErrorBlock/EmptyData';
+import AllCoursesTableMap from './AllCoursesTableMap';
 
-function AllCoursesTableTemplate({ tableData, themeList, languageList, filterState, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
+function AllCoursesTableTemplate({ tableData, themeList, languageList, filterState, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
   return (
     <div className="table use__bootstrap">
       <SearchByName searchState={searchState} />
@@ -32,37 +34,11 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, filterSta
         </thead>
         <tbody>
         {
-          tableData.data && tableData.data.map(item =>
-            <tr key={item.title}>
-              <td>{item.title}</td>
-              <td>{item.descr}</td>
-              <td>{item.importance}</td>
-              <td>{item.icon}</td>
-              <td>{item.borderColor}</td>
-              <td>{item.theme && item.theme.map(themeNumber =>
-                themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
-                ).find(item =>
-                  item !== '',
-                )
-              ).join(', ')
-              }</td>
-              <td>{item.language && item.language.map(languageNumber =>
-                languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
-                ).find(item =>
-                  item !== '',
-                )
-              ).join(', ')
-              }</td>
-              <td>
-                <div onClick={() => showModal(item.id)}>
-                  <Icon iconName={'edit'} className={'editIcon'} />
-                </div>
-                <div onClick={() => removeTableData(item.id)}>
-                  <Icon iconName={'delete'} className={'delIcon'} />
-                </div>
-              </td>
-            </tr>
-          )
+          !errorBlock ?
+            tableData.data.length ?
+              <AllCoursesTableMap tableData={tableData} themeList={themeList} languageList={languageList} removeTableData={removeTableData} showModal={showModal} />
+              : <EmptyData colSpan={8} problem={'Data somewhere, but not here'} />
+            : <EmptyData colSpan={8} problem={'We have some problem:C'} />
         }
         </tbody>
       </Table>
@@ -113,6 +89,7 @@ AllCoursesTableTemplate.propTypes = {
   limitNumber: PropTypes.string,
   sort: PropTypes.string,
   filterState: PropTypes.func,
+  errorBlock: PropTypes.bool,
 };
 
 export default AllCoursesTableTemplate;

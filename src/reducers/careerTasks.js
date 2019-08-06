@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const careerTasks = (state = {}, action) => {
+const careerTasks = (state = {data: [], count: '0'}, action) => {
   switch (action.type) {
     case TYPE.CAREER_ADD_DATA:
       return {

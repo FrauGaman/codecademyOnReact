@@ -1,4 +1,5 @@
-import { BASE_PATH, PATH, TYPE } from '../scripts/const';
+import { PATH, TYPE } from '../scripts/const';
+import { deleteData, postData, putData } from '../scripts/changeData';
 
 export function AddCoursesData(payload) {
   return {
@@ -7,12 +8,10 @@ export function AddCoursesData(payload) {
   };
 }
 
-export function RemoveCoursesData(id) {
+export function RemoveCoursesData(id, setGetDataStatus) {
   return dispatch => {
     dispatch(AddCoursesData);
-    return fetch(`${BASE_PATH}${PATH.COURSESLIST}/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
+    return deleteData(PATH.COURSESLIST, id, setGetDataStatus).then(() => {
       return {
         type: TYPE.COURSES_REMOVE_DATA,
         payload: { id },
@@ -21,17 +20,10 @@ export function RemoveCoursesData(id) {
   };
 }
 
-export function CreateCoursesData(payload) {
+export function CreateCoursesData(payload, setGetDataStatus) {
   return dispatch => {
     dispatch(AddCoursesData);
-    return fetch(`${BASE_PATH}${PATH.COURSESLIST}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: +new Date(),
-        ...payload,
-      }),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }).then(() => {
+    return postData(PATH.COURSESLIST, payload, setGetDataStatus).then(() => {
       return {
         type: TYPE.COURSES_CREATE_DATA,
         payload,
@@ -41,23 +33,8 @@ export function CreateCoursesData(payload) {
 }
 
 
-export function ChangeCoursesData(state, payload) {
-  state.data.map(item =>
-    item.id === payload.id &&
-      fetch(`${BASE_PATH}${PATH.COURSESLIST}/${item.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          importance: payload.importance,
-          title: payload.title,
-          descr: payload.descr,
-          icon: payload.icon,
-          borderColor: payload.borderColor,
-          theme: payload.theme,
-          language: payload.language,
-        }),
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }),
-  );
+export function ChangeCoursesData(state, payload, setGetDataStatus) {
+  state.data.map(item => item.id === payload.id && putData(PATH.COURSESLIST, item.id, payload, setGetDataStatus));
   return {
     type: TYPE.COURSES_CHANGE_DATA,
     payload,

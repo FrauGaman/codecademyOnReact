@@ -16,6 +16,7 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData, getData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import SkillModalInner from './SkillModalInner';
+import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -27,9 +28,11 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
+  const [getDataStatus, setGetDataStatus] = useState(true);
+  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber);
+    findData(sort, filter, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -68,7 +71,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   const submitData = value => {
     (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
     (value.language !== undefined) && (value.language = value.language.map(item => +item));
-    createData(value, sort, filter, search, pageNumber, limitNumber);
+    createData(value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
     setModalShow(false);
   };
 
@@ -81,7 +84,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
     } else {
       value.theme = value.theme.map(item => +item);
       value.language = value.language.map(item => +item);
-      editData(skillStatus, value);
+      editData(skillStatus, value, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -92,51 +95,58 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber);
+    removeData(id, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
   };
 
   return (
-    <React.Fragment>
-      <AdminBtn
-        className={'create__btn'}
-        innerBtn={'Create'}
-        position={{ span: 2, offset: 10 }}
-        variant="primary"
-        onClick={() => setModalShow(true)}
-      />
-      <ModalWindow
-        title={'Create new element'}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        formname={'skillForm'}
-      >
-        <SkillModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
-      </ModalWindow>
+    <div>
+      {
+        !getDataStatus && <PreloaderMini />
+      }
+      <div>
+        <AdminBtn
+          className={'create__btn'}
+          innerBtn={'Create'}
+          position={{ span: 2, offset: 10 }}
+          variant="primary"
+          onClick={() => setModalShow(true)}
+        />
+        <ModalWindow
+          title={'Create new element'}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          formname={'skillForm'}
+        >
+          <SkillModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
+        </ModalWindow>
 
-      <SkillTableTemplate
-        tableData={skillStatus}
-        themeList={themeList}
-        languageList={languageList}
-        removeTableData={removeTableData}
-        showModal={(id) => showEditForm(id)}
-        searchState={searchState}
-        limitNumber={limitNumber}
-        selectLimitNumber={selectLimitNumber}
-        chooseSort={chooseSort}
-        sort={sort}
-        pageArr={pageArr}
-        setPageNumber={setPageNumber}
-        filterState={filterState}
-      />
-      <ModalWindow
-        title={'Edit elements'}
-        show={editModalShow}
-        onHide={() => setEditModalShow(false)}
-        formname={'skillForm'}
-      >
-        <SkillModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
-      </ModalWindow>
-    </React.Fragment>
+        <SkillTableTemplate
+          tableData={skillStatus}
+          themeList={themeList}
+          languageList={languageList}
+          removeTableData={removeTableData}
+          showModal={(id) => showEditForm(id)}
+          searchState={searchState}
+          limitNumber={limitNumber}
+          selectLimitNumber={selectLimitNumber}
+          chooseSort={chooseSort}
+          sort={sort}
+          pageArr={pageArr}
+          setPageNumber={setPageNumber}
+          filterState={filterState}
+          errorBlock={errorBlock}
+        />
+        <ModalWindow
+          title={'Edit elements'}
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          formname={'skillForm'}
+        >
+          <SkillModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
+        </ModalWindow>
+      </div>
+    </div>
+
   );
 }
 
@@ -195,17 +205,54 @@ const mapStateToDispatch = dispatch => ({
   getLanguageData: () => {
     getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
   },
-  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber) => {
-    dispatch(RemoveSkillData(id)).then(() => changeData(PATH.SKILLPATH, (res) => dispatch(AddSkillData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.SKILLPATH,
+      addData: (res) => dispatch(AddSkillData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(RemoveSkillData(id, setGetDataStatus)).then(() => changeData(options));
   },
-  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber) => {
-    dispatch(CreateSkillData(newData)).then(() => changeData(PATH.SKILLPATH, (res) => dispatch(AddSkillData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber));
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.SKILLPATH,
+      addData: (res) => dispatch(AddSkillData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(CreateSkillData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value) => {
-    dispatch(ChangeSkillData(state, value));
+  editData: (state, value, setGetDataStatus) => {
+    dispatch(ChangeSkillData(state, value, setGetDataStatus));
   },
-  findData: (sortType, filterStr, name, pageNumber, limitNumber) => {
-    changeData(PATH.SKILLPATH, (res) => dispatch(AddSkillData(res)), 'title', sortType, filterStr, 'title', name, pageNumber, limitNumber);
+  findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+    const options = {
+      path: PATH.SKILLPATH,
+      addData: (res) => dispatch(AddSkillData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+      setErrorBlock,
+    };
+    changeData(options);
   },
 });
 

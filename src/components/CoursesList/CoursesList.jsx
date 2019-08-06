@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CoursesListMap from './CoursesListMap';
-import { PATH } from '../../scripts/const';
-import getData from '../../scripts/getData';
 import './coursesList.sass';
 
-function CoursesList({ currentThemeId, currentLanguageId }) {
-  const [result, setResult] = useState([]);
-  const addData = (res) => {
-    setResult(res);
-  };
-
-  useEffect(() => {
-    getData(PATH.COURSESLIST, addData);
-  }, []);
-
-  const coursesListPathArr = result || [];
-
+function CoursesList({ coursesRresult, currentThemeId, currentLanguageId }) {
+  const coursesListPathArr = coursesRresult || [];
   let coursesArr;
   if (coursesListPathArr.length) {
     coursesArr = coursesListPathArr.filter(item =>
@@ -45,6 +33,13 @@ function CoursesList({ currentThemeId, currentLanguageId }) {
 }
 
 CoursesList.propTypes = {
+  coursesRresult: PropTypes.arrayOf(PropTypes.shape({
+    importance: PropTypes.string,
+    title: PropTypes.string,
+    descr: PropTypes.string,
+    icon: PropTypes.string,
+    borderColor: PropTypes.string,
+  })),
   currentThemeId: PropTypes.number,
   currentLanguageId: PropTypes.number,
 };

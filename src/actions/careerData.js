@@ -1,5 +1,5 @@
-import { BASE_PATH, PATH, TYPE } from '../scripts/const';
-import { AddSkillData } from './skillData';
+import { PATH, TYPE } from '../scripts/const';
+import { deleteData, postData, putData } from '../scripts/changeData';
 
 export function AddCareerData(payload) {
   return {
@@ -8,12 +8,10 @@ export function AddCareerData(payload) {
   };
 }
 
-export function RemoveCareerData(id) {
+export function RemoveCareerData(id, setGetDataStatus) {
   return dispatch => {
-    dispatch(AddSkillData);
-    return fetch(`${BASE_PATH}${PATH.CAREERPATH}/${id}`, {
-      method: 'DELETE',
-    }).then(() => {
+    dispatch(AddCareerData);
+    return deleteData(PATH.CAREERPATH, id, setGetDataStatus).then(() => {
       return {
         type: TYPE.CAREER_REMOVE_DATA,
         payload: { id },
@@ -22,17 +20,10 @@ export function RemoveCareerData(id) {
   };
 }
 
-export function CreateCareerData(payload) {
+export function CreateCareerData(payload, setGetDataStatus) {
   return dispatch => {
-    dispatch(AddSkillData);
-    return fetch(`${BASE_PATH}${PATH.CAREERPATH}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: +new Date(),
-        ...payload,
-      }),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    }).then(() => {
+    dispatch(AddCareerData);
+    return postData(PATH.CAREERPATH, payload, setGetDataStatus).then(() => {
       return {
         type: TYPE.CAREER_CREATE_DATA,
         payload,
@@ -41,23 +32,8 @@ export function CreateCareerData(payload) {
   };
 }
 
-export function ChangeCareerData(state, payload) {
-  state.data.map(item =>
-    item.id === payload.id &&
-      fetch(`${BASE_PATH}${PATH.CAREERPATH}/${item.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          title: payload.title,
-          descr: payload.descr,
-          img: payload.img,
-          bgColor: payload.bgColor,
-          theme: payload.theme,
-          language: payload.language,
-          knowledge: payload.knowledge,
-        }),
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      }),
-  );
+export function ChangeCareerData(state, payload, setGetDataStatus) {
+  state.data.map(item => item.id === payload.id && putData(PATH.CAREERPATH, item.id, payload, setGetDataStatus));
   return {
     type: TYPE.CAREER_CHANGE_DATA,
     payload,

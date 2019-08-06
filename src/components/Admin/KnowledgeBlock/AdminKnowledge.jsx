@@ -14,6 +14,7 @@ import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ModalWindow from '../../ModalWindow';
 import KnowledgeModalInner from './KnowledgeModalInner';
+import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -24,9 +25,11 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
+  const [getDataStatus, setGetDataStatus] = useState(true);
+  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber);
+    findData(sort, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
   }, [sort, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -57,7 +60,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   };
 
   const submitData = value => {
-    createData(value, sort, search, pageNumber, limitNumber);
+    createData(value, sort, search, pageNumber, limitNumber, setGetDataStatus);
     setModalShow(false);
   };
 
@@ -68,7 +71,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         setEditModalShow(false);
       }
     } else {
-      editData(knowledgeStatus, value);
+      editData(knowledgeStatus, value, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -79,49 +82,56 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber);
+    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus);
   };
 
   return (
-    <React.Fragment>
-      <AdminBtn
-        className={'create__btn'}
-        innerBtn={'Create'}
-        position={{ span: 2, offset: 10 }}
-        variant="primary"
-        onClick={() => setModalShow(true)}
-      />
-      <ModalWindow
-        title={'Create new element'}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        formname={'knowledgeForm'}
-      >
-        <KnowledgeModalInner submitData={submitData} />
-      </ModalWindow>
+    <div>
+      {
+        !getDataStatus && <PreloaderMini />
+      }
+      <div>
+        <AdminBtn
+          className={'create__btn'}
+          innerBtn={'Create'}
+          position={{span: 2, offset: 10}}
+          variant="primary"
+          onClick={() => setModalShow(true)}
+        />
+        <ModalWindow
+          title={'Create new element'}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          formname={'knowledgeForm'}
+        >
+          <KnowledgeModalInner submitData={submitData}/>
+        </ModalWindow>
 
-      <KnowledgeTableTemplate
-        removeTableData={removeTableData}
-        tableData={knowledgeStatus}
-        showModal={(id) => showEditForm(id)}
-        searchState={searchState}
-        limitNumber={limitNumber}
-        selectLimitNumber={selectLimitNumber}
-        chooseSort={chooseSort}
-        sort={sort}
-        pageArr={pageArr}
-        setPageNumber={setPageNumber}
-      />
+        <KnowledgeTableTemplate
+          removeTableData={removeTableData}
+          tableData={knowledgeStatus}
+          showModal={(id) => showEditForm(id)}
+          searchState={searchState}
+          limitNumber={limitNumber}
+          selectLimitNumber={selectLimitNumber}
+          chooseSort={chooseSort}
+          sort={sort}
+          pageArr={pageArr}
+          setPageNumber={setPageNumber}
+          errorBlock={errorBlock}
+        />
 
-      <ModalWindow
-        title={'Edit elements'}
-        show={editModalShow}
-        onHide={() => setEditModalShow(false)}
-        formname={'knowledgeForm'}
-      >
-        <KnowledgeModalInner initialValues={initial} submitData={editFormData} />
-      </ModalWindow>
-    </React.Fragment>
+        <ModalWindow
+          title={'Edit elements'}
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          formname={'knowledgeForm'}
+        >
+          <KnowledgeModalInner initialValues={initial} submitData={editFormData} />
+        </ModalWindow>
+      </div>
+    </div>
+
   );
 }
 
@@ -148,17 +158,52 @@ const mapStateToProps = state => ({
 });
 
 const mapStateToDispatch = dispatch => ({
-  removeData: (id, sortType, name, pageNumber, limitNumber) => {
-    dispatch(RemoveKnowledgeData(id)).then(() => changeData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+  removeData: (id, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.KNOWLEDGE,
+      addData: (res) => dispatch(AddKnowledgeData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(RemoveKnowledgeData(id, setGetDataStatus)).then(() => changeData(options));
   },
-  createData: (newData, sortType, name, pageNumber, limitNumber) => {
-    dispatch(CreateKnowledgeData(newData)).then(() => changeData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+  createData: (newData, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.KNOWLEDGE,
+      addData: (res) => dispatch(AddKnowledgeData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(CreateKnowledgeData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value) => {
-    dispatch(ChangeKnowledgeData(state, value));
+  editData: (state, value, setGetDataStatus) => {
+    dispatch(ChangeKnowledgeData(state, value, setGetDataStatus));
   },
-  findData: (sortType, name, pageNumber, limitNumber) => {
-    changeData(PATH.KNOWLEDGE, (res) => dispatch(AddKnowledgeData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
+  findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+    const options = {
+      path: PATH.KNOWLEDGE,
+      addData: (res) => dispatch(AddKnowledgeData(res)),
+      sortField: 'name',
+      sortType,
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+      setErrorBlock,
+    };
+    return changeData(options);
   },
 });
 

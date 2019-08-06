@@ -6,8 +6,10 @@ import SkillFilterSelect from './SkillFilter-Select';
 import SearchByName from '../ComponentsPieces/SearchByName';
 import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
 import PaginationButton from '../ComponentsPieces/PaginationButton';
+import EmptyData from '../../ErrorBlock/EmptyData';
+import SkillTableMap from './SkillTableMap';
 
-function CareerTableTemplate({ tableData, themeList, languageList, removeTableData, filterState, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
+function CareerTableTemplate({ tableData, themeList, languageList, removeTableData, filterState, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
@@ -32,37 +34,11 @@ function CareerTableTemplate({ tableData, themeList, languageList, removeTableDa
         </thead>
         <tbody>
         {
-          tableData.data && tableData.data.map(item =>
-            <tr key={item.id}>
-              <td>{item.title}</td>
-              <td className="hidden__col__big">{item.descr}</td>
-              <td className="hidden__col__big">{item.img}</td>
-              <td className="hidden__col">{item.bgColor}</td>
-              <td className="hidden__col">{item.theme && item.theme.map(themeNumber =>
-                themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
-                ).find(item =>
-                  item !== '',
-                )
-              ).join(', ')
-              }</td>
-              <td className="hidden__col">{item.language && item.language.map(languageNumber =>
-                languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
-                ).find(item =>
-                  item !== ''
-                )
-              ).join(', ')
-              }</td>
-              <td className="hidden__col">{item.period}</td>
-              <td>
-                <div onClick={() => showModal(item.id)}>
-                  <Icon iconName={'edit'} className={'editIcon'} />
-                </div>
-                <div onClick={() => removeTableData(item.id)}>
-                  <Icon iconName={'delete'} className={'delIcon'} />
-                </div>
-              </td>
-            </tr>
-          )
+          !errorBlock ?
+            tableData.data.length ?
+              <SkillTableMap tableData={tableData} themeList={themeList} languageList={languageList} removeTableData={removeTableData} showModal={showModal} />
+              : <EmptyData colSpan={8} problem={'Data somewhere, but not here'} />
+            : <EmptyData colSpan={8} problem={'We have some problem:C'} />
         }
         </tbody>
       </Table>
@@ -113,6 +89,7 @@ CareerTableTemplate.propTypes = {
   limitNumber: PropTypes.string,
   sort: PropTypes.string,
   filterState: PropTypes.func,
+  errorBlock: PropTypes.bool,
 };
 
 export default CareerTableTemplate;

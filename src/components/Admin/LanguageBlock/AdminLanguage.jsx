@@ -14,6 +14,7 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import LanguageModalInner from './LanguageModalInner';
+import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -24,9 +25,11 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
+  const [getDataStatus, setGetDataStatus] = useState(true);
+  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber);
+    findData(sort, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
   }, [sort, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -57,7 +60,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   };
 
   const submitData = value => {
-    createData(value, sort, search, pageNumber, limitNumber);
+    createData(value, sort, search, pageNumber, limitNumber, setGetDataStatus);
     setModalShow(false);
   };
 
@@ -68,7 +71,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         setEditModalShow(false);
       }
     } else {
-      editData(languageStatus, value);
+      editData(languageStatus, value, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -79,48 +82,55 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber)
+    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus)
   };
 
   return (
-    <React.Fragment>
-      <AdminBtn
-        className={'create__btn'}
-        innerBtn={'Create'}
-        position={{ span: 2, offset: 10 }}
-        variant="primary"
-        onClick={() => setModalShow(true)}
-      />
-      <ModalWindow
-        title={'Create new element'}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        formname={'languageForm'}
-      >
-        <LanguageModalInner submitData={submitData} />
-      </ModalWindow>
+    <div>
+      {
+        !getDataStatus && <PreloaderMini />
+      }
+      <div>
+        <AdminBtn
+          className={'create__btn'}
+          innerBtn={'Create'}
+          position={{ span: 2, offset: 10 }}
+          variant="primary"
+          onClick={() => setModalShow(true)}
+        />
+        <ModalWindow
+          title={'Create new element'}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          formname={'languageForm'}
+        >
+          <LanguageModalInner submitData={submitData} />
+        </ModalWindow>
 
-      <LanguageTableTemplate
-        removeTableData={removeTableData}
-        tableData={languageStatus}
-        showModal={(id) => showEditForm(id)}
-        searchState={searchState}
-        limitNumber={limitNumber}
-        selectLimitNumber={selectLimitNumber}
-        chooseSort={chooseSort}
-        sort={sort}
-        pageArr={pageArr}
-        setPageNumber={setPageNumber}
-      />
-      <ModalWindow
-        title={'Edit elements'}
-        show={editModalShow}
-        onHide={() => setEditModalShow(false)}
-        formname={'languageForm'}
-      >
-        <LanguageModalInner initialValues={initial} submitData={editFormData} />
-      </ModalWindow>
-    </React.Fragment>
+        <LanguageTableTemplate
+          removeTableData={removeTableData}
+          tableData={languageStatus}
+          showModal={(id) => showEditForm(id)}
+          searchState={searchState}
+          limitNumber={limitNumber}
+          selectLimitNumber={selectLimitNumber}
+          chooseSort={chooseSort}
+          sort={sort}
+          pageArr={pageArr}
+          setPageNumber={setPageNumber}
+          errorBlock={errorBlock}
+        />
+        <ModalWindow
+          title={'Edit elements'}
+          show={editModalShow}
+          onHide={() => setEditModalShow(false)}
+          formname={'languageForm'}
+        >
+          <LanguageModalInner initialValues={initial} submitData={editFormData} />
+        </ModalWindow>
+      </div>
+    </div>
+
   );
 }
 
@@ -147,17 +157,52 @@ const mapStateToProps = state => ({
   pristine: isPristine('changeLanguage')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  removeData: (id, sortType, name, pageNumber, limitNumber) => {
-    dispatch(RemoveLanguageData(id)).then(() => changeData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+  removeData: (id, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.LANGUAGE,
+      addData: (res) => dispatch(AddLanguageData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(RemoveLanguageData(id,setGetDataStatus)).then(() => changeData(options));
   },
-  createData: (newData, sortType, name, pageNumber, limitNumber) => {
-    dispatch(CreateLanguageData(newData)).then(() => changeData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber));
+  createData: (newData, sortType, name, pageNumber, limitNumber,setGetDataStatus) => {
+    const options = {
+      path: PATH.LANGUAGE,
+      addData: (res) => dispatch(AddLanguageData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(CreateLanguageData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value) => {
-    dispatch(ChangeLanguageData(state, value));
+  editData: (state, value, setGetDataStatus) => {
+    dispatch(ChangeLanguageData(state, value,setGetDataStatus));
   },
-  findData: (sortType, name, pageNumber, limitNumber) => {
-    changeData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)), 'name', sortType, '', 'name', name, pageNumber, limitNumber);
+  findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+    const options = {
+      path: PATH.LANGUAGE,
+      addData: (res) => dispatch(AddLanguageData(res)),
+      sortField: 'name',
+      sortType,
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+      setErrorBlock,
+    };
+    changeData(options);
   },
 });
 

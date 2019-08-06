@@ -8,10 +8,10 @@ export function AddLanguageData(payload) {
   };
 }
 
-export function RemoveLanguageData(id) {
+export function RemoveLanguageData(id, setGetDataStatus) {
   return dispatch => {
     dispatch(AddLanguageData);
-    return deleteData(PATH.LANGUAGE, id).then(() => {
+    return deleteData(PATH.LANGUAGE, id, setGetDataStatus).then(() => {
       return {
         type: TYPE.LANGUAGE_REMOVE_DATA,
         payload: { id },
@@ -20,10 +20,10 @@ export function RemoveLanguageData(id) {
   };
 }
 
-export function CreateLanguageData(payload) {
+export function CreateLanguageData(payload, setGetDataStatus) {
   return dispatch => {
     dispatch(AddLanguageData);
-    return postData(PATH.LANGUAGE, payload).then(() => {
+    return postData(PATH.LANGUAGE, payload, setGetDataStatus).then(() => {
       return {
         type: TYPE.LANGUAGE_CREATE_DATA,
         payload,
@@ -32,17 +32,8 @@ export function CreateLanguageData(payload) {
   };
 }
 
-export function ChangeLanguageData(state, payload) {
-  let body = {};
-  state.data.map(item => {
-    item.id === payload.id &&
-    (body = {
-      name: payload.name,
-      descr: payload.descr,
-      link: payload.link,
-    });
-    putData(PATH.LANGUAGE, item.id, body);
-  });
+export function ChangeLanguageData(state, payload, setGetDataStatus) {
+  state.data.map(item => item.id === payload.id && putData(PATH.LANGUAGE, item.id, payload, setGetDataStatus));
   return {
     type: TYPE.LANGUAGE_CHANGE_DATA,
     payload,

@@ -5,8 +5,10 @@ import Icon from '../../Icons/Icons';
 import SearchByName from '../ComponentsPieces/SearchByName';
 import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
 import PaginationButton from '../ComponentsPieces/PaginationButton';
+import EmptyData from '../../ErrorBlock/EmptyData';
+import ThemeTableMap from './ThemeTableMap';
 
-function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort }) {
+function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
@@ -26,21 +28,11 @@ function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState
         </thead>
         <tbody>
         {
-          tableData.data && tableData.data.map(item =>
-            <tr key={item.id}>
-              <td>{item.name}</td>
-              <td className="hidden__col">{item.descr}</td>
-              <td className="hidden__col">{item.link}</td>
-              <td>
-                <div onClick={() => showModal(item.id)}>
-                  <Icon iconName={'edit'} className={'editIcon'} />
-                </div>
-                <div onClick={() => removeTableData(item.id)}>
-                  <Icon iconName={'delete'} className={'delIcon'} />
-                </div>
-              </td>
-            </tr>
-          )
+          !errorBlock ?
+            tableData.data.length ?
+              <ThemeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
+              : <EmptyData colSpan={4} problem={'Data somewhere, but not here'} />
+            : <EmptyData colSpan={4} problem={'We have some problem:C'} />
         }
         </tbody>
       </Table>
@@ -68,6 +60,7 @@ ThemeTableTemplate.propTypes = {
   setPageNumber: PropTypes.func,
   limitNumber: PropTypes.string,
   sort: PropTypes.string,
+  errorBlock: PropTypes.bool,
 };
 
 export default ThemeTableTemplate;
