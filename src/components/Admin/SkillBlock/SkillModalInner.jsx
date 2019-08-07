@@ -27,14 +27,18 @@ function SkillModalInner({ themeList, languageList, handleSubmit, submitData }) 
 				<Form.Label>Bg color</Form.Label>
 				<Field name="bgColor" component={FormInput} type="text" placeholder="Background color" />
 			</Form.Group>
-			<Form.Group controlId="exampleForm.ControlSelect2">
+			{themeList.data.length !== 0 &&
+			< Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Theme</Form.Label>
 				<Field name="theme" component={FormMultiSelector} dataArr={themeList} />
-			</Form.Group>
+				</Form.Group>
+			}
+			{languageList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Language</Form.Label>
-				<Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]} />
+				<Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]}/>
 			</Form.Group>
+			}
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Period</Form.Label>
 				<Field name="period" component={FormInput} type="text" placeholder="Period" validate={[requiredField, maxLPeriod]} />

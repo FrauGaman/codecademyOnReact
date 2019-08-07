@@ -46,16 +46,12 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [skillStatus.count, pageNumber, limitNumber]);
+  }, [skillStatus.count, limitNumber]);
 
   useEffect(() => {
-    if (skillStatus.data !== undefined) {
-      if (skillStatus.data.length === 0) {
-        if (pageNumber >= 1) {
-          let clonePageNumber = pageNumber;
-          clonePageNumber = clonePageNumber - 1;
-          setPageNumber(clonePageNumber);
-        }
+    if (skillStatus.data !== undefined && skillStatus.data.length === 0) {
+      if (pageNumber > 1) {
+        setPageNumber(pageNumber - 1);
       }
     }
   }, [skillStatus.count]);

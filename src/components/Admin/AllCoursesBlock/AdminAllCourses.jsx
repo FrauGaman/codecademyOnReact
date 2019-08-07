@@ -46,16 +46,12 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [allCoursesStatus.count, pageNumber, limitNumber]);
+  }, [allCoursesStatus.count, limitNumber]);
 
   useEffect(() => {
-    if (allCoursesStatus.data !== undefined) {
-      if (allCoursesStatus.data.length === 0) {
-        if (pageNumber >= 1) {
-          let clonePageNumber = pageNumber;
-          clonePageNumber = clonePageNumber - 1;
-          setPageNumber(clonePageNumber);
-        }
+    if (allCoursesStatus.data !== undefined && allCoursesStatus.data.length === 0) {
+      if (pageNumber > 1) {
+        setPageNumber(pageNumber - 1);
       }
     }
   }, [allCoursesStatus.count]);
@@ -217,6 +213,8 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
+      setGetDataStatus,
+
     };
     dispatch(RemoveCoursesData(id, setGetDataStatus)).then(() => changeData(options));
   },

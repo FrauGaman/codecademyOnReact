@@ -38,16 +38,12 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [languageStatus.count, pageNumber, limitNumber]);
+  }, [languageStatus.count, limitNumber]);
 
   useEffect(() => {
-    if (languageStatus.data !== undefined) {
-      if (languageStatus.data.length === 0) {
-        if (pageNumber >= 1) {
-          let clonePageNumber = pageNumber;
-          clonePageNumber = clonePageNumber - 1;
-          setPageNumber(clonePageNumber);
-        }
+    if (languageStatus.data !== undefined && languageStatus.data.length === 0) {
+      if (pageNumber > 1) {
+        setPageNumber(pageNumber - 1);
       }
     }
   }, [languageStatus.count]);

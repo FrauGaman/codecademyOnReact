@@ -35,6 +35,7 @@ ModalWindow.propTypes = {
 	title: PropTypes.string,
 	onHide: PropTypes.func,
 	show: PropTypes.bool,
+	submitData: PropTypes.func,
 };
 
 export default ModalWindow;

@@ -9,7 +9,7 @@ const maxL = setMaxLength(300);
 
 function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData}) {
 	return(
-		<Form id="allCoursesForm" onSubmit={handleSubmit(submitData)} >
+		<Form id="allCoursesForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Title</Form.Label>
 				<Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} />
@@ -30,14 +30,18 @@ function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData
 				<Form.Label>Border color</Form.Label>
 				<Field name="borderColor" component={FormInput} type="text" placeholder="Border color" />
 			</Form.Group>
+			{themeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Theme</Form.Label>
 				<Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]} />
 			</Form.Group>
+			}
+			{languageList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Language</Form.Label>
 				<Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]} />
 			</Form.Group>
+			}
 		</Form>
 	)
 }

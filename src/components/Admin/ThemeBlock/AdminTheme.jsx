@@ -38,16 +38,12 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [themeStatus.count, pageNumber, limitNumber]);
+  }, [themeStatus.count, limitNumber]);
 
   useEffect(() => {
-    if (themeStatus.data !== undefined) {
-      if (themeStatus.data.length === 0) {
-        if (pageNumber >= 1) {
-          let clonePageNumber = pageNumber;
-          clonePageNumber = clonePageNumber - 1;
-          setPageNumber(clonePageNumber);
-        }
+    if (themeStatus.data !== undefined && themeStatus.data.length === 0) {
+      if (pageNumber > 1) {
+        setPageNumber(pageNumber - 1);
       }
     }
   }, [themeStatus.count]);

@@ -17,7 +17,6 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData, getData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import CareerModalInner from './CareerModalInner';
-import {AddSkillData} from '../../../actions/skillData';
 import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
@@ -49,16 +48,12 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [careerStatus.count, pageNumber, limitNumber]);
+  }, [careerStatus.count, limitNumber]);
 
   useEffect(() => {
-    if (careerStatus.data !== undefined) {
-      if (careerStatus.data.length === 0) {
-        if (pageNumber >= 1) {
-          let clonePageNumber = pageNumber;
-          clonePageNumber = clonePageNumber - 1;
-          setPageNumber(clonePageNumber);
-        }
+    if (careerStatus.data !== undefined && careerStatus.data.length === 0) {
+      if (pageNumber > 1) {
+        setPageNumber(pageNumber - 1);
       }
     }
   }, [careerStatus.count]);
@@ -235,7 +230,7 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus
+      setGetDataStatus,
     };
     dispatch(RemoveCareerData(id, setGetDataStatus)).then(() => changeData(options));
   },
@@ -250,7 +245,7 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus
+      setGetDataStatus,
     };
     dispatch(CreateCareerData(newData, setGetDataStatus)).then(() => changeData(options));
   },

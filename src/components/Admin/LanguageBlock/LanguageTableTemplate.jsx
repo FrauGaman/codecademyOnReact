@@ -6,7 +6,7 @@ import SearchByName from '../ComponentsPieces/SearchByName';
 import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
 import PaginationButton from '../ComponentsPieces/PaginationButton';
 import LanguageTableMap from './LanguageTableMap';
-import EmptyData from '../../ErrorBlock/EmptyData';
+import EmptyData from '../ErrorBlock/EmptyData';
 
 function LanguageTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
   return (

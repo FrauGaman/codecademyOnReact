@@ -6,7 +6,7 @@ import CareerFilterSelect from './CareerFilter-Select';
 import SearchByName from '../ComponentsPieces/SearchByName';
 import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
 import PaginationButton from '../ComponentsPieces/PaginationButton';
-import EmptyData from '../../ErrorBlock/EmptyData';
+import EmptyData from '../ErrorBlock/EmptyData';
 import CareerTableMap from './CareerTableMap';
 
 function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeTableData, filterState, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {

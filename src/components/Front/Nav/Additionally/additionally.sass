@@ -1,0 +1,27 @@
+@import '../../../../style/variables'
+
+.additionally
+  display: flex
+  justify-content: space-between
+  align-items: center
+  @media screen and (max-width: 960px)
+    display: none
+  .icon__wrapper
+    margin-left: 38px
+    margin-right: 38px
+    cursor: pointer
+.upgrade__Btn
+  display: block
+  width: 147px
+  height: 38px
+  border: 1px solid $mainColor
+  background: #fff
+  font-size: $mainFontSize
+  font-weight: $mainFontWeight
+  color: $mainColor
+  @media screen and (max-width: 960px)
+    width: 100%
+    margin-top: 15px
+  &:hover
+    background-color: rgba(75, 53, 239, 0.1)
+

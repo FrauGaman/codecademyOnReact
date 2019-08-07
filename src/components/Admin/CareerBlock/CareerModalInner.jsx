@@ -7,7 +7,7 @@ import { requiredField, setMaxLength, stringValidator } from '../validator';
 
 const maxLDescr = setMaxLength(300);
 
-function CareerModalInner({  themeList, languageList, knowledgeList, handleSubmit, submitData }) {
+function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit, submitData }) {
 	return(
 		<Form id="careerForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
@@ -26,18 +26,24 @@ function CareerModalInner({  themeList, languageList, knowledgeList, handleSubmi
 				<Form.Label>Bg color</Form.Label>
 				<Field name="bgColor" component={FormInput} type="text" placeholder="Background color" />
 			</Form.Group>
+			{themeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Theme</Form.Label>
-				<Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]} />
+				<Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]}/>
 			</Form.Group>
-			<Form.Group controlId="exampleForm.ControlSelect2">
-				<Form.Label>Language</Form.Label>
-				<Field name="language" component={FormMultiSelector} dataArr={languageList} />
-			</Form.Group>
+			}
+			{languageList.data.length !== 0 &&
+				<Form.Group controlId="exampleForm.ControlSelect2">
+					<Form.Label>Language</Form.Label>
+					<Field name="language" component={FormMultiSelector} dataArr={languageList}/>
+				</Form.Group>
+			}
+			{knowledgeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Knowledge</Form.Label>
-				<Field name="knowledge" component={FormMultiSelector} dataArr={knowledgeList} />
+				<Field name="knowledge" component={FormMultiSelector} dataArr={knowledgeList}/>
 			</Form.Group>
+			}
 		</Form>
 	);
 }

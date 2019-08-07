@@ -38,16 +38,12 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
       helpArr.push(i);
     }
     setPageArr(helpArr);
-  }, [knowledgeStatus.count, pageNumber, limitNumber]);
+  }, [knowledgeStatus.count, limitNumber]);
 
   useEffect(() => {
-    if (knowledgeStatus.data !== undefined) {
-      if (knowledgeStatus.data.length === 0) {
-        if (pageNumber >= 1) {
-          let clonePageNumber = pageNumber;
-          clonePageNumber = clonePageNumber - 1;
-          setPageNumber(clonePageNumber);
-        }
+    if (knowledgeStatus.data !== undefined && knowledgeStatus.data.length === 0) {
+      if (pageNumber > 1) {
+        setPageNumber(pageNumber - 1);
       }
     }
   }, [knowledgeStatus.count]);
@@ -104,7 +100,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
           onHide={() => setModalShow(false)}
           formname={'knowledgeForm'}
         >
-          <KnowledgeModalInner submitData={submitData}/>
+          <KnowledgeModalInner submitData={submitData} />
         </ModalWindow>
 
         <KnowledgeTableTemplate

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Nav from './components/nav/Nav';
-import Filter from './components/Filter/Filter';
-import Footer from './components/Footer/Footer';
+import Nav from './components/Front/Nav/Nav';
+import Filter from './components/Front/Filter/Filter';
+import Footer from './components/Front/Footer/Footer';
 import Preloader from './components/Preloader/Preloader';
 
 import { PATH } from './scripts/const';

@@ -6,7 +6,7 @@ import AllCoursesFilterSelect from './AllCoursesFilter-Select';
 import SearchByName from '../ComponentsPieces/SearchByName';
 import SelectPageLimit from '../ComponentsPieces/SelectPageLimit';
 import PaginationButton from '../ComponentsPieces/PaginationButton';
-import EmptyData from '../../ErrorBlock/EmptyData';
+import EmptyData from '../ErrorBlock/EmptyData';
 import AllCoursesTableMap from './AllCoursesTableMap';
 
 function AllCoursesTableTemplate({ tableData, themeList, languageList, filterState, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {

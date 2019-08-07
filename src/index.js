@@ -9,7 +9,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
 
-import FullCatalogPage from './components/FullCatalogPage';
+import FullCatalogPage from './components/Front/FullCatalogPage';
 import AdminPanel from './components/Admin/AdminPanel';
 import AdminCareer from './components/Admin/CareerBlock/AdminCareer';
 import AdminSkill from './components/Admin/SkillBlock/AdminSkill';
@@ -17,8 +17,8 @@ import AdminAllCourses from './components/Admin/AllCoursesBlock/AdminAllCourses'
 import AdminTheme from './components/Admin/ThemeBlock/AdminTheme';
 import AdminLanguage from './components/Admin/LanguageBlock/AdminLanguage';
 import AdminKnowledge from './components/Admin/KnowledgeBlock/AdminKnowledge';
-import NotFound from './components/404Admin';
-import NotFoundFront from './components/404Front';
+import NotFound from './components/Admin/404Admin';
+import NotFoundFront from './components/Front/404Front';
 
 ReactDOM.render((
   <Provider store={store}>
