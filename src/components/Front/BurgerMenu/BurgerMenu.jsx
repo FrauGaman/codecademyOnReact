@@ -17,14 +17,14 @@ function BurgerMenu({ menu, hideMenu }) {
           <Icon iconName={'searchIcon'} className={'search__icon__menu'} />
         </div>
         <ul>
-          {menu.length ?
+          {!!menu.length &&
             menu.map(({ id, URL = '/all', linkName = 'linkPlug' }) =>
               <li key={id}><a href={URL} className="burger__menu__link">{linkName}</a></li>
-          ) : []}
+          )}
         </ul>
         <a href={null} className="burger__menu__link">Log in</a>
         <UpgradeBtn />
-        <SignUpBtn signUpBtnClass={"signUp__btn signUp__btn__menu"}/>
+        <SignUpBtn signUpBtnClass={'signUp__btn signUp__btn__menu'} />
       </div>
     </div>
   );

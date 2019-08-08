@@ -32,10 +32,14 @@ export function CreateCareerData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeCareerData(state, payload, setGetDataStatus) {
-  state.data.map(item => item.id === payload.id && putData(PATH.CAREERPATH, item.id, payload, setGetDataStatus));
-  return {
-    type: TYPE.CAREER_CHANGE_DATA,
-    payload,
+export function ChangeCareerData(id, state, payload, setGetDataStatus) {
+  return dispatch => {
+    dispatch(AddCareerData);
+    return putData(PATH.CAREERPATH, id, payload, setGetDataStatus).then(() => {
+      return {
+        type: TYPE.CAREER_CHANGE_DATA,
+        payload,
+      };
+    });
   };
 }

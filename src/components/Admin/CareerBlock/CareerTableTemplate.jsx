@@ -9,7 +9,24 @@ import PaginationButton from '../ComponentsPieces/PaginationButton';
 import EmptyData from '../ErrorBlock/EmptyData';
 import CareerTableMap from './CareerTableMap';
 
-function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList, removeTableData, filterState, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
+function CareerTableTemplate({
+   tableData,
+   themeList,
+   languageList,
+   knowledgeList,
+   removeTableData,
+   filterState,
+   showModal,
+   searchState,
+   selectLimitNumber,
+   chooseSort,
+   pageArr,
+   setPageNumber,
+   limitNumber,
+   sort,
+   errorBlock,
+   pageNumber,
+}) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
@@ -29,7 +46,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
           <th className="hidden__col">Theme</th>
           <th className="hidden__col">Language</th>
           <th className="hidden__col">Knowledge</th>
-          <th>Edit</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -42,7 +59,7 @@ function CareerTableTemplate({ tableData, themeList, languageList, knowledgeList
         }
         </tbody>
       </Table>
-      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} />
+      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
     </div>
   );
 }

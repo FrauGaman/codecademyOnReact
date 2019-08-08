@@ -20,7 +20,7 @@
     @media screen and (max-width: 1500px)
       padding-left: 40px
       padding-right: 40px
-    .create__btn, .sort__btn
+    .create__btn
       width: 150px
       height: 40px
       margin-top: 30px
@@ -29,31 +29,46 @@
       border: none
       color: #ffffff
       cursor: pointer
+      @media screen and (max-width: 766px)
+        display: block
+        width: 70%
+        margin: 30px auto
       &:hover
         box-shadow: 0 0 11px -3px #808080
       &:active, &:focus
         outline: none
-    .sort__btn
-      width: 110px
-      height: 35px
-      margin-top: 0
-      background-color: #4a4a4a
-    .sort__field
-      cursor: pointer
     .filter__title
       font-size: 20px
       font-weight: 700
+    .params__selector__block
+      display: flex
+      justify-content: space-between
+      margin-top: 30px
+      @media screen and (max-width: 900px)
+        flex-direction: column
+
     .params__selector
-      width: 50%
       margin-bottom: 20px
-      @media screen and (max-width: 850px)
-        width: 100%
+      width: 680px
+      @media screen and (max-width: 1450px)
+        width: 600px
+      @media screen and (max-width: 1310px)
+        width: 500px
+      @media screen and (max-width: 1096px)
+        width: 450px
+      @media screen and (max-width: 1096px)
+        width: 400px
+      @media screen and (max-width: 900px)
+        width: 300px
+
     .page__selector
       margin-left: 20px
     .page
       margin-right: 20px
       width: 50px
       height: 50px
+      &__active
+        border: 3px solid $mainColor
 
 .table
   max-width: $maxDisplayWidth
@@ -64,6 +79,13 @@
   .hidden__col__big
     @media screen and (max-width: 1450px)
       display: none
+
+.form__button
+  display: flex
+  justify-content: flex-end
+  padding-bottom: 20px
+  &__close
+    margin-right: 20px
 
 input[type="text"], input[type="text"], textarea
   width: 100%

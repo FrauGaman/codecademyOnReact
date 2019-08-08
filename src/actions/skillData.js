@@ -1,5 +1,6 @@
 import { PATH, TYPE } from '../scripts/const';
 import { deleteData, postData, putData } from '../scripts/changeData';
+import {AddLanguageData} from './languageData';
 
 export function AddSkillData(payload) {
   return {
@@ -32,10 +33,14 @@ export function CreateSkillData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeSkillData(state, payload, setGetDataStatus) {
-  state.data.map(item => item.id === payload.id && putData(PATH.SKILLPATH, item.id, payload, setGetDataStatus));
-  return {
-    type: TYPE.SKILL_CHANGE_DATA,
-    payload,
+export function ChangeSkillData(id, state, payload, setGetDataStatus) {
+  return dispatch => {
+    dispatch(AddSkillData);
+    return putData(PATH.SKILLPATH, id, payload, setGetDataStatus).then(() => {
+      return {
+        type: TYPE.SKILL_CHANGE_DATA,
+        payload,
+      };
+    });
   };
 }

@@ -5,11 +5,9 @@ import './navigation.sass';
 function NavMenu({ menu }) {
   return (
     <ul>
-      {menu.length ? menu.map(({id, URL = '/all', linkName = 'linkPlug'}) =>
+      {!!menu.length && menu.map(({id, URL = '/all', linkName = 'linkPlug'}) =>
         <li className="menu__link" key={id}><a href={URL}>{linkName}</a></li>
-      )
-        : []
-      }
+      )}
     </ul>
   );
 }

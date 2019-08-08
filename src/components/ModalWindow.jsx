@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
-function ModalWindow({ children, formname, title, onHide, show }) {
+function ModalWindow({ children, title, onHide, show }) {
 	return (
 		<Modal
 			size="lg"
@@ -11,7 +11,6 @@ function ModalWindow({ children, formname, title, onHide, show }) {
 			show={show}
 			onHide={onHide}
 			title={title}
-			formname={formname}
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="contained-modal-title-vcenter">
@@ -21,21 +20,15 @@ function ModalWindow({ children, formname, title, onHide, show }) {
 			<Modal.Body>
 				{children}
 			</Modal.Body>
-			<Modal.Footer>
-				<Button variant="secondary" onClick={onHide}>Close</Button>
-				<Button variant="primary" form={formname} type="submit">Save changes</Button>
-			</Modal.Footer>
 		</Modal>
 	);
 }
 
 ModalWindow.propTypes = {
 	children: PropTypes.node,
-	formname: PropTypes.string,
 	title: PropTypes.string,
 	onHide: PropTypes.func,
 	show: PropTypes.bool,
-	submitData: PropTypes.func,
 };
 
 export default ModalWindow;

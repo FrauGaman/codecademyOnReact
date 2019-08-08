@@ -28,10 +28,10 @@ function Search({ hideSearch }) {
               {
                 searchState.length ?
                   searchState.map(({title = 'TitlePlug'}) =>
-                <li key={title}>
-                  <button>{title}</button>
-                </li>
-              )
+                    <li key={title}>
+                      <button>{title}</button>
+                    </li>
+                  )
                 : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
               }
             </ul>

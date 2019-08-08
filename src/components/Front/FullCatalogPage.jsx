@@ -32,9 +32,9 @@ function FullCatalogPage({ match }) {
     setKnowResult(res);
   };
 
-  const [careerResult, setcareerResult] = useState([]);
+  const [careerResult, setCareerResult] = useState([]);
   const addCareerData = (res) => {
-    setcareerResult(res);
+    setCareerResult(res);
   };
 
 	const [skillResult, setSkillResult] = useState([]);
@@ -42,7 +42,7 @@ function FullCatalogPage({ match }) {
 		setSkillResult(res);
 	};
 
-	const [coursesRresult, setCoursesResult] = useState([]);
+	const [coursesResult, setCoursesResult] = useState([]);
 	const addCoursesData = (res) => {
 		setCoursesResult(res);
 	};
@@ -106,7 +106,7 @@ function FullCatalogPage({ match }) {
               <MainDescr filterArr={filterArr} activeLink={activeLink} />
               <CareerCourses careerResult={careerResult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} knowledgeArr={knowResult} />
               <SkillCourses skillResult={skillResult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
-              <CoursesList coursesRresult={coursesRresult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
+              <CoursesList coursesResult={coursesResult} currentThemeId={currentThemeId} currentLanguageId={currentLanguageId} />
             </div>
               : <NotFoundFront />
               : <PreloaderMini />

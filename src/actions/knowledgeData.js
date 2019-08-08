@@ -32,10 +32,14 @@ export function CreateKnowledgeData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeKnowledgeData(state, payload, setGetDataStatus) {
-  state.data.map(item => item.id === payload.id && putData(PATH.KNOWLEDGE, item.id, payload, setGetDataStatus));
-  return {
-    type: TYPE.KNOWLEDGE_CHANGE_DATA,
-    payload,
+export function ChangeKnowledgeData(id, state, payload, setGetDataStatus) {
+  return dispatch => {
+    dispatch(AddKnowledgeData);
+    return putData(PATH.KNOWLEDGE, id, payload, setGetDataStatus).then(() => {
+      return {
+        type: TYPE.KNOWLEDGE_CHANGE_DATA,
+        payload,
+      };
+    });
   };
 }

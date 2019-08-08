@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormMultiSelector } from '../ComponentsPieces/Forms/FromParts';
 import { requiredField, setMaxLength, stringValidator } from '../validator';
 
 const maxLDescr = setMaxLength(300);
 
-function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit, submitData }) {
+function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit, submitData, onHide }) {
 	return(
 		<Form id="careerForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
@@ -29,21 +29,25 @@ function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit
 			{themeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Theme</Form.Label>
-				<Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]}/>
+				<Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]} />
 			</Form.Group>
 			}
 			{languageList.data.length !== 0 &&
 				<Form.Group controlId="exampleForm.ControlSelect2">
 					<Form.Label>Language</Form.Label>
-					<Field name="language" component={FormMultiSelector} dataArr={languageList}/>
+					<Field name="language" component={FormMultiSelector} dataArr={languageList} />
 				</Form.Group>
 			}
 			{knowledgeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Knowledge</Form.Label>
-				<Field name="knowledge" component={FormMultiSelector} dataArr={knowledgeList}/>
+				<Field name="knowledge" component={FormMultiSelector} dataArr={knowledgeList} />
 			</Form.Group>
 			}
+			<div className="form__button">
+				<Button className="form__button__close" variant="secondary" onClick={onHide}>Close</Button>
+				<Button className="form__button__submit" variant="primary" type="submit">Save changes</Button>
+			</div>
 		</Form>
 	);
 }
@@ -76,6 +80,7 @@ CareerModalInner.propTypes = {
 	}),
 	handleSubmit: PropTypes.func,
 	submitData: PropTypes.func,
+	onHide: PropTypes.func,
 };
 
 CareerModalInner = reduxForm({

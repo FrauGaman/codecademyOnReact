@@ -8,7 +8,20 @@ import PaginationButton from '../ComponentsPieces/PaginationButton';
 import EmptyData from '../ErrorBlock/EmptyData';
 import ThemeTableMap from './ThemeTableMap';
 
-function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
+function ThemeTableTemplate({
+  tableData,
+  removeTableData,
+  showModal,
+  searchState,
+  selectLimitNumber,
+  chooseSort,
+  pageArr,
+  setPageNumber,
+  limitNumber,
+  sort,
+  errorBlock,
+  pageNumber,
+}) {
   return (
     <div className="table">
       <SearchByName searchState={searchState} />
@@ -23,7 +36,7 @@ function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState
           </th>
           <th className="hidden__col">Description</th>
           <th className="hidden__col">Link</th>
-          <th>Edit</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +49,7 @@ function ThemeTableTemplate({ tableData, removeTableData, showModal, searchState
         }
         </tbody>
       </Table>
-      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} />
+      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
     </div>
   );
 }

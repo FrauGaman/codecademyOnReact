@@ -15,6 +15,7 @@ import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import ThemeModalInner from './ThemeModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import {AddLanguageData, ChangeLanguageData} from '../../../actions/languageData';
 
 function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -67,7 +68,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
         setEditModalShow(false);
       }
     } else {
-      editData(themeStatus, value, setGetDataStatus);
+      editData(initial.id, themeStatus, value, sort, search, pageNumber, limitNumber, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -90,7 +91,6 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
         <AdminBtn
           className={'create__btn'}
           innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
           variant="primary"
           onClick={() => setModalShow(true)}
         />
@@ -98,9 +98,8 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
           title={'Create new element'}
           show={modalShow}
           onHide={() => setModalShow(false)}
-          formname={'themeForm'}
         >
-          <ThemeModalInner submitData={submitData} />
+          <ThemeModalInner onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
 
         <ThemeTableTemplate
@@ -114,15 +113,15 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
           sort={sort}
           pageArr={pageArr}
           setPageNumber={setPageNumber}
+          pageNumber={pageNumber}
           errorBlock={errorBlock}
         />
         <ModalWindow
           title={'Edit elements'}
           show={editModalShow}
           onHide={() => setEditModalShow(false)}
-          formname={'themeForm'}
         >
-          <ThemeModalInner initialValues={initial} submitData={editFormData} />
+          <ThemeModalInner onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>
     </div>
@@ -179,12 +178,24 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus
+      setGetDataStatus,
     };
     dispatch(CreateThemeData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value, setGetDataStatus) => {
-    dispatch(ChangeThemeData(state, value, setGetDataStatus));
+  editData: (id, state, value, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.THEME,
+      addData: (res) => dispatch(AddThemeData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(ChangeThemeData(id, state, value, setGetDataStatus)).then(() => changeData(options));
   },
   findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
     const options = {

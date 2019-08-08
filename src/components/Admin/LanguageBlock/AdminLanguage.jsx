@@ -67,7 +67,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         setEditModalShow(false);
       }
     } else {
-      editData(languageStatus, value, setGetDataStatus);
+      editData(initial.id, languageStatus, value, sort, search, pageNumber, limitNumber, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -78,7 +78,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus)
+    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus);
   };
 
   return (
@@ -90,7 +90,6 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         <AdminBtn
           className={'create__btn'}
           innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
           variant="primary"
           onClick={() => setModalShow(true)}
         />
@@ -98,9 +97,8 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
           title={'Create new element'}
           show={modalShow}
           onHide={() => setModalShow(false)}
-          formname={'languageForm'}
         >
-          <LanguageModalInner submitData={submitData} />
+          <LanguageModalInner onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
 
         <LanguageTableTemplate
@@ -114,15 +112,15 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
           sort={sort}
           pageArr={pageArr}
           setPageNumber={setPageNumber}
+          pageNumber={pageNumber}
           errorBlock={errorBlock}
         />
         <ModalWindow
           title={'Edit elements'}
           show={editModalShow}
           onHide={() => setEditModalShow(false)}
-          formname={'languageForm'}
         >
-          <LanguageModalInner initialValues={initial} submitData={editFormData} />
+          <LanguageModalInner onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>
     </div>
@@ -183,8 +181,20 @@ const mapStateToDispatch = dispatch => ({
     };
     dispatch(CreateLanguageData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value, setGetDataStatus) => {
-    dispatch(ChangeLanguageData(state, value,setGetDataStatus));
+  editData: (id, state, value, sortType, name, pageNumber, limitNumber,setGetDataStatus) => {
+    const options = {
+      path: PATH.LANGUAGE,
+      addData: (res) => dispatch(AddLanguageData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(ChangeLanguageData(id, state, value, setGetDataStatus)).then(() => changeData(options));
   },
   findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
     const options = {

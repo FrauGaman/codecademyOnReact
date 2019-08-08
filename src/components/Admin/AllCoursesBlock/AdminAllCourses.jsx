@@ -13,7 +13,7 @@ import { AddThemeData } from '../../../actions/themeData';
 import { AddLanguageData } from '../../../actions/languageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import { changeData, getData } from '../../../scripts/changeData';
+import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import AllCoursesModalInner from './AllCoursesModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
@@ -36,8 +36,8 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
-    getThemeData();
-    getLanguageData();
+    getThemeData(themeList.count);
+    getLanguageData(languageList.count);
   }, []);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     } else {
       value.theme = value.theme.map(item => +item);
       value.language = value.language.map(item => +item);
-      editData(allCoursesStatus, value, setGetDataStatus);
+      editData(initial.id, allCoursesStatus, value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -103,17 +103,11 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
         <AdminBtn
           className={'create__btn'}
           innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <ModalWindow
-          title={'Create new element'}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          formname={'allCoursesForm'}
-        >
-          <AllCoursesModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
+        <ModalWindow title={'Create new element'} show={modalShow} onHide={() => setModalShow(false)}>
+          <AllCoursesModalInner themeList={themeList} languageList={languageList} onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
         <AllCoursesTableTemplate
           tableData={allCoursesStatus}
@@ -129,15 +123,11 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
           pageArr={pageArr}
           setPageNumber={setPageNumber}
           filterState={filterState}
+          pageNumber={pageNumber}
           errorBlock={errorBlock}
         />
-        <ModalWindow
-          title={'Edit elements'}
-          show={editModalShow}
-          onHide={() => setEditModalShow(false)}
-          formname={'allCoursesForm'}
-        >
-          <AllCoursesModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
+        <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
+          <AllCoursesModalInner themeList={themeList} languageList={languageList} onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>
     </div>
@@ -196,11 +186,21 @@ const mapStateToProps = state => ({
 });
 
 const mapStateToDispatch = dispatch => ({
-  getThemeData: () => {
-    getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
+  getThemeData: (count) => {
+    const options = {
+      path: PATH.THEME,
+      addData: (res) => dispatch(AddThemeData(res)),
+      limitNumber: count,
+    };
+    changeData(options);
   },
-  getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+  getLanguageData: (count) => {
+    const options = {
+      path: PATH.LANGUAGE,
+      addData: (res) => dispatch(AddLanguageData(res)),
+      limitNumber: count,
+    };
+    changeData(options);
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
     const options = {
@@ -233,8 +233,20 @@ const mapStateToDispatch = dispatch => ({
     };
     dispatch(CreateCoursesData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value, setGetDataStatus) => {
-    dispatch(ChangeCoursesData(state, value, setGetDataStatus));
+  editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.COURSESLIST,
+      addData: (res) => dispatch(AddCoursesData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(ChangeCoursesData(id, state, value, setGetDataStatus)).then(() => changeData(options));
   },
   findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
     const options = {

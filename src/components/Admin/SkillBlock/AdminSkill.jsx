@@ -13,7 +13,7 @@ import { AddThemeData } from '../../../actions/themeData';
 import { AddLanguageData } from '../../../actions/languageData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import { changeData, getData } from '../../../scripts/changeData';
+import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import SkillModalInner from './SkillModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
@@ -36,8 +36,8 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
-    getThemeData();
-    getLanguageData();
+    getThemeData(themeList.count);
+    getLanguageData(languageList.count);
   }, []);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
     } else {
       value.theme = value.theme.map(item => +item);
       value.language = value.language.map(item => +item);
-      editData(skillStatus, value, setGetDataStatus);
+      editData(initial.id, skillStatus, value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -103,19 +103,12 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
         <AdminBtn
           className={'create__btn'}
           innerBtn={'Create'}
-          position={{ span: 2, offset: 10 }}
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <ModalWindow
-          title={'Create new element'}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          formname={'skillForm'}
-        >
-          <SkillModalInner themeList={themeList} languageList={languageList} submitData={submitData} />
+        <ModalWindow title={'Create new element'} show={modalShow} onHide={() => setModalShow(false)}>
+          <SkillModalInner themeList={themeList} languageList={languageList} onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
-
         <SkillTableTemplate
           tableData={skillStatus}
           themeList={themeList}
@@ -129,20 +122,15 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
           sort={sort}
           pageArr={pageArr}
           setPageNumber={setPageNumber}
+          pageNumber={pageNumber}
           filterState={filterState}
           errorBlock={errorBlock}
         />
-        <ModalWindow
-          title={'Edit elements'}
-          show={editModalShow}
-          onHide={() => setEditModalShow(false)}
-          formname={'skillForm'}
-        >
-          <SkillModalInner themeList={themeList} languageList={languageList} initialValues={initial} submitData={editFormData} />
+        <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
+          <SkillModalInner themeList={themeList} languageList={languageList} onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>
     </div>
-
   );
 }
 
@@ -195,11 +183,21 @@ const mapStateToProps = state => ({
   pristine: isPristine('changeSkill')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  getThemeData: () => {
-    getData(PATH.THEME, (res) => dispatch(AddThemeData(res)));
+  getThemeData: (count) => {
+    const options = {
+      path: PATH.THEME,
+      addData: (res) => dispatch(AddThemeData(res)),
+      limitNumber: count,
+    };
+    changeData(options);
   },
-  getLanguageData: () => {
-    getData(PATH.LANGUAGE, (res) => dispatch(AddLanguageData(res)));
+  getLanguageData: (count) => {
+    const options = {
+      path: PATH.LANGUAGE,
+      addData: (res) => dispatch(AddLanguageData(res)),
+      limitNumber: count,
+    };
+    changeData(options);
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
     const options = {
@@ -231,8 +229,20 @@ const mapStateToDispatch = dispatch => ({
     };
     dispatch(CreateSkillData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value, setGetDataStatus) => {
-    dispatch(ChangeSkillData(state, value, setGetDataStatus));
+  editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.SKILLPATH,
+      addData: (res) => dispatch(AddSkillData(res)),
+      sortField: 'title',
+      sortType,
+      filterStr,
+      field: 'title',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(ChangeSkillData(id, state, value, setGetDataStatus)).then(() => changeData(options));
   },
   findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
     const options = {

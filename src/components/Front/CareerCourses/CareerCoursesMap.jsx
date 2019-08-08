@@ -7,13 +7,13 @@ function CareerCoursesMap({ careerArr, knowledgeArr }) {
     careerArr.map(({ id, img = '../../img/plugImg.svg', bgColor = '#000', title = 'Title Plug', descr = 'description Plug', knowledge = [] }) =>
       <div key={id} className="career__box__item">
         <div className="career__box__img" style={{ backgroundColor: bgColor }}>
-          <img src={img} alt={title}/>
+          <img src={img} alt={title} />
         </div>
         <div className="career__box__descr">
           <h3 className="career_title">{title}</h3>
           <div className="career__box__descr_more">{descr}</div>
           <div className="knowledges">
-            {knowledge.map(knowItem =>
+            {!!knowledge.length && knowledge.map(knowItem =>
               <div key={knowItem} className="know__item">
                 <DoneIcon iconName={'doneIcon'} className="done__icon" />
                 {knowledgeArr.map(elem =>

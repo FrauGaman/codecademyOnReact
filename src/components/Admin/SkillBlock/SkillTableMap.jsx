@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '../../Icons/Icons';
 
 function SkillTableMap({ tableData, themeList, languageList, showModal, removeTableData }) {
-	return(
+	return (
 		tableData.data.map(item =>
 			<tr key={item.id}>
 				<td>{item.title}</td>
@@ -36,5 +37,41 @@ function SkillTableMap({ tableData, themeList, languageList, showModal, removeTa
 		)
 	)
 }
+
+SkillTableMap.propTypes = {
+	tableData: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			img: PropTypes.img,
+			bgColor: PropTypes.string,
+			title: PropTypes.string,
+			descr: PropTypes.string,
+			period: PropTypes.string,
+			theme: PropTypes.array,
+			language: PropTypes.array,
+		})),
+		count: PropTypes.string,
+	}),
+	themeList: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+			descr: PropTypes.string,
+			link: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	languageList: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+			descr: PropTypes.string,
+			link: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	showModal: PropTypes.func,
+	removeTableData: PropTypes.func,
+};
 
 export default SkillTableMap;

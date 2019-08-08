@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormMultiSelector } from '../ComponentsPieces/Forms/FromParts';
 import { requiredField, setMaxLength, stringValidator } from '../validator';
@@ -8,8 +8,8 @@ import { requiredField, setMaxLength, stringValidator } from '../validator';
 const maxLDescr = setMaxLength(300);
 const maxLPeriod = setMaxLength(20);
 
-function SkillModalInner({ themeList, languageList, handleSubmit, submitData }) {
-	return(
+function SkillModalInner({ themeList, languageList, handleSubmit, submitData, onHide }) {
+	return (
 		<Form id="skillForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Title</Form.Label>
@@ -43,8 +43,12 @@ function SkillModalInner({ themeList, languageList, handleSubmit, submitData }) 
 				<Form.Label>Period</Form.Label>
 				<Field name="period" component={FormInput} type="text" placeholder="Period" validate={[requiredField, maxLPeriod]} />
 			</Form.Group>
+			<div className="form__button">
+				<Button className="form__button__close" variant="secondary" onClick={onHide}>Close</Button>
+				<Button className="form__button__submit" variant="primary" type="submit">Save changes</Button>
+			</div>
 		</Form>
-	)
+	);
 }
 
 SkillModalInner.propTypes = {
@@ -68,6 +72,7 @@ SkillModalInner.propTypes = {
 	}),
 	handleSubmit: PropTypes.func,
 	submitData: PropTypes.func,
+	onHide: PropTypes.func,
 };
 
 SkillModalInner = reduxForm({

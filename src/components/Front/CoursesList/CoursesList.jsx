@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import CoursesListMap from './CoursesListMap';
 import './coursesList.sass';
 
-function CoursesList({ coursesRresult, currentThemeId, currentLanguageId }) {
-  const coursesListPathArr = coursesRresult || [];
-  let coursesArr;
-  if (coursesListPathArr.length) {
-    coursesArr = coursesListPathArr.filter(item =>
-      (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
-  } else {
-    coursesArr = [];
+function CoursesList({ coursesResult, currentThemeId, currentLanguageId }) {
+  if (!coursesResult.length) {
+    return null;
   }
+
+  const coursesArr = coursesResult.filter(item =>
+      (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
   return (
     <div className="courses__list">
-      { coursesArr.length ?
+      { !!coursesArr.length &&
         <div>
           <div className="course__title">
             <h2>courses</h2>
@@ -26,14 +24,13 @@ function CoursesList({ coursesRresult, currentThemeId, currentLanguageId }) {
             <CoursesListMap coursesArr={coursesArr} />
           </div>
         </div>
-          : []
       }
     </div>
   );
 }
 
 CoursesList.propTypes = {
-  coursesRresult: PropTypes.arrayOf(PropTypes.shape({
+  coursesResult: PropTypes.arrayOf(PropTypes.shape({
     importance: PropTypes.string,
     title: PropTypes.string,
     descr: PropTypes.string,

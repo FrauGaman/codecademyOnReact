@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import getData from '../../../scripts/getData';
-import { PATH } from '../../../scripts/const';
 import './navAdmin.sass';
 
-function NavAdmin() {
-  const [navList, setNavList] = useState('');
-  const addListData = (res) => {
-    setNavList(res);
-  };
-
-  useEffect(() => {
-    getData(PATH.ADMINNAV, addListData);
-  }, []);
-
+function NavAdmin({ navList }) {
   return (
     <div className="admin__menu__container">
       <ul className="menu__link__container">
-        {navList.length ?
+        {!!navList.length &&
           navList.map(({ title = 'titlePlug', link = 'linkPlug' }) =>
             <li key={title}><NavLink to={`/admin${link}`}>{title}</NavLink></li>
           )
-          : []
         }
       </ul>
     </div>
   );
 }
+
+NavAdmin.propTypes = {
+  navList: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    link: PropTypes.string,
+  })),
+};
 
 export default NavAdmin;

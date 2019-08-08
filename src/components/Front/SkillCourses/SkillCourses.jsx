@@ -5,17 +5,13 @@ import ProIcon from '../../Icons/Icons';
 import './skillCourses.sass';
 
 function SkillCourses({ skillResult, currentThemeId, currentLanguageId }) {
-  const skillPathArr = skillResult || [];
-  let skillArr;
-  if (skillPathArr.length) {
-    skillArr = skillPathArr.filter(item => (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
-  } else {
-    skillArr = [];
+  if (!skillResult.length) {
+    return null;
   }
-
+  const skillArr = skillResult.filter(item => (item.theme && item.theme.includes(currentThemeId)) || (item.language && item.language.includes(currentLanguageId)));
   return (
     <div>
-      { skillArr.length ?
+      { !!skillArr.length &&
       <div>
         <div className="course__title">
           <h2>skill paths</h2>
@@ -30,7 +26,6 @@ function SkillCourses({ skillResult, currentThemeId, currentLanguageId }) {
           <SkillCoursesMap skillArr={skillArr} />
         </div>
       </div>
-          : []
       }
     </div>
   );

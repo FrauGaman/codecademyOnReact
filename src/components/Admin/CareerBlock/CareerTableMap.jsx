@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '../../Icons/Icons';
 
 function CareerTableMap({ tableData, themeList, languageList, knowledgeList, showModal, removeTableData }) {
@@ -9,22 +10,22 @@ function CareerTableMap({ tableData, themeList, languageList, knowledgeList, sho
 				<td className="hidden__col__big">{item.descr}</td>
 				<td className="hidden__col__big">{item.img}</td>
 				<td className="hidden__col">{item.bgColor}</td>
-				<td className="hidden__col">{item.theme && item.theme.map(themeNumber =>
-					themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
+				<td className="hidden__col">{!!item.theme && item.theme.map(themeNumber =>
+					!!themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
 					item !== ''
 					)
 				).join(', ')
 				}</td>
-				<td className="hidden__col">{item.language && item.language.map(languageNumber =>
-					languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
+				<td className="hidden__col">{!!item.language && item.language.map(languageNumber =>
+					!!languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
 					item !== ''
 					)
 				).join(', ')
 				}</td>
-				<td className="hidden__col">{item.knowledge && item.knowledge.map(knowledgeNumber =>
-					knowledgeList.data && knowledgeList.data.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
+				<td className="hidden__col">{!!item.knowledge && item.knowledge.map(knowledgeNumber =>
+					!!knowledgeList.data && knowledgeList.data.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
 					item !== ''
 					)
@@ -43,4 +44,47 @@ function CareerTableMap({ tableData, themeList, languageList, knowledgeList, sho
 	)
 }
 
-export default CareerTableMap
+CareerTableMap.propTypes = {
+	tableData: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			img: PropTypes.img,
+			bgColor: PropTypes.string,
+			title: PropTypes.string,
+			descr: PropTypes.string,
+			theme: PropTypes.array,
+			language: PropTypes.array,
+			knowledge: PropTypes.array,
+		})),
+		count: PropTypes.string,
+	}),
+	themeList: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+			descr: PropTypes.string,
+			link: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	languageList: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+			descr: PropTypes.string,
+			link: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	knowledgeList: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	showModal: PropTypes.func,
+	removeTableData: PropTypes.func,
+};
+
+export default CareerTableMap;

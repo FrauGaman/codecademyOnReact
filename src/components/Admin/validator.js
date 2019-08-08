@@ -15,5 +15,5 @@ export const stringValidator = value => {
 
 export const linkValidator = value => {
   if (value && value.match(/^\/[\d+\w+-]+$/i)) return undefined;
-  return 'Link begins with / without spacing';
+  return 'Link begins with / without spacing and contains only eng language';
 };

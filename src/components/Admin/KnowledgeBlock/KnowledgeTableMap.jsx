@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '../../Icons/Icons';
 
 function KnowledgeTableMap({tableData, removeTableData, showModal}) {
@@ -16,6 +17,19 @@ function KnowledgeTableMap({tableData, removeTableData, showModal}) {
 					</td>
 				</tr>
 			)
-	)
+	);
 }
+
+KnowledgeTableMap.propTypes = {
+	tableData: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	removeTableData: PropTypes.func,
+	showModal: PropTypes.func,
+};
+
 export default KnowledgeTableMap;

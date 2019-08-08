@@ -8,35 +8,48 @@ import PaginationButton from '../ComponentsPieces/PaginationButton';
 import EmptyData from '../ErrorBlock/EmptyData';
 import KnowledgeTableMap from './KnowledgeTableMap';
 
-function KnowledgeTableTemplate({ tableData, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
+function KnowledgeTableTemplate({
+  tableData,
+  removeTableData,
+  showModal,
+  searchState,
+  selectLimitNumber,
+  chooseSort,
+  pageArr,
+  setPageNumber,
+  limitNumber,
+  sort,
+  errorBlock,
+  pageNumber,
+}) {
   return (
     <React.Fragment>
-        <div className="table">
-          <SearchByName searchState={searchState} />
-          <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
-          <Table striped bordered hover>
-            <thead>
-            <tr>
-              <th onClick={() => chooseSort()} className="sort__field">Knowledge
-                {sort === 'asc' ?
-                  <Icon iconName={'sortDown'} className={'sort__arrow'} />
-                  : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
-              </th>
-              <th>Edit</th>
-            </tr>
-            </thead>
-                <tbody>
-                {
-                  !errorBlock ?
-                    tableData.data.length ?
-                      <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
-                      : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
-                  : <EmptyData colSpan={2} problem={'We have some problem:C'} />
-                }
-                </tbody>
-          </Table>
-          <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} />
-        </div>
+      <div className="table">
+        <SearchByName searchState={searchState} />
+        <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+        <Table striped bordered hover>
+          <thead>
+          <tr>
+            <th onClick={() => chooseSort()} className="sort__field">Knowledge
+              {sort === 'asc' ?
+                <Icon iconName={'sortDown'} className={'sort__arrow'} />
+                : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
+            </th>
+            <th></th>
+          </tr>
+          </thead>
+              <tbody>
+              {
+                !errorBlock ?
+                  tableData.data.length ?
+                    <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
+                    : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
+                : <EmptyData colSpan={2} problem={'We have some problem:C'} />
+              }
+              </tbody>
+        </Table>
+        <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
+      </div>
     </React.Fragment>
   );
 }

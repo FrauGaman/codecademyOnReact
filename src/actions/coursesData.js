@@ -32,11 +32,14 @@ export function CreateCoursesData(payload, setGetDataStatus) {
   };
 }
 
-
-export function ChangeCoursesData(state, payload, setGetDataStatus) {
-  state.data.map(item => item.id === payload.id && putData(PATH.COURSESLIST, item.id, payload, setGetDataStatus));
-  return {
-    type: TYPE.COURSES_CHANGE_DATA,
-    payload,
+export function ChangeCoursesData(id, state, payload, setGetDataStatus) {
+  return dispatch => {
+    dispatch(AddCoursesData);
+    return putData(PATH.COURSESLIST, id, payload, setGetDataStatus).then(() => {
+      return {
+        type: TYPE.COURSES_CHANGE_DATA,
+        payload,
+      };
+    });
   };
 }

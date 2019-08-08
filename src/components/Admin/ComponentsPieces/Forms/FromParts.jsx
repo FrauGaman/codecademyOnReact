@@ -13,7 +13,7 @@ export function FormInput(props) {
       />
       {hasError && <span style={{color: 'red'}}>{props.meta.error}</span>}
     </div>
-  )
+  );
 }
 
 export function FormTextarea(props) {
@@ -29,7 +29,7 @@ export function FormTextarea(props) {
       />
       {hasError && <span style={{color: 'red'}}>{props.meta.error}</span>}
     </div>
-  )
+  );
 }
 
 export function FormSelector(props) {
@@ -48,7 +48,7 @@ export function FormSelector(props) {
       </Form.Control>
       {hasError && <span style={{color: 'red'}}>{props.meta.error}</span>}
     </div>
-  )
+  );
 }
 
 export function FormMultiSelector(props) {
@@ -68,6 +68,5 @@ export function FormMultiSelector(props) {
       </Form.Control>
       {hasError && <span style={{color: 'red'}}>{props.meta.error}</span>}
     </div>
-
-  )
+  );
 }

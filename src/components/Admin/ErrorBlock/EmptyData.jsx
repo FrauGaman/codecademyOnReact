@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './errorBlock.sass';
 
 function EmptyData({ colSpan, problem }) {
@@ -8,5 +9,9 @@ function EmptyData({ colSpan, problem }) {
 		</tr>
 	)
 }
+EmptyData.propTypes = {
+	colSpan: PropTypes.number,
+	problem: PropTypes.string,
+};
 
 export default EmptyData;

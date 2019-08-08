@@ -9,7 +9,23 @@ import PaginationButton from '../ComponentsPieces/PaginationButton';
 import EmptyData from '../ErrorBlock/EmptyData';
 import AllCoursesTableMap from './AllCoursesTableMap';
 
-function AllCoursesTableTemplate({ tableData, themeList, languageList, filterState, removeTableData, showModal, searchState, selectLimitNumber, chooseSort, pageArr, setPageNumber, limitNumber, sort, errorBlock }) {
+function AllCoursesTableTemplate({
+     tableData,
+     themeList,
+     languageList,
+     filterState,
+     removeTableData,
+     showModal,
+     searchState,
+     selectLimitNumber,
+     chooseSort,
+     pageArr,
+     setPageNumber,
+     limitNumber,
+     sort,
+     errorBlock,
+     pageNumber,
+}) {
   return (
     <div className="table use__bootstrap">
       <SearchByName searchState={searchState} />
@@ -23,13 +39,13 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, filterSta
               <Icon iconName={'sortDown'} className={'sort__arrow'} />
               : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
           </th>
-          <th>Description</th>
-          <th>Importance</th>
-          <th>Icon</th>
-          <th>BorderColor</th>
-          <th>Theme</th>
-          <th>Language</th>
-          <th>Edit</th>
+          <th className="hidden__col__big">Description</th>
+          <th className="hidden__col">Importance</th>
+          <th className="hidden__col__big">Icon</th>
+          <th className="hidden__col__big">BorderColor</th>
+          <th className="hidden__col">Theme</th>
+          <th className="hidden__col">Language</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -42,7 +58,7 @@ function AllCoursesTableTemplate({ tableData, themeList, languageList, filterSta
         }
         </tbody>
       </Table>
-      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} />
+      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
     </div>
   );
 }

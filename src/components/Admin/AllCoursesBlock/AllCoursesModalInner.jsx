@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormSelector, FormMultiSelector } from '../ComponentsPieces/Forms/FromParts';
 import { requiredField, setMaxLength, stringValidator } from '../validator';
 
 const maxL = setMaxLength(300);
 
-function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData}) {
-	return(
+function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData, onHide}) {
+	return (
 		<Form id="allCoursesForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Title</Form.Label>
@@ -42,6 +42,10 @@ function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData
 				<Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]} />
 			</Form.Group>
 			}
+			<div className="form__button">
+				<Button className="form__button__close" variant="secondary" onClick={onHide}>Close</Button>
+				<Button className="form__button__submit" variant="primary" type="submit">Save changes</Button>
+			</div>
 		</Form>
 	)
 }
@@ -67,6 +71,7 @@ AllCoursesModalInner.propTypes = {
 	}),
 	handleSubmit: PropTypes.func,
 	submitData: PropTypes.func,
+	onHide: PropTypes.func,
 };
 
 AllCoursesModalInner = reduxForm({

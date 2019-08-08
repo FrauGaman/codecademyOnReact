@@ -1,5 +1,6 @@
 import { PATH, TYPE } from '../scripts/const';
 import { deleteData, postData, putData } from '../scripts/changeData';
+import {AddKnowledgeData} from './knowledgeData';
 
 export function AddLanguageData(payload) {
   return {
@@ -32,10 +33,14 @@ export function CreateLanguageData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeLanguageData(state, payload, setGetDataStatus) {
-  state.data.map(item => item.id === payload.id && putData(PATH.LANGUAGE, item.id, payload, setGetDataStatus));
-  return {
-    type: TYPE.LANGUAGE_CHANGE_DATA,
-    payload,
+export function ChangeLanguageData(id, state, payload, setGetDataStatus) {
+  return dispatch => {
+    dispatch(AddLanguageData);
+    return putData(PATH.LANGUAGE, id, payload, setGetDataStatus).then(() => {
+      return {
+        type: TYPE.LANGUAGE_CHANGE_DATA,
+        payload,
+      };
+    });
   };
 }

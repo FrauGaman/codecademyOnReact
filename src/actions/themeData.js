@@ -1,5 +1,6 @@
 import { PATH, TYPE } from '../scripts/const';
 import {deleteData, postData, putData} from '../scripts/changeData';
+import {AddLanguageData} from './languageData';
 
 export function AddThemeData(payload) {
   return {
@@ -32,10 +33,14 @@ export function CreateThemeData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeThemeData(state, payload, setGetDataStatus) {
-  state.data.map(item => item.id === payload.id && putData(PATH.THEME, item.id, payload, setGetDataStatus));
-  return {
-    type: TYPE.THEME_CHANGE_DATA,
-    payload,
+export function ChangeThemeData(id, state, payload, setGetDataStatus) {
+  return dispatch => {
+    dispatch(AddThemeData);
+    return putData(PATH.THEME, id, payload, setGetDataStatus).then(() => {
+      return {
+        type: TYPE.THEME_CHANGE_DATA,
+        payload,
+      };
+    });
   };
 }

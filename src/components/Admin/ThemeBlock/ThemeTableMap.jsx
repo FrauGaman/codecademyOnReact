@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '../../Icons/Icons';
 
 function ThemeTableMap({ tableData, showModal, removeTableData }) {
@@ -20,5 +21,19 @@ function ThemeTableMap({ tableData, showModal, removeTableData }) {
 		)
 	)
 }
+
+ThemeTableMap.propTypes = {
+	tableData: PropTypes.shape({
+		data: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number,
+			name: PropTypes.string,
+			descr: PropTypes.string,
+			link: PropTypes.string,
+		})),
+		count: PropTypes.string,
+	}),
+	showModal: PropTypes.func,
+	removeTableData: PropTypes.func,
+};
 
 export default ThemeTableMap;

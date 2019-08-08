@@ -5,17 +5,14 @@ import ProIcon from '../../Icons/Icons';
 import './careerCourses.sass';
 
 function CareerCourse({ careerResult, currentThemeId, currentLanguageId, knowledgeArr }) {
-  const careerPathArr = careerResult || [];
-  let careerArr;
-  if (careerPathArr.length) {
-    careerArr = careerPathArr.filter(item => item.theme && item.theme.includes(currentThemeId));
-  } else {
-    careerArr = [];
-  }
+	if (!careerResult.length) {
+		return null;
+	}
 
+  const careerArr = careerResult.filter(item => item.theme && item.theme.includes(currentThemeId));
   return (
     <div>
-      { (currentThemeId && !currentLanguageId && careerArr.length) ?
+      { !!(currentThemeId && !currentLanguageId) &&
         <div>
           <div className="course__title">
             <h2>Career path</h2>
@@ -30,7 +27,6 @@ function CareerCourse({ careerResult, currentThemeId, currentLanguageId, knowled
             <CareerCoursesMap careerArr={careerArr} knowledgeArr={knowledgeArr} />
           </div>
         </div>
-          : []
       }
     </div>
   );

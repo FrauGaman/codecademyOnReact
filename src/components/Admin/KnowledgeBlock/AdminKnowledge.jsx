@@ -67,7 +67,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         setEditModalShow(false);
       }
     } else {
-      editData(knowledgeStatus, value, setGetDataStatus);
+      editData(initial.id, knowledgeStatus, value, sort, search, pageNumber, limitNumber, setGetDataStatus);
       setEditModalShow(false);
     }
   };
@@ -90,17 +90,11 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         <AdminBtn
           className={'create__btn'}
           innerBtn={'Create'}
-          position={{span: 2, offset: 10}}
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <ModalWindow
-          title={'Create new element'}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          formname={'knowledgeForm'}
-        >
-          <KnowledgeModalInner submitData={submitData} />
+        <ModalWindow title={'Create new element'} show={modalShow} onHide={() => setModalShow(false)} submitData={submitData}>
+          <KnowledgeModalInner onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
 
         <KnowledgeTableTemplate
@@ -114,16 +108,11 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
           sort={sort}
           pageArr={pageArr}
           setPageNumber={setPageNumber}
+          pageNumber={pageNumber}
           errorBlock={errorBlock}
         />
-
-        <ModalWindow
-          title={'Edit elements'}
-          show={editModalShow}
-          onHide={() => setEditModalShow(false)}
-          formname={'knowledgeForm'}
-        >
-          <KnowledgeModalInner initialValues={initial} submitData={editFormData} />
+        <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
+          <KnowledgeModalInner onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>
     </div>
@@ -184,8 +173,20 @@ const mapStateToDispatch = dispatch => ({
     };
     dispatch(CreateKnowledgeData(newData, setGetDataStatus)).then(() => changeData(options));
   },
-  editData: (state, value, setGetDataStatus) => {
-    dispatch(ChangeKnowledgeData(state, value, setGetDataStatus));
+  editData: (id, state, value, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+    const options = {
+      path: PATH.KNOWLEDGE,
+      addData: (res) => dispatch(AddKnowledgeData(res)),
+      sortField: 'name',
+      sortType,
+      filterStr: '',
+      field: 'name',
+      name,
+      pageNumber,
+      limitNumber,
+      setGetDataStatus,
+    };
+    dispatch(ChangeKnowledgeData(id, state, value, setGetDataStatus)).then(() => changeData(options));
   },
   findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
     const options = {
