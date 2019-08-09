@@ -23,34 +23,34 @@ function KnowledgeTableTemplate({
   pageNumber,
 }) {
   return (
-    <React.Fragment>
-      <div className="table">
+    <div className="table">
+      <div className="admin__block">
         <SearchByName searchState={searchState} />
         <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
-        <Table striped bordered hover>
-          <thead>
-          <tr>
-            <th onClick={() => chooseSort()} className="sort__field">Knowledge
-              {sort === 'asc' ?
-                <Icon iconName={'sortDown'} className={'sort__arrow'} />
-                : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
-            </th>
-            <th></th>
-          </tr>
-          </thead>
-              <tbody>
-              {
-                !errorBlock ?
-                  tableData.data.length ?
-                    <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
-                    : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
-                : <EmptyData colSpan={2} problem={'We have some problem:C'} />
-              }
-              </tbody>
-        </Table>
-        <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
       </div>
-    </React.Fragment>
+      <Table striped bordered hover>
+        <thead>
+        <tr>
+          <th onClick={() => chooseSort()} className="sort__field">Knowledge
+            {sort === 'asc' ?
+              <Icon iconName={'sortDown'} className={'sort__arrow'} />
+              : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+            <tbody>
+            {
+              !errorBlock ?
+                tableData.data.length ?
+                  <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
+                  : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
+              : <EmptyData colSpan={2} problem={'We have some problem:C'} />
+            }
+            </tbody>
+      </Table>
+      <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
+    </div>
   );
 }
 

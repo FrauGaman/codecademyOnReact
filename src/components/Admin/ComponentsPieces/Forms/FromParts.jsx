@@ -1,7 +1,16 @@
-import React  from 'react';
+import React, { useEffect, useRef }  from 'react';
 import { Form } from 'react-bootstrap';
+import Select from 'react-select';
 
 export function FormInput(props) {
+  const formInputFocus = useRef(null);
+
+  useEffect(() => {
+    	if (formInputFocus.current !== null && props.useFocus === true) {
+    	  formInputFocus.current.focus();
+    	}
+    }, [formInputFocus]);
+
   const hasError = props.meta.touched && props.meta.error;
   return (
     <div>
@@ -10,6 +19,7 @@ export function FormInput(props) {
         placeholder={props.placeholder}
         value={props.input.value}
         onChange={props.input.onChange}
+        ref={formInputFocus}
       />
       {hasError && <span style={{color: 'red'}}>{props.meta.error}</span>}
     </div>
@@ -55,17 +65,7 @@ export function FormMultiSelector(props) {
   const hasError = props.meta.touched && props.meta.error;
   return (
     <div>
-      <Form.Control
-        as="select"
-        multiple={true}
-        placeholder={props.placeholder}
-        value={props.input.value || []}
-        onChange={props.input.onChange}
-      >
-        {props.dataArr.data.map(item =>
-          <option value={item.id} key={item.id}>{item.name}</option>
-        )}
-      </Form.Control>
+      <Select options={props.options} isMulti className={props.className} onChange={props.input.onChange} value={props.input.value} isSearchable={false} />
       {hasError && <span style={{color: 'red'}}>{props.meta.error}</span>}
     </div>
   );

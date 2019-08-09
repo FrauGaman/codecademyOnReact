@@ -8,40 +8,43 @@ import { requiredField, setMaxLength, stringValidator } from '../validator';
 const maxLDescr = setMaxLength(300);
 
 function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit, submitData, onHide }) {
+	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
+	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+	const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name, }});
 	return(
 		<Form id="careerForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Title</Form.Label>
-				<Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} />
+				<Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} useFocus={true} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlTextarea1">
 				<Form.Label>Description</Form.Label>
-				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxLDescr]} />
+				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxLDescr]} useFocus={false} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Img</Form.Label>
-				<Field name="img" component={FormInput} type="text" placeholder="Img" />
+				<Field name="img" component={FormInput} type="text" placeholder="Img" useFocus={false} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Bg color</Form.Label>
-				<Field name="bgColor" component={FormInput} type="text" placeholder="Background color" />
+				<Field name="bgColor" component={FormInput} type="text" placeholder="Background color" useFocus={false} />
 			</Form.Group>
 			{themeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Theme</Form.Label>
-				<Field name="theme" component={FormMultiSelector} dataArr={themeList} validate={[requiredField]} />
+				<Field name="theme" component={FormMultiSelector} options={themeOptions} validate={[requiredField]} />
 			</Form.Group>
 			}
 			{languageList.data.length !== 0 &&
 				<Form.Group controlId="exampleForm.ControlSelect2">
 					<Form.Label>Language</Form.Label>
-					<Field name="language" component={FormMultiSelector} dataArr={languageList} />
+					<Field name="language" component={FormMultiSelector} options={languageOptions} />
 				</Form.Group>
 			}
 			{knowledgeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Knowledge</Form.Label>
-				<Field name="knowledge" component={FormMultiSelector} dataArr={knowledgeList} />
+				<Field name="knowledge" component={FormMultiSelector} options={knowledgeOptions} />
 			</Form.Group>
 			}
 			<div className="form__button">

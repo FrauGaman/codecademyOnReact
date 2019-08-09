@@ -5,7 +5,7 @@ import Icon from '../../Icons/Icons';
 function AllCoursesTableMap({ tableData, themeList, languageList, showModal, removeTableData }) {
 	return(
 		tableData.data.map(item =>
-			<tr key={item.title}>
+			<tr key={item.id}>
 				<td>{item.title}</td>
 				<td className="hidden__col__big">{item.descr}</td>
 				<td className="hidden__col">{item.importance}</td>

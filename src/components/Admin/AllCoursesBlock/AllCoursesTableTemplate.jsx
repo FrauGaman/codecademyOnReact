@@ -28,8 +28,10 @@ function AllCoursesTableTemplate({
 }) {
   return (
     <div className="table use__bootstrap">
-      <SearchByName searchState={searchState} />
-      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+        <div className="admin__block">
+            <SearchByName searchState={searchState} />
+            <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+        </div>
       <AllCoursesFilterSelect themeList={themeList} languageList={languageList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>

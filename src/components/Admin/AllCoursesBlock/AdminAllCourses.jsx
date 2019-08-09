@@ -17,6 +17,7 @@ import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import AllCoursesModalInner from './AllCoursesModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import {AddDataStatus} from '../../../actions/allDataStatus';
 
 function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -28,17 +29,18 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  const [getDataStatus, setGetDataStatus] = useState(true);
+  // const [getDataStatus, setGetDataStatus] = useState(true);
   const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
+    findData(sort, filter, search, pageNumber, limitNumber, setErrorBlock);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
     getThemeData(themeList.count);
     getLanguageData(languageList.count);
-  }, []);
+  }, [themeList.count, languageList.count]);
+
 
   useEffect(() => {
     const helpArr = [];
@@ -65,9 +67,12 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   };
 
   const submitData = value => {
-    (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
-    (value.language !== undefined) && (value.language = value.language.map(item => +item));
-    createData(value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+    const valueData = {
+      ...value,
+      theme: value.theme && value.theme.map(item => +item.value),
+      language:  value.language && value.language.map(item => +item.value),
+    };
+    createData(valueData, sort, filter, search, pageNumber, limitNumber);
     setModalShow(false);
   };
 
@@ -78,27 +83,63 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
         setEditModalShow(false);
       }
     } else {
-      value.theme = value.theme.map(item => +item);
-      value.language = value.language.map(item => +item);
-      editData(initial.id, allCoursesStatus, value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+      const valueData = {
+        ...value,
+        theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
+        language: (value.language !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
+      };
+      editData(initial.id, allCoursesStatus, valueData, sort, filter, search, pageNumber, limitNumber);
       setEditModalShow(false);
     }
   };
 
   const showEditForm = (id) => {
-    setInitial(allCoursesStatus.data.find(item => item.id === id));
+    const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
+    const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+    let allCoursesData = JSON.stringify(allCoursesStatus.data);
+    allCoursesData = JSON.parse(allCoursesData);
+    let arrTheme = [];
+    let arrLang = [];
+
+    allCoursesData.map(item => {
+      if (item.id === id) {
+        themeOptions.map(elem => {
+          item.theme && item.theme.map(inst => {
+            if(elem.value === inst) {
+              arrTheme.push(elem);
+            }
+          })
+        })
+      }
+      item.theme = arrTheme;
+    });
+
+    allCoursesData.map(item => {
+      if (item.id === id) {
+        languageOptions.map(elem => {
+          item.language && item.language.map(inst => {
+            if(elem.value === inst) {
+              arrLang.push(elem);
+            }
+          });
+        });
+      }
+      item.language = arrLang;
+    });
+
+    setInitial(allCoursesData.find(item => item.id === id));
     setEditModalShow(true);
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+    removeData(id, sort, filter, search, pageNumber, limitNumber);
   };
 
   return (
     <div>
-      {
-        !getDataStatus && <PreloaderMini />
-      }
+      {/*{*/}
+      {/*  !getDataStatus && <PreloaderMini />*/}
+      {/*}*/}
       <div>
         <AdminBtn
           className={'create__btn'}
@@ -182,6 +223,7 @@ const mapStateToProps = state => ({
   allCoursesStatus: state.coursesTasks,
   themeList: state.themeTasks,
   languageList: state.languageTask,
+  getDataStatus: state.dataStatusTasks,
   pristine: isPristine('changeAllCourses')(state),
 });
 

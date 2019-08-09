@@ -24,8 +24,10 @@ function ThemeTableTemplate({
 }) {
   return (
     <div className="table">
-      <SearchByName searchState={searchState} />
-      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+      <div className="admin__block">
+        <SearchByName searchState={searchState} />
+        <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+      </div>
       <Table striped bordered hover>
         <thead>
         <tr>

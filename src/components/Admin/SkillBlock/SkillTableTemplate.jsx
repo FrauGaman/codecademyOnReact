@@ -28,8 +28,10 @@ function CareerTableTemplate({
 }) {
   return (
     <div className="table">
-      <SearchByName searchState={searchState} />
-      <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+      <div className="admin__block">
+        <SearchByName searchState={searchState} />
+        <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+      </div>
       <SkillFilterSelect themeList={themeList} languageList={languageList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>

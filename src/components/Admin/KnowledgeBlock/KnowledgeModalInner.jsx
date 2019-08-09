@@ -13,8 +13,10 @@ function KnowledgeModalInner({ handleSubmit, submitData, onHide }) {
 					<Field
 						name="name"
 						component={FormInput}
-						type="text" placeholder="item"
+						type="text"
+						placeholder="item"
 						validate={[requiredField, stringValidator]}
+						useFocus={true}
 					/>
 				</Form.Group>
 			<div className="form__button">
@@ -22,7 +24,8 @@ function KnowledgeModalInner({ handleSubmit, submitData, onHide }) {
 				<Button className="form__button__submit" variant="primary" type="submit">Save changes</Button>
 			</div>
 		</Form>
-	);
+
+);
 }
 
 KnowledgeModalInner.propTypes = {

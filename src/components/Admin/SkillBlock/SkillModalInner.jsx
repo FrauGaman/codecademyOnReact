@@ -9,6 +9,8 @@ const maxLDescr = setMaxLength(300);
 const maxLPeriod = setMaxLength(20);
 
 function SkillModalInner({ themeList, languageList, handleSubmit, submitData, onHide }) {
+	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
+	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
 	return (
 		<Form id="skillForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
@@ -30,13 +32,13 @@ function SkillModalInner({ themeList, languageList, handleSubmit, submitData, on
 			{themeList.data.length !== 0 &&
 			< Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Theme</Form.Label>
-				<Field name="theme" component={FormMultiSelector} dataArr={themeList} />
+				<Field name="theme" component={FormMultiSelector} options={themeOptions} validate={[requiredField]} />
 				</Form.Group>
 			}
 			{languageList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">
 				<Form.Label>Language</Form.Label>
-				<Field name="language" component={FormMultiSelector} dataArr={languageList} validate={[requiredField]}/>
+				<Field name="language" component={FormMultiSelector} options={languageOptions} validate={[requiredField]} />
 			</Form.Group>
 			}
 			<Form.Group controlId="exampleForm.ControlInput1">

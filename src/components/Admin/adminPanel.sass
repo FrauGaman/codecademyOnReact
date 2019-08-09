@@ -21,9 +21,10 @@
       padding-left: 40px
       padding-right: 40px
     .create__btn
+      position: absolute
       width: 150px
       height: 40px
-      margin-top: 30px
+      margin-top: 85px
       background-color: $mainColor
       border-radius: 5px
       border: none
@@ -40,12 +41,21 @@
     .filter__title
       font-size: 20px
       font-weight: 700
+      margin-top: 25px
+      @media screen and (max-width: 690px)
+        text-align: center
     .params__selector__block
       display: flex
       justify-content: space-between
+      flex-wrap: wrap
       margin-top: 30px
-      @media screen and (max-width: 900px)
+      @media screen and (max-width: 690px)
         flex-direction: column
+        align-items: center
+        margin-top: 5px
+    .search__block
+      display: inline-block
+      margin-top: 40px
 
     .params__selector
       margin-bottom: 20px
@@ -59,7 +69,27 @@
       @media screen and (max-width: 1096px)
         width: 400px
       @media screen and (max-width: 900px)
+        width: 350px
+      @media screen and (max-width: 790px)
         width: 300px
+      @media screen and (max-width: 690px)
+        width: 250px
+    .admin__block
+      display: flex
+      align-items: flex-end
+      @media screen and (max-width: 395px)
+        flex-direction: column
+        align-items: center
+      .search__block__label
+        margin: 0
+        @media screen and (max-width: 395px)
+          margin-bottom: 10px
+      .search__block__input
+        @media screen and (max-width: 350px)
+          width: 90%
+      .search__block__button
+        @media screen and (max-width: 350px)
+          margin-left: -10px
 
     .page__selector
       margin-left: 20px

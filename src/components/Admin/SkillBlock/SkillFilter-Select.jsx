@@ -23,10 +23,17 @@ function SkillFilterSelect({ themeList, languageList, filterState }) {
   return (
     <React.Fragment>
       <div className="filter__title">Filter</div>
-      <div>Theme</div>
-      <MultiSelect options={themeOptions} className={'params__selector'} onChange={selectedThemeValue} />
-      <div>Language</div>
-      <MultiSelect options={languageOptions} className={'params__selector'} onChange={selectedLanguageValue} />
+      <div className="params__selector__block">
+        <div>
+          <div>Theme</div>
+          <MultiSelect options={themeOptions} className={'params__selector'} onChange={selectedThemeValue} />
+        </div>
+        <div>
+          <div>Language</div>
+          <MultiSelect options={languageOptions} className={'params__selector'} onChange={selectedLanguageValue} />
+        </div>
+      </div>
+
     </React.Fragment>
   );
 }

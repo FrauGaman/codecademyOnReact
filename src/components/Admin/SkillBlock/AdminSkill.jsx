@@ -16,7 +16,7 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import SkillModalInner from './SkillModalInner';
-import PreloaderMini from '../../Preloader/PreloaderMini';
+// import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -28,17 +28,17 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  const [getDataStatus, setGetDataStatus] = useState(true);
+  // const [getDataStatus, setGetDataStatus] = useState(true);
   const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
+    findData(sort, filter, search, pageNumber, limitNumber, setErrorBlock);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
     getThemeData(themeList.count);
     getLanguageData(languageList.count);
-  }, []);
+  }, [themeList.count, languageList.count]);
 
   useEffect(() => {
     const helpArr = [];
@@ -65,9 +65,12 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   };
 
   const submitData = value => {
-    (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
-    (value.language !== undefined) && (value.language = value.language.map(item => +item));
-    createData(value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+    const valueData = {
+      ...value,
+      theme: value.theme && value.theme.map(item => +item.value),
+      language:  value.language && value.language.map(item => +item.value),
+    };
+    createData(valueData, sort, filter, search, pageNumber, limitNumber);
     setModalShow(false);
   };
 
@@ -78,27 +81,63 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
         setEditModalShow(false);
       }
     } else {
-      value.theme = value.theme.map(item => +item);
-      value.language = value.language.map(item => +item);
-      editData(initial.id, skillStatus, value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+      const valueData = {
+        ...value,
+        theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
+        language: (value.language !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
+      };
+      editData(initial.id, skillStatus, valueData, sort, filter, search, pageNumber, limitNumber);
       setEditModalShow(false);
     }
   };
 
   const showEditForm = (id) => {
-    setInitial(skillStatus.data.find(item => item.id === id));
+    const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
+    const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+    let skillData = JSON.stringify(skillStatus.data);
+    skillData = JSON.parse(skillData);
+    let arrTheme = [];
+    let arrLang = [];
+
+    skillData.map(item => {
+      if (item.id === id) {
+        themeOptions.map(elem => {
+          item.theme && item.theme.map(inst => {
+            if(elem.value === inst) {
+              arrTheme.push(elem);
+            }
+          })
+        })
+      }
+      item.theme = arrTheme;
+    });
+
+    skillData.map(item => {
+      if (item.id === id) {
+        languageOptions.map(elem => {
+          item.language && item.language.map(inst => {
+            if(elem.value === inst) {
+              arrLang.push(elem);
+            }
+          });
+        });
+      }
+      item.language = arrLang;
+    });
+
+    setInitial(skillData.find(item => item.id === id));
     setEditModalShow(true);
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+    removeData(id, sort, filter, search, pageNumber, limitNumber);
   };
 
   return (
     <div>
-      {
-        !getDataStatus && <PreloaderMini />
-      }
+      {/*{*/}
+      {/*  !getDataStatus && <PreloaderMini />*/}
+      {/*}*/}
       <div>
         <AdminBtn
           className={'create__btn'}

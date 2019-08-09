@@ -17,7 +17,7 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import CareerModalInner from './CareerModalInner';
-import PreloaderMini from '../../Preloader/PreloaderMini';
+// import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -29,18 +29,18 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  const [getDataStatus, setGetDataStatus] = useState(true);
+  // const [getDataStatus, setGetDataStatus] = useState(true);
   const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
+    findData(sort, filter, search, pageNumber, limitNumber, setErrorBlock);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
-    getThemeData(themeList.count);
-    getLanguageData(languageList.count);
-    getKnowledgeData(knowledgeList.count);
-  }, [themeList.count, languageList.count, knowledgeList.count]);
+    getThemeData();
+    getLanguageData();
+    getKnowledgeData();
+  }, []);
 
   useEffect(() => {
     const helpArr = [];
@@ -67,10 +67,13 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
   };
 
   const submitData = value => {
-    (value.theme !== undefined) && (value.theme = value.theme.map(item => +item));
-    (value.language !== undefined) && (value.language = value.language.map(item => +item));
-    (value.knowledge !== undefined) && (value.knowledge = value.knowledge.map(item => +item));
-    createData(value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+    const valueData = {
+      ...value,
+      theme: value.theme && value.theme.map(item => +item.value),
+      language: value.language && value.language.map(item => +item.value),
+      knowledge: value.knowledge && value.knowledge.map(item => +item.value),
+    };
+    createData(valueData, sort, filter, search, pageNumber, limitNumber);
     setModalShow(false);
   };
 
@@ -81,28 +84,76 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
         setEditModalShow(false);
       }
     } else {
-      value.theme = value.theme.map(item => +item);
-      value.language = value.language.map(item => +item);
-      value.knowledge = value.knowledge.map(item => +item);
-      editData(initial.id, careerStatus, value, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+      const valueData = {
+        ...value,
+        theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
+        language: (value.language !== [] && value.language !== null) && value.language.map(item => +item.value),
+        knowledge: (value.knowledge !== [] && value.knowledge.map(item => item !== null)) && value.knowledge.map(item => +item.value),
+      };
+      editData(initial.id, careerStatus, valueData, sort, filter, search, pageNumber, limitNumber);
       setEditModalShow(false);
     }
   };
 
   const showEditForm = (id) => {
-    setInitial(careerStatus.data.find(item => item.id === id));
+    const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
+    const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+    const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name, }});
+    let careerData = JSON.stringify(careerStatus.data);
+    careerData = JSON.parse(careerData);
+    let arrTheme = [];
+    let arrLang = [];
+    let arrKnow = [];
+    careerData.map(item => {
+      if (item.id === id) {
+        themeOptions.map(elem => {
+          item.theme && item.theme.map(inst => {
+            if(elem.value === inst) {
+              arrTheme.push(elem);
+            }
+          })
+        })
+      }
+      item.theme = arrTheme;
+    });
+    careerData.map(item => {
+      if (item.id === id) {
+        languageOptions.map(elem => {
+          item.language && item.language.map(inst => {
+            if(elem.value === inst) {
+              arrLang.push(elem);
+            }
+          });
+        });
+      }
+      item.language = arrLang;
+    });
+    careerData.map(item => {
+      if (item.id === id) {
+        knowledgeOptions.map(elem => {
+          item.knowledge && item.knowledge.map(inst => {
+            if(elem.value === inst) {
+              arrKnow.push(elem);
+            }
+          });
+        });
+      }
+      item.knowledge = arrKnow;
+    });
+
+    setInitial(careerData.find(item => item.id === id));
     setEditModalShow(true);
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber, setGetDataStatus);
+    removeData(id, sort, filter, search, pageNumber, limitNumber);
   };
 
   return (
     <div>
-      {
-        !getDataStatus && <PreloaderMini />
-      }
+      {/*{*/}
+      {/*  !getDataStatus && <PreloaderMini />*/}
+      {/*}*/}
       <div>
         <AdminBtn
           className={'create__btn'}
@@ -216,7 +267,7 @@ const mapStateToDispatch = dispatch => ({
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
-      limitNumber: count,
+      limitNumber: null,
     };
     changeData(options);
   },
@@ -224,7 +275,7 @@ const mapStateToDispatch = dispatch => ({
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
-      limitNumber: count,
+      limitNumber: null,
     };
     changeData(options);
   },

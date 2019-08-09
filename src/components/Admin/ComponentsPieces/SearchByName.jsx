@@ -9,13 +9,13 @@ function SearchByName({ searchState }) {
   };
 
   return (
-    <React.Fragment>
-      <label>
-        Search
-        <input type="text" value={nameValue} onChange={filterByName} onKeyPress={(event) => (event.charCode === 13) && searchState(nameValue)} />
-      </label>
-      <button onClick={() => searchState(nameValue)} >Search</button>
-    </React.Fragment>
+    <div className="search__block">
+        <label className="search__block__label">
+            Search
+            <input type="text" value={nameValue} onChange={filterByName} onKeyPress={(event) => (event.charCode === 13) && searchState(nameValue)} className="search__block__input" />
+        </label>
+        <button onClick={() => searchState(nameValue)} className="search__block__button" >Search</button>
+    </div>
   )
 }
 

@@ -12,15 +12,15 @@ function ThemeModalInner({handleSubmit, submitData, onHide}) {
 		<Form id="themeForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Name</Form.Label>
-				<Field name="name" component={FormInput} type="text" placeholder="Name" validate={[requiredField, stringValidator]} />
+				<Field name="name" component={FormInput} type="text" placeholder="Name" validate={[requiredField, stringValidator]} useFocus={true} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlTextarea1">
 				<Form.Label>Description</Form.Label>
-				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} />
+				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} useFocus={false} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Link</Form.Label>
-				<Field name="link" component={FormInput} type="text" placeholder="/link" validate={[requiredField, linkValidator]} />
+				<Field name="link" component={FormInput} type="text" placeholder="/link" validate={[requiredField, linkValidator]} useFocus={false} />
 			</Form.Group>
 			<div className="form__button">
 				<Button className="form__button__close" variant="secondary" onClick={onHide}>Close</Button>

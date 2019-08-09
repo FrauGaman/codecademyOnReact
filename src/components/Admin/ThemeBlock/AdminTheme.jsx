@@ -15,7 +15,6 @@ import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import ThemeModalInner from './ThemeModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
-import {AddLanguageData, ChangeLanguageData} from '../../../actions/languageData';
 
 function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -94,11 +93,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <ModalWindow
-          title={'Create new element'}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        >
+        <ModalWindow title={'Create new element'} show={modalShow} onHide={() => setModalShow(false)}>
           <ThemeModalInner onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
 
@@ -116,11 +111,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
           pageNumber={pageNumber}
           errorBlock={errorBlock}
         />
-        <ModalWindow
-          title={'Edit elements'}
-          show={editModalShow}
-          onHide={() => setEditModalShow(false)}
-        >
+        <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
           <ThemeModalInner onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>

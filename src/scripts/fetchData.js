@@ -2,8 +2,6 @@ function fetchData({
 	 url,
 	 success,
 	 fail,
-	 setErrorBlock,
-	 setGetDataStatus,
 	 method,
 	 body = null,
 	 headers = {Accept: 'application/json', 'Content-Type': 'application/json'},
@@ -19,8 +17,7 @@ function fetchData({
 			if (res.ok) {
 				success(res);
 			} else {
-				setErrorBlock(true);
-				setGetDataStatus(true);
+				// setGetDataStatus(true);
 			}
 		})
 		.catch(err => {

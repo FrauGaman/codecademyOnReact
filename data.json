@@ -297,10 +297,16 @@
   ],
   "language": [
     {
+      "id": 1,
       "name": "HTML & CSS",
       "descr": "HTML is the foundation behind all web pages. It’s used to add structure and form to text, images, and more. CSS is the language used to style HTML content. In this first course, you’ll learn the fundamentals of both languages so that you can create visually appealing web pages.",
-      "link": "/html-css",
-      "id": 1
+      "link": "/html-css"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "descr": "Python is a general-purpose, versatile and modern programming language. It’s great as a first language because it is concise and easy to read. Use it for everything from web development to software development and scientific applications.",
+      "link": "/python"
     },
     {
       "id": 3,
@@ -355,12 +361,6 @@
       "name": "PHP",
       "descr": "PHP is a widely used server-side programming language that’s become increasingly fast and powerful over the years. PHP works well with HTML and databases, making it a great language for anyone interested in building dynamic web applications.",
       "link": "/php"
-    },
-    {
-      "id": 1564655058670,
-      "name": "gdrfg g",
-      "descr": "g hv ghnjvgh j",
-      "link": "/qwerty"
     }
   ],
   "items": [

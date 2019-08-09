@@ -3,12 +3,12 @@ import { TYPE } from '../scripts/const';
 const knowledgeTasks = (state = {data: [], count: '0'}, action) => {
   switch (action.type) {
     case TYPE.KNOWLEDGE_ADD_DATA:
+
       return {
         data: action.payload.data,
         count: action.payload.count,
       };
     case TYPE.KNOWLEDGE_REMOVE_DATA:
-      console.log(action)
       return {
         data: [...state.data].filter((item) => item.id !== action.payload.id),
         count: (state.count > 0) && state.count - 1,
@@ -19,10 +19,8 @@ const knowledgeTasks = (state = {data: [], count: '0'}, action) => {
         count: action.payload.count,
       };
     case TYPE.KNOWLEDGE_CHANGE_DATA:
-      console.log(action)
       state.data.map(item =>
-        item.id === action.payload.id ?
-          item.name = action.payload.name : '',
+        (item.id === action.payload.id) && (item.name = action.payload.name),
       );
       return state;
     default:

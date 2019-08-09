@@ -6,7 +6,7 @@ function AdminButton({ className, innerBtn, onClick }) {
   return (
     <Container>
       <Row>
-        <Col md={{ span: 2, offset: 10 }} sm={{ span: 12, offset: 0 }}>
+        <Col md={{ span: 2, offset: 10 }} xs={{ span: 10, offset: 2 }}>
           <button className={className} onClick={onClick}>{innerBtn}</button>
         </Col>
       </Row>

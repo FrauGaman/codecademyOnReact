@@ -93,7 +93,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
           variant="primary"
           onClick={() => setModalShow(true)}
         />
-        <ModalWindow title={'Create new element'} show={modalShow} onHide={() => setModalShow(false)} submitData={submitData}>
+        <ModalWindow title={'Create new element'} show={modalShow} onHide={() => setModalShow(false)}>
           <KnowledgeModalInner onHide={() => setModalShow(false)} submitData={submitData} />
         </ModalWindow>
 
@@ -200,7 +200,7 @@ const mapStateToDispatch = dispatch => ({
       setGetDataStatus,
       setErrorBlock,
     };
-    return changeData(options);
+    changeData(options);
   },
 });
 

@@ -27,12 +27,21 @@ function CareerFilterSelect({ themeList, languageList, knowledgeList, filterStat
   return (
     <React.Fragment>
       <div className="filter__title">Filter</div>
-      <div>Theme</div>
-      <MultiSelect options={themeOptions} className={'params__selector'} onChange={selectedThemeValue} />
-      <div>Language</div>
-      <MultiSelect options={languageOptions} className={'params__selector'} onChange={selectedLanguageValue} />
-      <div>Knowledge</div>
-      <MultiSelect options={knowledgeOptions} className={'params__selector'} onChange={selectedKnowledgeValue} />
+
+      <div className="params__selector__block">
+        <div>
+          <div>Theme</div>
+          <MultiSelect options={themeOptions} className={'params__selector'} onChange={selectedThemeValue} />
+        </div>
+        <div>
+          <div>Language</div>
+          <MultiSelect options={languageOptions} className={'params__selector'} onChange={selectedLanguageValue} />
+        </div>
+        <div>
+          <div>Knowledge</div>
+          <MultiSelect options={knowledgeOptions} className={'params__selector'} onChange={selectedKnowledgeValue} />
+        </div>
+      </div>
     </React.Fragment>
   );
 }
