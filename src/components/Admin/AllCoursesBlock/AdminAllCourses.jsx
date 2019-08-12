@@ -9,6 +9,7 @@ import {
   CreateCoursesData,
   RemoveCoursesData,
 } from '../../../actions/coursesData';
+import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import { AddThemeData } from '../../../actions/themeData';
 import { AddLanguageData } from '../../../actions/languageData';
 import AllCoursesTableTemplate from './AllCoursesTableTemplate';
@@ -17,9 +18,8 @@ import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import AllCoursesModalInner from './AllCoursesModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
-import {AddDataStatus} from '../../../actions/allDataStatus';
 
-function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
+function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -29,16 +29,14 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  // const [getDataStatus, setGetDataStatus] = useState(true);
-  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber, setErrorBlock);
+    findData(sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
-    getThemeData(themeList.count);
-    getLanguageData(languageList.count);
+    getThemeData(themeList.count, statusEmptyData, statusLoading);
+    getLanguageData(languageList.count, statusEmptyData, statusLoading);
   }, [themeList.count, languageList.count]);
 
 
@@ -72,7 +70,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
       theme: value.theme && value.theme.map(item => +item.value),
       language:  value.language && value.language.map(item => +item.value),
     };
-    createData(valueData, sort, filter, search, pageNumber, limitNumber);
+    createData(valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
     setModalShow(false);
   };
 
@@ -88,7 +86,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
         theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
         language: (value.language !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
       };
-      editData(initial.id, allCoursesStatus, valueData, sort, filter, search, pageNumber, limitNumber);
+      editData(initial.id, allCoursesStatus, valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
     }
   };
@@ -132,14 +130,14 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber);
+    removeData(id, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   };
 
   return (
     <div>
-      {/*{*/}
-      {/*  !getDataStatus && <PreloaderMini />*/}
-      {/*}*/}
+      {
+        !dataStatus.loading && <PreloaderMini />
+      }
       <div>
         <AdminBtn
           className={'create__btn'}
@@ -165,14 +163,13 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
           setPageNumber={setPageNumber}
           filterState={filterState}
           pageNumber={pageNumber}
-          errorBlock={errorBlock}
+          dataStatus={dataStatus}
         />
         <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
           <AllCoursesModalInner themeList={themeList} languageList={languageList} onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
         </ModalWindow>
       </div>
     </div>
-
   );
 }
 
@@ -217,34 +214,44 @@ AdminAllCourses.propTypes = {
   pristine: PropTypes.bool,
   sortCoursesData: PropTypes.func,
   findData: PropTypes.func,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
+  statusLoading: PropTypes.func,
+  statusEmptyData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   allCoursesStatus: state.coursesTasks,
   themeList: state.themeTasks,
   languageList: state.languageTask,
-  getDataStatus: state.dataStatusTasks,
+  dataStatus: state.dataStatusTasks,
   pristine: isPristine('changeAllCourses')(state),
 });
 
 const mapStateToDispatch = dispatch => ({
-  getThemeData: (count) => {
+  getThemeData: (count, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
       limitNumber: count,
+      statusEmptyData: () => {},
+      statusLoading,
     };
     changeData(options);
   },
-  getLanguageData: (count) => {
+  getLanguageData: (count, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
       limitNumber: count,
+      statusEmptyData: () => {},
+      statusLoading,
     };
     changeData(options);
   },
-  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.COURSESLIST,
       addData: (res) => dispatch(AddCoursesData(res)),
@@ -255,12 +262,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
-
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(RemoveCoursesData(id, setGetDataStatus)).then(() => changeData(options));
+    dispatch(RemoveCoursesData(id, statusLoading)).then(() => changeData(options));
   },
-  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.COURSESLIST,
       addData: (res) => dispatch(AddCoursesData(res)),
@@ -271,11 +278,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(CreateCoursesData(newData, setGetDataStatus)).then(() => changeData(options));
+    dispatch(CreateCoursesData(newData, statusLoading)).then(() => changeData(options));
   },
-  editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+  editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.COURSESLIST,
       addData: (res) => dispatch(AddCoursesData(res)),
@@ -286,11 +294,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(ChangeCoursesData(id, state, value, setGetDataStatus)).then(() => changeData(options));
+    dispatch(ChangeCoursesData(id, state, value, statusLoading)).then(() => changeData(options));
   },
-  findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+  findData: (sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.COURSESLIST,
       addData: (res) => dispatch(AddCoursesData(res)),
@@ -301,10 +310,16 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
-      setErrorBlock,
+      statusEmptyData,
+      statusLoading,
     };
     changeData(options);
+  },
+  statusLoading: (loading) => {
+    dispatch(setLoading(loading));
+  },
+  statusEmptyData: (emptyData) => {
+    dispatch(setDataStatusEmpty(emptyData));
   },
 });
 

@@ -9,6 +9,7 @@ import {
   CreateLanguageData,
   ChangeLanguageData,
 } from '../../../actions/languageData';
+import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import { changeData } from '../../../scripts/changeData';
@@ -16,7 +17,7 @@ import ModalWindow from '../../ModalWindow';
 import LanguageModalInner from './LanguageModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
 
-function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData }) {
+function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -25,11 +26,9 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  const [getDataStatus, setGetDataStatus] = useState(true);
-  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
+    findData(sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   }, [sort, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   };
 
   const submitData = value => {
-    createData(value, sort, search, pageNumber, limitNumber, setGetDataStatus);
+    createData(value, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
     setModalShow(false);
   };
 
@@ -67,7 +66,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         setEditModalShow(false);
       }
     } else {
-      editData(initial.id, languageStatus, value, sort, search, pageNumber, limitNumber, setGetDataStatus);
+      editData(initial.id, languageStatus, value, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
     }
   };
@@ -78,13 +77,13 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus);
+    removeData(id, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   };
 
   return (
     <div>
       {
-        !getDataStatus && <PreloaderMini />
+        !dataStatus.loading && <PreloaderMini />
       }
       <div>
         <AdminBtn
@@ -113,7 +112,7 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
           pageArr={pageArr}
           setPageNumber={setPageNumber}
           pageNumber={pageNumber}
-          errorBlock={errorBlock}
+          dataStatus={dataStatus}
         />
         <ModalWindow
           title={'Edit elements'}
@@ -144,14 +143,21 @@ AdminLanguage.propTypes = {
   editData: PropTypes.func,
   pristine: PropTypes.bool,
   findData: PropTypes.func,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
+  statusLoading: PropTypes.func,
+  statusEmptyData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   languageStatus: state.languageTask,
+  dataStatus: state.dataStatusTasks,
   pristine: isPristine('changeLanguage')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  removeData: (id, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  removeData: (id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
@@ -162,11 +168,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(RemoveLanguageData(id,setGetDataStatus)).then(() => changeData(options));
+    dispatch(RemoveLanguageData(id, statusLoading)).then(() => changeData(options));
   },
-  createData: (newData, sortType, name, pageNumber, limitNumber,setGetDataStatus) => {
+  createData: (newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
@@ -177,11 +184,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(CreateLanguageData(newData, setGetDataStatus)).then(() => changeData(options));
+    dispatch(CreateLanguageData(newData, statusLoading)).then(() => changeData(options));
   },
-  editData: (id, state, value, sortType, name, pageNumber, limitNumber,setGetDataStatus) => {
+  editData: (id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
@@ -192,11 +200,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(ChangeLanguageData(id, state, value, setGetDataStatus)).then(() => changeData(options));
+    dispatch(ChangeLanguageData(id, state, value, statusLoading)).then(() => changeData(options));
   },
-  findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+  findData: (sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
@@ -205,10 +214,16 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
-      setErrorBlock,
+      statusEmptyData,
+      statusLoading,
     };
     changeData(options);
+  },
+  statusLoading: (loading) => {
+    dispatch(setLoading(loading));
+  },
+  statusEmptyData: (emptyData) => {
+    dispatch(setDataStatusEmpty(emptyData));
   },
 });
 

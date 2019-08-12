@@ -10,13 +10,14 @@ import {
   CreateKnowledgeData,
   RemoveKnowledgeData,
 } from '../../../actions/knowledgeData';
+import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ModalWindow from '../../ModalWindow';
 import KnowledgeModalInner from './KnowledgeModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
 
-function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pristine, findData }) {
+function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -25,11 +26,9 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  const [getDataStatus, setGetDataStatus] = useState(true);
-  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
+    findData(sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   }, [sort, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   };
 
   const submitData = value => {
-    createData(value, sort, search, pageNumber, limitNumber, setGetDataStatus);
+    createData(value, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
     setModalShow(false);
   };
 
@@ -67,7 +66,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         setEditModalShow(false);
       }
     } else {
-      editData(initial.id, knowledgeStatus, value, sort, search, pageNumber, limitNumber, setGetDataStatus);
+      editData(initial.id, knowledgeStatus, value, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
     }
   };
@@ -78,13 +77,13 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus);
+    removeData(id, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   };
 
   return (
     <div>
       {
-        !getDataStatus && <PreloaderMini />
+        !dataStatus.loading && <PreloaderMini />
       }
       <div>
         <AdminBtn
@@ -109,7 +108,7 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
           pageArr={pageArr}
           setPageNumber={setPageNumber}
           pageNumber={pageNumber}
-          errorBlock={errorBlock}
+          dataStatus={dataStatus}
         />
         <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
           <KnowledgeModalInner onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
@@ -135,15 +134,22 @@ AdminKnowledge.propTypes = {
   pristine: PropTypes.bool,
   sortKnowledgeData: PropTypes.func,
   findData: PropTypes.func,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
+  statusLoading: PropTypes.func,
+  statusEmptyData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   knowledgeStatus: state.knowledgeTask,
+  dataStatus: state.dataStatusTasks,
   pristine: isPristine('changeKnowledge')(state),
 });
 
 const mapStateToDispatch = dispatch => ({
-  removeData: (id, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  removeData: (id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.KNOWLEDGE,
       addData: (res) => dispatch(AddKnowledgeData(res)),
@@ -154,11 +160,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(RemoveKnowledgeData(id, setGetDataStatus)).then(() => changeData(options));
+    dispatch(RemoveKnowledgeData(id, statusLoading)).then(() => changeData(options));
   },
-  createData: (newData, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  createData: (newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.KNOWLEDGE,
       addData: (res) => dispatch(AddKnowledgeData(res)),
@@ -169,11 +176,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(CreateKnowledgeData(newData, setGetDataStatus)).then(() => changeData(options));
+    dispatch(CreateKnowledgeData(newData, statusLoading)).then(() => changeData(options));
   },
-  editData: (id, state, value, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  editData: (id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.KNOWLEDGE,
       addData: (res) => dispatch(AddKnowledgeData(res)),
@@ -184,11 +192,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(ChangeKnowledgeData(id, state, value, setGetDataStatus)).then(() => changeData(options));
+    dispatch(ChangeKnowledgeData(id, state, value, statusLoading)).then(() => changeData(options));
   },
-  findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+  findData: (sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.KNOWLEDGE,
       addData: (res) => dispatch(AddKnowledgeData(res)),
@@ -197,10 +206,16 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
-      setErrorBlock,
+      statusEmptyData,
+      statusLoading,
     };
     changeData(options);
+  },
+  statusLoading: (loading) => {
+    dispatch(setLoading(loading));
+  },
+  statusEmptyData: (emptyData) => {
+    dispatch(setDataStatusEmpty(emptyData));
   },
 });
 

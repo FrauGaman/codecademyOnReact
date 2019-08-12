@@ -1,6 +1,5 @@
 import { PATH, TYPE } from '../scripts/const';
 import { deleteData, postData, putData } from '../scripts/changeData';
-import {AddLanguageData} from './languageData';
 
 export function AddSkillData(payload) {
   return {
@@ -9,10 +8,10 @@ export function AddSkillData(payload) {
   };
 }
 
-export function RemoveSkillData(id, setGetDataStatus) {
+export function RemoveSkillData(id, statusLoading) {
   return dispatch => {
     dispatch(AddSkillData);
-    return deleteData(PATH.SKILLPATH, id, setGetDataStatus).then(() => {
+    return deleteData(PATH.SKILLPATH, id, statusLoading).then(() => {
       return {
         type: TYPE.SKILL_REMOVE_DATA,
         payload: { id },
@@ -21,10 +20,10 @@ export function RemoveSkillData(id, setGetDataStatus) {
   };
 }
 
-export function CreateSkillData(payload, setGetDataStatus) {
+export function CreateSkillData(payload, statusLoading) {
   return dispatch => {
     dispatch(AddSkillData);
-    return postData(PATH.SKILLPATH, payload, setGetDataStatus).then(() => {
+    return postData(PATH.SKILLPATH, payload, statusLoading).then(() => {
       return {
         type: TYPE.SKILL_CREATE_DATA,
         payload,
@@ -33,10 +32,10 @@ export function CreateSkillData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeSkillData(id, state, payload, setGetDataStatus) {
+export function ChangeSkillData(id, state, payload, statusLoading) {
   return dispatch => {
     dispatch(AddSkillData);
-    return putData(PATH.SKILLPATH, id, payload, setGetDataStatus).then(() => {
+    return putData(PATH.SKILLPATH, id, payload, statusLoading).then(() => {
       return {
         type: TYPE.SKILL_CHANGE_DATA,
         payload,

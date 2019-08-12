@@ -9,6 +9,7 @@ import {
   CreateSkillData,
   ChangeSkillData,
 } from '../../../actions/skillData';
+import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import { AddThemeData } from '../../../actions/themeData';
 import { AddLanguageData } from '../../../actions/languageData';
 import SkillTableTemplate from './SkillTableTemplate';
@@ -16,9 +17,9 @@ import AdminBtn from '../AdminButton/AdminButton';
 import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import SkillModalInner from './SkillModalInner';
-// import PreloaderMini from '../../Preloader/PreloaderMini';
+import PreloaderMini from '../../Preloader/PreloaderMini';
 
-function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData }) {
+function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -28,16 +29,14 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  // const [getDataStatus, setGetDataStatus] = useState(true);
-  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, filter, search, pageNumber, limitNumber, setErrorBlock);
+    findData(sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   }, [sort, filter, search, pageNumber, limitNumber]);
 
   useEffect(() => {
-    getThemeData(themeList.count);
-    getLanguageData(languageList.count);
+    getThemeData(themeList.count, statusEmptyData, statusLoading);
+    getLanguageData(languageList.count, statusEmptyData, statusLoading);
   }, [themeList.count, languageList.count]);
 
   useEffect(() => {
@@ -70,7 +69,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
       theme: value.theme && value.theme.map(item => +item.value),
       language:  value.language && value.language.map(item => +item.value),
     };
-    createData(valueData, sort, filter, search, pageNumber, limitNumber);
+    createData(valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
     setModalShow(false);
   };
 
@@ -86,7 +85,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
         theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
         language: (value.language !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
       };
-      editData(initial.id, skillStatus, valueData, sort, filter, search, pageNumber, limitNumber);
+      editData(initial.id, skillStatus, valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
     }
   };
@@ -130,14 +129,14 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, filter, search, pageNumber, limitNumber);
+    removeData(id, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   };
 
   return (
     <div>
-      {/*{*/}
-      {/*  !getDataStatus && <PreloaderMini />*/}
-      {/*}*/}
+      {
+        !dataStatus.loading && <PreloaderMini />
+      }
       <div>
         <AdminBtn
           className={'create__btn'}
@@ -163,7 +162,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
           setPageNumber={setPageNumber}
           pageNumber={pageNumber}
           filterState={filterState}
-          errorBlock={errorBlock}
+          dataStatus={dataStatus}
         />
         <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
           <SkillModalInner themeList={themeList} languageList={languageList} onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
@@ -213,32 +212,43 @@ AdminSkill.propTypes = {
   editData: PropTypes.func,
   pristine: PropTypes.bool,
   findData: PropTypes.func,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
+  statusLoading: PropTypes.func,
+  statusEmptyData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   skillStatus: state.skillTasks,
   themeList: state.themeTasks,
   languageList: state.languageTask,
+  dataStatus: state.dataStatusTasks,
   pristine: isPristine('changeSkill')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  getThemeData: (count) => {
+  getThemeData: (count, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
       limitNumber: count,
+      statusEmptyData: () => {},
+      statusLoading,
     };
     changeData(options);
   },
-  getLanguageData: (count) => {
+  getLanguageData: (count, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.LANGUAGE,
       addData: (res) => dispatch(AddLanguageData(res)),
       limitNumber: count,
+      statusEmptyData: () => {},
+      statusLoading,
     };
     changeData(options);
   },
-  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+  removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.SKILLPATH,
       addData: (res) => dispatch(AddSkillData(res)),
@@ -249,11 +259,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(RemoveSkillData(id, setGetDataStatus)).then(() => changeData(options));
+    dispatch(RemoveSkillData(id, statusLoading)).then(() => changeData(options));
   },
-  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+  createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.SKILLPATH,
       addData: (res) => dispatch(AddSkillData(res)),
@@ -264,11 +275,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(CreateSkillData(newData, setGetDataStatus)).then(() => changeData(options));
+    dispatch(CreateSkillData(newData, statusLoading)).then(() => changeData(options));
   },
-  editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus) => {
+  editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.SKILLPATH,
       addData: (res) => dispatch(AddSkillData(res)),
@@ -279,11 +291,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(ChangeSkillData(id, state, value, setGetDataStatus)).then(() => changeData(options));
+    dispatch(ChangeSkillData(id, state, value, statusLoading)).then(() => changeData(options));
   },
-  findData: (sortType, filterStr, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+  findData: (sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.SKILLPATH,
       addData: (res) => dispatch(AddSkillData(res)),
@@ -294,10 +307,16 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
-      setErrorBlock,
+      statusEmptyData,
+      statusLoading,
     };
     changeData(options);
+  },
+  statusLoading: (loading) => {
+    dispatch(setLoading(loading));
+  },
+  statusEmptyData: (emptyData) => {
+    dispatch(setDataStatusEmpty(emptyData));
   },
 });
 

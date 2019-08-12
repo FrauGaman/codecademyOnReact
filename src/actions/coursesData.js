@@ -8,10 +8,10 @@ export function AddCoursesData(payload) {
   };
 }
 
-export function RemoveCoursesData(id, setGetDataStatus) {
+export function RemoveCoursesData(id, statusLoading) {
   return dispatch => {
     dispatch(AddCoursesData);
-    return deleteData(PATH.COURSESLIST, id, setGetDataStatus).then(() => {
+    return deleteData(PATH.COURSESLIST, id, statusLoading).then(() => {
       return {
         type: TYPE.COURSES_REMOVE_DATA,
         payload: { id },
@@ -20,10 +20,10 @@ export function RemoveCoursesData(id, setGetDataStatus) {
   };
 }
 
-export function CreateCoursesData(payload, setGetDataStatus) {
+export function CreateCoursesData(payload, statusLoading) {
   return dispatch => {
     dispatch(AddCoursesData);
-    return postData(PATH.COURSESLIST, payload, setGetDataStatus).then(() => {
+    return postData(PATH.COURSESLIST, payload, statusLoading).then(() => {
       return {
         type: TYPE.COURSES_CREATE_DATA,
         payload,
@@ -32,10 +32,10 @@ export function CreateCoursesData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeCoursesData(id, state, payload, setGetDataStatus) {
+export function ChangeCoursesData(id, state, payload, statusLoading) {
   return dispatch => {
     dispatch(AddCoursesData);
-    return putData(PATH.COURSESLIST, id, payload, setGetDataStatus).then(() => {
+    return putData(PATH.COURSESLIST, id, payload, statusLoading).then(() => {
       return {
         type: TYPE.COURSES_CHANGE_DATA,
         payload,

@@ -1,6 +1,5 @@
 import { PATH, TYPE } from '../scripts/const';
-import {deleteData, postData, putData} from '../scripts/changeData';
-import {AddLanguageData} from './languageData';
+import { deleteData, postData, putData } from '../scripts/changeData';
 
 export function AddThemeData(payload) {
   return {
@@ -9,10 +8,10 @@ export function AddThemeData(payload) {
   };
 }
 
-export function RemoveThemeData(id, setGetDataStatus) {
+export function RemoveThemeData(id, statusLoading) {
   return dispatch => {
     dispatch(AddThemeData);
-    return deleteData(PATH.THEME, id, setGetDataStatus).then(() => {
+    return deleteData(PATH.THEME, id, statusLoading).then(() => {
       return {
         type: TYPE.THEME_REMOVE_DATA,
         payload: { id },
@@ -21,10 +20,10 @@ export function RemoveThemeData(id, setGetDataStatus) {
   };
 }
 
-export function CreateThemeData(payload, setGetDataStatus) {
+export function CreateThemeData(payload, statusLoading) {
   return dispatch => {
     dispatch(AddThemeData);
-    return postData(PATH.THEME, payload, setGetDataStatus).then(() => {
+    return postData(PATH.THEME, payload, statusLoading).then(() => {
       return {
         type: TYPE.THEME_CREATE_DATA,
         payload,
@@ -33,10 +32,10 @@ export function CreateThemeData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeThemeData(id, state, payload, setGetDataStatus) {
+export function ChangeThemeData(id, state, payload, statusLoading) {
   return dispatch => {
     dispatch(AddThemeData);
-    return putData(PATH.THEME, id, payload, setGetDataStatus).then(() => {
+    return putData(PATH.THEME, id, payload, statusLoading).then(() => {
       return {
         type: TYPE.THEME_CHANGE_DATA,
         payload,

@@ -8,10 +8,10 @@ export function AddCareerData(payload) {
   };
 }
 
-export function RemoveCareerData(id, setGetDataStatus) {
+export function RemoveCareerData(id, statusLoading) {
   return dispatch => {
     dispatch(AddCareerData);
-    return deleteData(PATH.CAREERPATH, id, setGetDataStatus).then(() => {
+    return deleteData(PATH.CAREERPATH, id, statusLoading).then(() => {
       return {
         type: TYPE.CAREER_REMOVE_DATA,
         payload: { id },
@@ -20,10 +20,10 @@ export function RemoveCareerData(id, setGetDataStatus) {
   };
 }
 
-export function CreateCareerData(payload, setGetDataStatus) {
+export function CreateCareerData(payload, statusLoading) {
   return dispatch => {
     dispatch(AddCareerData);
-    return postData(PATH.CAREERPATH, payload, setGetDataStatus).then(() => {
+    return postData(PATH.CAREERPATH, payload, statusLoading).then(() => {
       return {
         type: TYPE.CAREER_CREATE_DATA,
         payload,
@@ -32,10 +32,10 @@ export function CreateCareerData(payload, setGetDataStatus) {
   };
 }
 
-export function ChangeCareerData(id, state, payload, setGetDataStatus) {
+export function ChangeCareerData(id, state, payload, statusLoading) {
   return dispatch => {
     dispatch(AddCareerData);
-    return putData(PATH.CAREERPATH, id, payload, setGetDataStatus).then(() => {
+    return putData(PATH.CAREERPATH, id, payload, statusLoading).then(() => {
       return {
         type: TYPE.CAREER_CHANGE_DATA,
         payload,

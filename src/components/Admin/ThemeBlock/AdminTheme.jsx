@@ -9,6 +9,7 @@ import {
   CreateThemeData,
   ChangeThemeData,
 } from '../../../actions/themeData';
+import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import { changeData } from '../../../scripts/changeData';
@@ -16,7 +17,7 @@ import ModalWindow from '../../ModalWindow';
 import ThemeModalInner from './ThemeModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
 
-function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData }) {
+function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -25,11 +26,9 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
   const [limitNumber, setLimitNumber] = useState('10');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
-  const [getDataStatus, setGetDataStatus] = useState(true);
-  const [errorBlock, setErrorBlock] = useState(false);
 
   useEffect(() => {
-    findData(sort, search, pageNumber, limitNumber, setGetDataStatus, setErrorBlock);
+    findData(sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   }, [sort, search, pageNumber, limitNumber]);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
   };
 
   const submitData = value => {
-    createData(value, sort, search, pageNumber, limitNumber, setGetDataStatus);
+    createData(value, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
     setModalShow(false);
   };
 
@@ -67,7 +66,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
         setEditModalShow(false);
       }
     } else {
-      editData(initial.id, themeStatus, value, sort, search, pageNumber, limitNumber, setGetDataStatus);
+      editData(initial.id, themeStatus, value, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
     }
   };
@@ -78,13 +77,13 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
   };
 
   const removeTableData = (id) => {
-    removeData(id, sort, search, pageNumber, limitNumber, setGetDataStatus);
+    removeData(id, sort, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   };
 
   return (
     <div>
       {
-        !getDataStatus && <PreloaderMini />
+        !dataStatus.loading && <PreloaderMini />
       }
       <div>
         <AdminBtn
@@ -109,7 +108,7 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
           pageArr={pageArr}
           setPageNumber={setPageNumber}
           pageNumber={pageNumber}
-          errorBlock={errorBlock}
+          dataStatus={dataStatus}
         />
         <ModalWindow title={'Edit elements'} show={editModalShow} onHide={() => setEditModalShow(false)}>
           <ThemeModalInner onHide={() => setEditModalShow(false)} initialValues={initial} submitData={editFormData} />
@@ -136,14 +135,21 @@ AdminTheme.propTypes = {
   editData: PropTypes.func,
   pristine: PropTypes.bool,
   findData: PropTypes.func,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
+  statusLoading: PropTypes.func,
+  statusEmptyData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   themeStatus: state.themeTasks,
+  dataStatus: state.dataStatusTasks,
   pristine: isPristine('changeTheme')(state),
 });
 const mapStateToDispatch = dispatch => ({
-  removeData: (id, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  removeData: (id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
@@ -154,11 +160,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(RemoveThemeData(id, setGetDataStatus)).then(() => changeData(options));
+    dispatch(RemoveThemeData(id, statusLoading)).then(() => changeData(options));
   },
-  createData: (newData, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  createData: (newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
@@ -169,11 +176,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(CreateThemeData(newData, setGetDataStatus)).then(() => changeData(options));
+    dispatch(CreateThemeData(newData, statusLoading)).then(() => changeData(options));
   },
-  editData: (id, state, value, sortType, name, pageNumber, limitNumber, setGetDataStatus) => {
+  editData: (id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
@@ -184,11 +192,12 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
+      statusEmptyData,
+      statusLoading,
     };
-    dispatch(ChangeThemeData(id, state, value, setGetDataStatus)).then(() => changeData(options));
+    dispatch(ChangeThemeData(id, state, value, statusLoading)).then(() => changeData(options));
   },
-  findData: (sortType, name, pageNumber, limitNumber, setGetDataStatus, setErrorBlock) => {
+  findData: (sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
     const options = {
       path: PATH.THEME,
       addData: (res) => dispatch(AddThemeData(res)),
@@ -197,10 +206,16 @@ const mapStateToDispatch = dispatch => ({
       name,
       pageNumber,
       limitNumber,
-      setGetDataStatus,
-      setErrorBlock,
+      statusEmptyData,
+      statusLoading,
     };
     changeData(options);
+  },
+  statusLoading: (loading) => {
+    dispatch(setLoading(loading));
+  },
+  statusEmptyData: (emptyData) => {
+    dispatch(setDataStatusEmpty(emptyData));
   },
 });
 

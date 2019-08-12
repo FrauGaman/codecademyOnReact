@@ -2,9 +2,6 @@ import {BASE_PATH} from './const';
 import fetchData from './fetchData';
 
 export function changeData(options) {
-  // const url = `${BASE_PATH}${path}?_sort=${sortField}&_order=${sortType}&${field}_like=${name}&${filterStr}&_page=${pageNumber}&_limit=${limitNumber}`;
-
-
   const base = `${BASE_PATH}${options.path}?`;
   const sort = options.sortField && `_sort=${options.sortField}`;
   const order = options.sortType && `&_order=${options.sortType}`;
@@ -15,11 +12,12 @@ export function changeData(options) {
 
   const url = `${base}${sort}${order}${search}${filter}${page}${limit}`;
 
-  // options.setGetDataStatus(false);
+  options.statusLoading(false);
+  options.statusEmptyData(false);
+
   function success(data) {
     const count = data.headers.get('X-Total-Count');
-    // options.setGetDataStatus(true);
-    // options.setErrorBlock(false);
+    options.statusLoading(true);
     new Promise(resolve => data.json()
       .then(res =>
         resolve({
@@ -30,55 +28,51 @@ export function changeData(options) {
     ).then(res => options.addData(res));
   }
   function fail(err){ console.log(err)}
-  return fetchData({ url, success, fail,  method: 'GET' });
+  return fetchData({ url, success, fail,  method: 'GET', statusEmptyData: options.statusEmptyData, statusLoading: options.statusLoading });
 }
 
-export function deleteData(path, id, setGetDataStatus) {
+export function deleteData(path, id, statusLoading) {
   const url = `${BASE_PATH}${path}/${id}`;
-  // setGetDataStatus(false);
-  // function success() { setGetDataStatus(true); }
-  function success() {console.log('lolo')}
+  statusLoading(false);
+  function success() { statusLoading(true); }
   function fail(err){ console.log(err)}
-  return fetchData({ url, success, fail, setGetDataStatus, method: 'DELETE' });
+  return fetchData({ url, success, fail, method: 'DELETE', statusLoading });
 }
 
-export function postData(path, payload, setGetDataStatus) {
+export function postData(path, payload, statusLoading) {
   const url = `${BASE_PATH}${path}`;
-  // setGetDataStatus(false);
-  // function success() { setGetDataStatus(true); }
-  function success() {console.log('lolo')}
-
+  statusLoading(false);
+  function success() { statusLoading(true); }
   function fail(err){ console.log(err) }
   return fetchData({
     url,
     success,
     fail,
-    setGetDataStatus,
     method: 'POST',
     body: JSON.stringify({
       id: +new Date(),
       ...payload,
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    statusLoading,
   });
 }
 
-export function putData(path, id, body, setGetDataStatus) {
+export function putData(path, id, body, statusLoading) {
   const url = `${BASE_PATH}${path}/${id}`;
-  // setGetDataStatus(false);
-  // function success() { setGetDataStatus(true); }
-  function success() {console.log('lolo')}
+  statusLoading(false);
+  function success() { statusLoading(true); }
   function fail(err){ console.log(err); }
 
   return fetchData({
     url,
     success,
     fail,
-    setGetDataStatus,
     method: 'PUT',
     body: JSON.stringify(
       body,
     ),
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    statusLoading,
   });
 }

@@ -19,7 +19,7 @@ function LanguageTableTemplate({
    setPageNumber,
    limitNumber,
    sort,
-   errorBlock,
+   dataStatus,
    pageNumber,
 }) {
   return (
@@ -43,7 +43,7 @@ function LanguageTableTemplate({
         </thead>
         <tbody>
         {
-          !errorBlock ?
+          !dataStatus.emptyData ?
             tableData.data.length ?
               <LanguageTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
               : <EmptyData colSpan={4} problem={'Data somewhere, but not here'} />
@@ -73,9 +73,13 @@ LanguageTableTemplate.propTypes = {
   chooseSort: PropTypes.func,
   pageArr: PropTypes.array,
   setPageNumber: PropTypes.func,
+  pageNumber: PropTypes.number,
   limitNumber: PropTypes.string,
   sort: PropTypes.string,
-  errorBlock: PropTypes.bool,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
 };
 
 export default LanguageTableTemplate;

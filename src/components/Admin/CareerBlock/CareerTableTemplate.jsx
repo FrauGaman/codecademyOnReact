@@ -24,7 +24,7 @@ function CareerTableTemplate({
    setPageNumber,
    limitNumber,
    sort,
-   errorBlock,
+   dataStatus,
    pageNumber,
 }) {
   return (
@@ -53,7 +53,7 @@ function CareerTableTemplate({
         </thead>
         <tbody>
         {
-          !errorBlock ?
+          !dataStatus.emptyData ?
             tableData.data.length ?
               <CareerTableMap tableData={tableData} themeList={themeList} languageList={languageList} knowledgeList={knowledgeList} removeTableData={removeTableData} showModal={showModal} />
               : <EmptyData colSpan={8} problem={'Data somewhere, but not here'} />
@@ -105,6 +105,7 @@ CareerTableTemplate.propTypes = {
     })),
     count: PropTypes.string,
   }),
+  filterState: PropTypes.func,
   removeTableData: PropTypes.func,
   showModal: PropTypes.func,
   searchState: PropTypes.func,
@@ -112,10 +113,13 @@ CareerTableTemplate.propTypes = {
   chooseSort: PropTypes.func,
   pageArr: PropTypes.array,
   setPageNumber: PropTypes.func,
+  pageNumber: PropTypes.number,
   limitNumber: PropTypes.string,
   sort: PropTypes.string,
-  filterState: PropTypes.func,
-  errorBlock: PropTypes.bool,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
 };
 
 export default CareerTableTemplate;

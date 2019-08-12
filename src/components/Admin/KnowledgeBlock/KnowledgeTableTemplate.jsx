@@ -19,7 +19,7 @@ function KnowledgeTableTemplate({
   setPageNumber,
   limitNumber,
   sort,
-  errorBlock,
+  dataStatus,
   pageNumber,
 }) {
   return (
@@ -41,7 +41,7 @@ function KnowledgeTableTemplate({
         </thead>
             <tbody>
             {
-              !errorBlock ?
+              !dataStatus.emptyData ?
                 tableData.data.length ?
                   <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
                   : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
@@ -69,9 +69,13 @@ KnowledgeTableTemplate.propTypes = {
   chooseSort: PropTypes.func,
   pageArr: PropTypes.array,
   setPageNumber: PropTypes.func,
+  pageNumber: PropTypes.number,
   limitNumber: PropTypes.string,
   sort: PropTypes.string,
-  errorBlock: PropTypes.bool,
+  dataStatus: PropTypes.shape({
+    loading: PropTypes.bool,
+    emptyData: PropTypes.bool,
+  }),
 };
 
 export default KnowledgeTableTemplate;

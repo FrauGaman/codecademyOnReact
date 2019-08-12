@@ -2,12 +2,13 @@ function fetchData({
 	 url,
 	 success,
 	 fail,
+	statusEmptyData,
+	statusLoading,
 	 method,
 	 body = null,
 	 headers = {Accept: 'application/json', 'Content-Type': 'application/json'},
-}){
+}) {
 	const options = {};
-
 	options.method = method;
 	options.headers = headers;
 	options.body = body;
@@ -17,7 +18,8 @@ function fetchData({
 			if (res.ok) {
 				success(res);
 			} else {
-				// setGetDataStatus(true);
+				statusEmptyData(true);
+				statusLoading(true);
 			}
 		})
 		.catch(err => {
