@@ -39,7 +39,6 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     getLanguageData(languageList.count, statusEmptyData, statusLoading);
   }, [themeList.count, languageList.count]);
 
-
   useEffect(() => {
     const helpArr = [];
     for (let i = 0; i < Math.ceil(allCoursesStatus.count / limitNumber); i++) {
@@ -68,7 +67,7 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     const valueData = {
       ...value,
       theme: value.theme && value.theme.map(item => +item.value),
-      language:  value.language && value.language.map(item => +item.value),
+      language: value.language && value.language.map(item => +item.value),
     };
     createData(valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
     setModalShow(false);
@@ -83,8 +82,8 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     } else {
       const valueData = {
         ...value,
-        theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
-        language: (value.language !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
+        theme: (value.theme && (value.theme !== []) && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
+        language: (value.language && (value.language !== []) && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
       };
       editData(initial.id, allCoursesStatus, valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
@@ -106,12 +105,11 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
             if(elem.value === inst) {
               arrTheme.push(elem);
             }
-          })
-        })
+          });
+        });
       }
       item.theme = arrTheme;
     });
-
     allCoursesData.map(item => {
       if (item.id === id) {
         languageOptions.map(elem => {
@@ -124,7 +122,6 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
       }
       item.language = arrLang;
     });
-
     setInitial(allCoursesData.find(item => item.id === id));
     setEditModalShow(true);
   };

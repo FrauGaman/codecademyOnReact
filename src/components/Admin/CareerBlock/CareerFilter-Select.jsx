@@ -27,7 +27,6 @@ function CareerFilterSelect({ themeList, languageList, knowledgeList, filterStat
   return (
     <React.Fragment>
       <div className="filter__title">Filter</div>
-
       <div className="params__selector__block">
         <div>
           <div>Theme</div>

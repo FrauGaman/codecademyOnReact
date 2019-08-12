@@ -8,24 +8,23 @@ import { requiredField, stringValidator } from '../validator';
 function KnowledgeModalInner({ handleSubmit, submitData, onHide }) {
 	return (
 		<Form id="knowledgeForm" onSubmit={handleSubmit(submitData)}>
-				<Form.Group controlId="exampleForm.ControlInput1">
-					<Form.Label>Knowledge</Form.Label>
-					<Field
-						name="name"
-						component={FormInput}
-						type="text"
-						placeholder="item"
-						validate={[requiredField, stringValidator]}
-						useFocus={true}
-					/>
-				</Form.Group>
+			<Form.Group controlId="exampleForm.ControlInput1">
+				<Form.Label>Knowledge</Form.Label>
+				<Field
+					name="name"
+					component={FormInput}
+					type="text"
+					placeholder="item"
+					validate={[requiredField, stringValidator]}
+					useFocus={true}
+				/>
+			</Form.Group>
 			<div className="form__button">
 				<Button className="form__button__close" variant="secondary" onClick={onHide}>Close</Button>
 				<Button className="form__button__submit" variant="primary" type="submit">Save changes</Button>
 			</div>
 		</Form>
-
-);
+	);
 }
 
 KnowledgeModalInner.propTypes = {

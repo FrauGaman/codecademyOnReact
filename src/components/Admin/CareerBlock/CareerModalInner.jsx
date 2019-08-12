@@ -8,9 +8,9 @@ import { requiredField, setMaxLength, stringValidator } from '../validator';
 const maxLDescr = setMaxLength(300);
 
 function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit, submitData, onHide }) {
-	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
-	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
-	const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name, }});
+	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name }});
+	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name }});
+	const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name }});
 	return(
 		<Form id="careerForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
@@ -19,15 +19,15 @@ function CareerModalInner({ themeList, languageList, knowledgeList, handleSubmit
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlTextarea1">
 				<Form.Label>Description</Form.Label>
-				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxLDescr]} useFocus={false} />
+				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxLDescr]} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Img</Form.Label>
-				<Field name="img" component={FormInput} type="text" placeholder="Img" useFocus={false} />
+				<Field name="img" component={FormInput} type="text" placeholder="Img" />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Bg color</Form.Label>
-				<Field name="bgColor" component={FormInput} type="text" placeholder="Background color" useFocus={false} />
+				<Field name="bgColor" component={FormInput} type="text" placeholder="Background color" />
 			</Form.Group>
 			{themeList.data.length !== 0 &&
 			<Form.Group controlId="exampleForm.ControlSelect2">

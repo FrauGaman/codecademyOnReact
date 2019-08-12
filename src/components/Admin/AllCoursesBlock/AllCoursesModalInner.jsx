@@ -1,16 +1,15 @@
-import React  from 'react';
-import { connect } from 'react-redux'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
-import { Field, reduxForm, formValueSelector  } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { FormInput, FormTextarea, FormSelector, FormMultiSelector } from '../ComponentsPieces/Forms/FromParts';
 import { requiredField, setMaxLength, stringValidator } from '../validator';
 
 const maxL = setMaxLength(300);
 
 function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData, onHide}) {
-	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
-	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name }});
+	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name }});
 	return (
 		<Form id="allCoursesForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
@@ -19,7 +18,7 @@ function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlTextarea1">
 				<Form.Label>Description</Form.Label>
-				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]}/>
+				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Importance</Form.Label>
@@ -50,7 +49,7 @@ function AllCoursesModalInner({themeList, languageList, handleSubmit, submitData
 				<Button className="form__button__submit" variant="primary" type="submit">Save changes</Button>
 			</div>
 		</Form>
-	)
+	);
 }
 
 AllCoursesModalInner.propTypes = {
@@ -81,20 +80,6 @@ AllCoursesModalInner = reduxForm({
 	form: 'changeAllCourses',
 	enableReinitialize: true,
 	destroyOnUnmount: true,
-})(AllCoursesModalInner);
-
-const selector = formValueSelector('changeAllCourses');
-AllCoursesModalInner = connect(state => {
-	const { title, descr, importance, icon, borderColor, theme, language } = selector(state, 'title', 'descr', 'importance', 'icon', 'borderColor', 'theme', 'language' )
-	return {
-		title,
-		descr,
-		importance,
-		icon,
-		borderColor,
-		theme,
-		language,
-	}
 })(AllCoursesModalInner);
 
 export default AllCoursesModalInner;

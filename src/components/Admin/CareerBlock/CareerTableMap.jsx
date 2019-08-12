@@ -13,21 +13,21 @@ function CareerTableMap({ tableData, themeList, languageList, knowledgeList, sho
 				<td className="hidden__col">{!!item.theme && item.theme.map(themeNumber =>
 					!!themeList.data && themeList.data.map(elem => themeNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
-					item !== ''
+					item !== '',
 					)
 				).join(', ')
 				}</td>
 				<td className="hidden__col">{!!item.language && item.language.map(languageNumber =>
 					!!languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
-					item !== ''
+					item !== '',
 					)
 				).join(', ')
 				}</td>
 				<td className="hidden__col">{!!item.knowledge && item.knowledge.map(knowledgeNumber =>
 					!!knowledgeList.data && knowledgeList.data.map(elem => knowledgeNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
-					item !== ''
+					item !== '',
 					)
 				).join(', ')
 				}</td>
@@ -41,7 +41,7 @@ function CareerTableMap({ tableData, themeList, languageList, knowledgeList, sho
 				</td>
 			</tr>
 		)
-	)
+	);
 }
 
 CareerTableMap.propTypes = {

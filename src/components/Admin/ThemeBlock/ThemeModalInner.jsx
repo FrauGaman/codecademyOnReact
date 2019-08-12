@@ -16,11 +16,11 @@ function ThemeModalInner({handleSubmit, submitData, onHide}) {
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlTextarea1">
 				<Form.Label>Description</Form.Label>
-				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} useFocus={false} />
+				<Field name="descr" component={FormTextarea} placeholder="Descriptopn" validate={[requiredField, maxL]} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Link</Form.Label>
-				<Field name="link" component={FormInput} type="text" placeholder="/link" validate={[requiredField, linkValidator]} useFocus={false} />
+				<Field name="link" component={FormInput} type="text" placeholder="/link" validate={[requiredField, linkValidator]} />
 			</Form.Group>
 			<div className="form__button">
 				<Button className="form__button__close" variant="secondary" onClick={onHide}>Close</Button>

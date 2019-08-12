@@ -19,7 +19,7 @@ function ThemeTableMap({ tableData, showModal, removeTableData }) {
 				</td>
 			</tr>
 		)
-	)
+	);
 }
 
 ThemeTableMap.propTypes = {

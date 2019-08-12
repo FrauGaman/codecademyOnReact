@@ -115,7 +115,6 @@ function AdminTheme({ themeStatus, removeData, createData, editData, pristine, f
         </ModalWindow>
       </div>
     </div>
-
   );
 }
 
@@ -129,7 +128,6 @@ AdminTheme.propTypes = {
     })),
     count: PropTypes.string,
   }),
-  getThemeData: PropTypes.func,
   removeData: PropTypes.func,
   createData: PropTypes.func,
   editData: PropTypes.func,

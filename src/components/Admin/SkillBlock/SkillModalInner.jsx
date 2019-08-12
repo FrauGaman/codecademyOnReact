@@ -9,13 +9,13 @@ const maxLDescr = setMaxLength(300);
 const maxLPeriod = setMaxLength(20);
 
 function SkillModalInner({ themeList, languageList, handleSubmit, submitData, onHide }) {
-	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
-	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+	const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name }});
+	const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name }});
 	return (
 		<Form id="skillForm" onSubmit={handleSubmit(submitData)}>
 			<Form.Group controlId="exampleForm.ControlInput1">
 				<Form.Label>Title</Form.Label>
-				<Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} />
+				<Field name="title" component={FormInput} type="text" placeholder="Title" validate={[requiredField, stringValidator]} useFocus={true} />
 			</Form.Group>
 			<Form.Group controlId="exampleForm.ControlTextarea1">
 				<Form.Label>Description</Form.Label>

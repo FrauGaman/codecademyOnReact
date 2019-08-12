@@ -85,9 +85,9 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
     } else {
       const valueData = {
         ...value,
-        theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
-        language: (value.language !== [] && value.language !== null) && value.language.map(item => +item.value),
-        knowledge: (value.knowledge !== [] && value.knowledge.map(item => item !== null)) && value.knowledge.map(item => +item.value),
+        theme: (value.theme && (value.theme !== []) && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
+        language: (value.language && (value.language !== []) && value.language !== null) && value.language.map(item => +item.value),
+        knowledge: (value.knowledge && (value.knowledge !== []) && value.knowledge.map(item => item !== null)) && value.knowledge.map(item => +item.value),
       };
       editData(initial.id, careerStatus, valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
@@ -110,8 +110,8 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
             if(elem.value === inst) {
               arrTheme.push(elem);
             }
-          })
-        })
+          });
+        });
       }
       item.theme = arrTheme;
     });
@@ -131,7 +131,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
       if (item.id === id) {
         knowledgeOptions.map(elem => {
           item.knowledge && item.knowledge.map(inst => {
-            if(elem.value === inst) {
+            if (elem.value === inst) {
               arrKnow.push(elem);
             }
           });
@@ -139,7 +139,6 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
       }
       item.knowledge = arrKnow;
     });
-
     setInitial(careerData.find(item => item.id === id));
     setEditModalShow(true);
   };

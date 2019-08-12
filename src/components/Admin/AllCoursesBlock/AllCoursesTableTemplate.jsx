@@ -10,28 +10,28 @@ import EmptyData from '../ErrorBlock/EmptyData';
 import AllCoursesTableMap from './AllCoursesTableMap';
 
 function AllCoursesTableTemplate({
-     tableData,
-     themeList,
-     languageList,
-     filterState,
-     removeTableData,
-     showModal,
-     searchState,
-     selectLimitNumber,
-     chooseSort,
-     pageArr,
-     setPageNumber,
-     limitNumber,
-     sort,
-     dataStatus,
-     pageNumber,
+   tableData,
+   themeList,
+   languageList,
+   filterState,
+   removeTableData,
+   showModal,
+   searchState,
+   selectLimitNumber,
+   chooseSort,
+   pageArr,
+   setPageNumber,
+   limitNumber,
+   sort,
+   dataStatus,
+   pageNumber,
 }) {
   return (
     <div className="table use__bootstrap">
-        <div className="admin__block">
-            <SearchByName searchState={searchState} />
-            <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
-        </div>
+      <div className="admin__block">
+        <SearchByName searchState={searchState} />
+        <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+      </div>
       <AllCoursesFilterSelect themeList={themeList} languageList={languageList} filterState={filterState} />
       <Table striped bordered hover>
         <thead>

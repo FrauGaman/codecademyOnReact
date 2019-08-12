@@ -16,7 +16,7 @@ function SearchByName({ searchState }) {
         </label>
         <button onClick={() => searchState(nameValue)} className="search__block__button" >Search</button>
     </div>
-  )
+  );
 }
 
 SearchByName.propTypes = {

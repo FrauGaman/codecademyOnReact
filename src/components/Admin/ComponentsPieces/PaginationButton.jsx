@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pagination from 'react-bootstrap/Pagination';
 
-
-function PaginationButton({pageArr, setPageNumber, pageNumber}) {
+function PaginationButton({ pageArr, setPageNumber, pageNumber }) {
 	return (
 		<Pagination>
 			{(pageArr.length > 1) && pageArr.map(item =>

@@ -25,21 +25,21 @@ function LanguageTableTemplate({
   return (
     <div className="table">
         <div className="admin__block">
-            <SearchByName searchState={searchState} />
-            <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
+          <SearchByName searchState={searchState} />
+          <SelectPageLimit limitNumber={limitNumber} selectLimitNumber={selectLimitNumber} />
         </div>
       <Table striped bordered hover>
         <thead>
-        <tr>
-          <th onClick={() => chooseSort()} className="sort__field">Name
-            {sort === 'asc' ?
-              <Icon iconName={'sortDown'} className={'sort__arrow'} />
-              : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
-          </th>
-          <th className="hidden__col">Description</th>
-          <th className="hidden__col">Link</th>
-          <th></th>
-        </tr>
+          <tr>
+            <th onClick={() => chooseSort()} className="sort__field">Name
+              {sort === 'asc' ?
+                <Icon iconName={'sortDown'} className={'sort__arrow'} />
+                : <Icon iconName={'sortUp'} className={'sort__arrow'} />}
+            </th>
+            <th className="hidden__col">Description</th>
+            <th className="hidden__col">Link</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
         {

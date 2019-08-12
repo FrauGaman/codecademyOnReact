@@ -123,7 +123,6 @@ function AdminLanguage({ languageStatus, removeData, createData, editData, prist
         </ModalWindow>
       </div>
     </div>
-
   );
 }
 
@@ -137,7 +136,6 @@ AdminLanguage.propTypes = {
     })),
     count: PropTypes.string,
   }),
-  getLanguageData: PropTypes.func,
   removeData: PropTypes.func,
   createData: PropTypes.func,
   editData: PropTypes.func,

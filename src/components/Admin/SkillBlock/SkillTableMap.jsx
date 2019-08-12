@@ -20,7 +20,7 @@ function SkillTableMap({ tableData, themeList, languageList, showModal, removeTa
 				<td className="hidden__col">{item.language && item.language.map(languageNumber =>
 					languageList.data && languageList.data.map(elem => languageNumber === elem.id ? `${elem.name} ` : '',
 					).find(item =>
-					item !== ''
+					item !== '',
 					)
 				).join(', ')
 				}</td>
@@ -35,7 +35,7 @@ function SkillTableMap({ tableData, themeList, languageList, showModal, removeTa
 				</td>
 			</tr>
 		)
-	)
+	);
 }
 
 SkillTableMap.propTypes = {

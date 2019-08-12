@@ -39,15 +39,15 @@ function KnowledgeTableTemplate({
           <th></th>
         </tr>
         </thead>
-            <tbody>
-            {
-              !dataStatus.emptyData ?
-                tableData.data.length ?
-                  <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
-                  : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
-              : <EmptyData colSpan={2} problem={'We have some problem:C'} />
-            }
-            </tbody>
+          <tbody>
+          {
+            !dataStatus.emptyData ?
+              tableData.data.length ?
+                <KnowledgeTableMap tableData={tableData} removeTableData={removeTableData} showModal={showModal} />
+                : <EmptyData colSpan={2} problem={'Data somewhere, but not here'} />
+            : <EmptyData colSpan={2} problem={'We have some problem:C'} />
+          }
+          </tbody>
       </Table>
       <PaginationButton pageArr={pageArr} setPageNumber={setPageNumber} pageNumber={pageNumber} />
     </div>

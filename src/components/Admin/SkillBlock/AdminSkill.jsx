@@ -82,8 +82,8 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
     } else {
       const valueData = {
         ...value,
-        theme: (value.theme !== [] && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
-        language: (value.language !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
+        theme: (value.theme && (value.theme !== []) && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
+        language: (value.language && (value.language) !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
       };
       editData(initial.id, skillStatus, valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
@@ -110,7 +110,6 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
       }
       item.theme = arrTheme;
     });
-
     skillData.map(item => {
       if (item.id === id) {
         languageOptions.map(elem => {
@@ -123,7 +122,6 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
       }
       item.language = arrLang;
     });
-
     setInitial(skillData.find(item => item.id === id));
     setEditModalShow(true);
   };
@@ -204,7 +202,6 @@ AdminSkill.propTypes = {
     })),
     count: PropTypes.string,
   }),
-  getSkillsData: PropTypes.func,
   getThemeData: PropTypes.func,
   getLanguageData: PropTypes.func,
   createData: PropTypes.func,

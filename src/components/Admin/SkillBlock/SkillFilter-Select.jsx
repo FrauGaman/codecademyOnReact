@@ -17,8 +17,8 @@ function SkillFilterSelect({ themeList, languageList, filterState }) {
 
   const selectedThemeValue = (value) => setThemeValue(value);
   const selectedLanguageValue = (value) => setLanguageValue(value);
-  const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
-  const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
+  const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name }});
+  const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name }});
 
   return (
     <React.Fragment>
@@ -33,7 +33,6 @@ function SkillFilterSelect({ themeList, languageList, filterState }) {
           <MultiSelect options={languageOptions} className={'params__selector'} onChange={selectedLanguageValue} />
         </div>
       </div>
-
     </React.Fragment>
   );
 }

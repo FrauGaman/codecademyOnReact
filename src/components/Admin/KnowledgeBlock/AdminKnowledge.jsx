@@ -127,12 +127,10 @@ AdminKnowledge.propTypes = {
     })),
     count: PropTypes.string,
   }),
-  getKnowledgeData: PropTypes.func,
   removeData: PropTypes.func,
   createData: PropTypes.func,
   editData: PropTypes.func,
   pristine: PropTypes.bool,
-  sortKnowledgeData: PropTypes.func,
   findData: PropTypes.func,
   dataStatus: PropTypes.shape({
     loading: PropTypes.bool,
