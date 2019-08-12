@@ -5,7 +5,7 @@ import CareerCourses from './CareerCourses/CareerCourses';
 import SkillCourses from './SkillCourses/SkillCourses';
 import CoursesList from './CoursesList/CoursesList';
 import { PATH } from '../../scripts/const';
-import getData from '../../scripts/getData';
+import getFrontData from '../../scripts/getData';
 import '../../style/basic.sass';
 import NotFoundFront from './404Front';
 import PreloaderMini from '../Preloader/PreloaderMini';
@@ -48,12 +48,12 @@ function FullCatalogPage({ match }) {
 	};
 
   useEffect(() => {
-    const themeData = getData(PATH.THEME, addDataTheme);
-    const languageData = getData(PATH.LANGUAGE, addDataLang);
-    const knowledgeData = getData(PATH.KNOWLEDGE, addDataKnow);
-    const career = getData(PATH.CAREERPATH, addCareerData);
-    const skill = getData(PATH.SKILLPATH, addSkillData);
-    const courses = getData(PATH.COURSESLIST, addCoursesData);
+    const themeData = getFrontData(PATH.THEME, addDataTheme);
+    const languageData = getFrontData(PATH.LANGUAGE, addDataLang);
+    const knowledgeData = getFrontData(PATH.KNOWLEDGE, addDataKnow);
+    const career = getFrontData(PATH.CAREERPATH, addCareerData);
+    const skill = getFrontData(PATH.SKILLPATH, addSkillData);
+    const courses = getFrontData(PATH.COURSESLIST, addCoursesData);
     Promise.all([themeData, languageData, knowledgeData, career, skill, courses]).then(() => setInitialize(true))
   }, []);
 
