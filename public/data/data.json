@@ -145,20 +145,6 @@
       ]
     },
     {
-      "id": 6,
-      "importance": "Course",
-      "title": "Introduction To JavaScript",
-      "descr": "Learn the JavaScript fundamentals you'll need for front-end or back-end development.",
-      "icon": "../../img/courseList/green.svg",
-      "borderColor": "#2daaa6",
-      "theme": [
-        1
-      ],
-      "language": [
-        3
-      ]
-    },
-    {
       "id": 7,
       "importance": "Course",
       "title": "Learn Java",
@@ -175,19 +161,19 @@
   ],
   "skillPath": [
     {
-      "id": 1,
-      "img": "../../img/skillPath/skill1.svg",
-      "bgColor": "#6437cc",
       "title": "Analyze Data with Python",
       "descr": "Learn how to analyze and visualize data using Python.",
+      "img": "../../img/skillPath/skill1.svg",
+      "bgColor": "#6437cc",
       "period": "10 weeks",
       "theme": [
         1,
         4
       ],
       "language": [
-        2
-      ]
+        1564655058670
+      ],
+      "id": 1
     },
     {
       "id": 2,
@@ -393,10 +379,10 @@
   ],
   "theme": [
     {
-      "id": 1,
       "name": "Full Catalog",
       "descr": "Whether you’re trying to level up your career, build your side project, or simply play around with programming, you’ve found the right place to start. Explore our programs and courses, try an exercise or two, and join our community of 45 million learners.",
-      "link": "/all"
+      "link": "/all",
+      "id": 1
     },
     {
       "id": 2,
@@ -463,16 +449,16 @@
   ],
   "knowledge": [
     {
-      "id": 1,
-      "name": "Computer Science History"
+      "name": "Computer Science History",
+      "id": 1
     },
     {
       "id": 2,
       "name": "Career Exploration"
     },
     {
-      "id": 3,
-      "name": "Applications"
+      "name": "Applications",
+      "id": 3
     },
     {
       "id": 4,
@@ -499,8 +485,8 @@
       "name": "Data Visualization"
     },
     {
-      "id": 10,
-      "name": "Machine Learning"
+      "name": "Machine Learning",
+      "id": 10
     },
     {
       "id": 11,

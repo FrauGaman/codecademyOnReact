@@ -2,23 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import { PATH } from '../../../scripts/const';
-import {
-  AddCareerData,
-  ChangeCareerData,
-  CreateCareerData,
-  RemoveCareerData,
-} from '../../../actions/careerData';
 import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
-import { AddThemeData } from '../../../actions/themeData';
-import { AddLanguageData } from '../../../actions/languageData';
-import { AddKnowledgeData } from '../../../actions/knowledgeData';
 import CareerTableTemplate from './CareerTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import CareerModalInner from './CareerModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import { getThemeData, getLanguageData, getKnowledgeData, removeData, createData, editData, findData } from './dispatchCareer';
 
 function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -241,7 +231,6 @@ AdminCareer.propTypes = {
     })),
     count: PropTypes.string,
   }),
-  getCareerData: PropTypes.func,
   getThemeData: PropTypes.func,
   getLanguageData: PropTypes.func,
   getKnowledgeData: PropTypes.func,
@@ -269,98 +258,25 @@ const mapStateToProps = state => ({
 
 const mapStateToDispatch = dispatch => ({
   getThemeData: (count, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.THEME,
-      addData: (res) => dispatch(AddThemeData(res)),
-      limitNumber: count,
-      statusEmptyData: () => {},
-      statusLoading,
-    };
-    changeData(options);
+    getThemeData(count, statusEmptyData, statusLoading, dispatch);
   },
   getLanguageData: (count, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.LANGUAGE,
-      addData: (res) => dispatch(AddLanguageData(res)),
-      limitNumber: count,
-      statusEmptyData: () => {},
-      statusLoading,
-    };
-    changeData(options);
+    getLanguageData(count, statusEmptyData, statusLoading, dispatch);
   },
   getKnowledgeData: (count, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.KNOWLEDGE,
-      addData: (res) => dispatch(AddKnowledgeData(res)),
-      limitNumber: count,
-      statusEmptyData: () => {},
-      statusLoading,
-    };
-    changeData(options);
+    getKnowledgeData(count, statusEmptyData, statusLoading, dispatch);
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.CAREERPATH,
-      addData: (res) => dispatch(AddCareerData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(RemoveCareerData(id, statusLoading)).then(() => changeData(options));
+    removeData(id, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.CAREERPATH,
-      addData: (res) => dispatch(AddCareerData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(CreateCareerData(newData, statusLoading)).then(() => changeData(options));
+    createData(newData, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.CAREERPATH,
-      addData: (res) => dispatch(AddCareerData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(ChangeCareerData(id, state, value, statusLoading)).then(() => changeData(options));
+    editData(id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   findData: (sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.CAREERPATH,
-      addData: (res) => dispatch(AddCareerData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    changeData(options);
+    findData(sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   statusLoading: (loading) => {
     dispatch(setLoading(loading));

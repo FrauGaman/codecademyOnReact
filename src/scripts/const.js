@@ -13,7 +13,6 @@ export const PATH = {
   KNOWLEDGE: '/knowledge',
 };
 
-
 export const TYPE = {
   CAREER_ADD_DATA: 'CAREER_ADD_DATA',
   SKILL_ADD_DATA: 'SKILL_ADD_DATA',
@@ -45,5 +44,4 @@ export const TYPE = {
 
   STATUS_LOAD_DATA: 'STATUS_LOAD_DATA',
   STATUS_EMPTY_DATA: 'STATUS_EMPTY_DATA',
-
 };

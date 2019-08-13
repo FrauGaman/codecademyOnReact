@@ -2,22 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import { PATH } from '../../../scripts/const';
-import {
-  AddSkillData,
-  RemoveSkillData,
-  CreateSkillData,
-  ChangeSkillData,
-} from '../../../actions/skillData';
 import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
-import { AddThemeData } from '../../../actions/themeData';
-import { AddLanguageData } from '../../../actions/languageData';
 import SkillTableTemplate from './SkillTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import SkillModalInner from './SkillModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import { getThemeData, getLanguageData, removeData, createData, editData, findData } from './dispatchSkill';
 
 function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLanguageData, createData, removeData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -226,88 +217,22 @@ const mapStateToProps = state => ({
 });
 const mapStateToDispatch = dispatch => ({
   getThemeData: (count, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.THEME,
-      addData: (res) => dispatch(AddThemeData(res)),
-      limitNumber: count,
-      statusEmptyData: () => {},
-      statusLoading,
-    };
-    changeData(options);
+    getThemeData(count, statusEmptyData, statusLoading, dispatch);
   },
   getLanguageData: (count, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.LANGUAGE,
-      addData: (res) => dispatch(AddLanguageData(res)),
-      limitNumber: count,
-      statusEmptyData: () => {},
-      statusLoading,
-    };
-    changeData(options);
+    getLanguageData(count, statusEmptyData, statusLoading, dispatch);
   },
   removeData: (id, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.SKILLPATH,
-      addData: (res) => dispatch(AddSkillData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(RemoveSkillData(id, statusLoading)).then(() => changeData(options));
+    removeData(id, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   createData: (newData, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.SKILLPATH,
-      addData: (res) => dispatch(AddSkillData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(CreateSkillData(newData, statusLoading)).then(() => changeData(options));
+    createData(newData, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   editData: (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.SKILLPATH,
-      addData: (res) => dispatch(AddSkillData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(ChangeSkillData(id, state, value, statusLoading)).then(() => changeData(options));
+    editData(id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   findData: (sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.SKILLPATH,
-      addData: (res) => dispatch(AddSkillData(res)),
-      sortField: 'title',
-      sortType,
-      filterStr,
-      field: 'title',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    changeData(options);
+    findData(sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   statusLoading: (loading) => {
     dispatch(setLoading(loading));

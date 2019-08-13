@@ -13,7 +13,7 @@ function CareerCoursesMap({ careerArr, knowledgeArr }) {
           <h3 className="career_title">{title}</h3>
           <div className="career__box__descr_more">{descr}</div>
           <div className="knowledges">
-            {(knowledge !== null) && knowledge.map(knowItem =>
+            {(knowledge !== []) && knowledge.map(knowItem =>
               <div key={knowItem} className="know__item">
                 <DoneIcon iconName={'doneIcon'} className="done__icon" />
                 {knowledgeArr.map(elem =>

@@ -3,7 +3,6 @@ import { TYPE } from '../scripts/const';
 const careerTasks = (state = {data: [], count: '0'}, action) => {
   switch (action.type) {
     case TYPE.CAREER_ADD_DATA:
-
       return {
         data: action.payload.data,
         count: action.payload.count,
@@ -19,6 +18,7 @@ const careerTasks = (state = {data: [], count: '0'}, action) => {
         count: action.payload.count,
       };
     case TYPE.CAREER_CHANGE_DATA:
+      console.log(action.payload)
       state.data.map(item => {
         if (item.id === action.payload.id) {
           item.title = action.payload.title;

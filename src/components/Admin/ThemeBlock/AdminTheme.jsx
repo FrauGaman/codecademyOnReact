@@ -2,20 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import { PATH } from '../../../scripts/const';
-import {
-  AddThemeData,
-  RemoveThemeData,
-  CreateThemeData,
-  ChangeThemeData,
-} from '../../../actions/themeData';
 import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import ThemeTableTemplate from './ThemeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import ThemeModalInner from './ThemeModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import { removeData, createData, editData, findData } from './dispatchTheme';
 
 function AdminTheme({ themeStatus, removeData, createData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -148,66 +141,16 @@ const mapStateToProps = state => ({
 });
 const mapStateToDispatch = dispatch => ({
   removeData: (id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.THEME,
-      addData: (res) => dispatch(AddThemeData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(RemoveThemeData(id, statusLoading)).then(() => changeData(options));
+    removeData(id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   createData: (newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.THEME,
-      addData: (res) => dispatch(AddThemeData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(CreateThemeData(newData, statusLoading)).then(() => changeData(options));
+    createData(newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   editData: (id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.THEME,
-      addData: (res) => dispatch(AddThemeData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(ChangeThemeData(id, state, value, statusLoading)).then(() => changeData(options));
+    editData(id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   findData: (sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.THEME,
-      addData: (res) => dispatch(AddThemeData(res)),
-      sortField: 'name',
-      sortType,
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    changeData(options);
+    findData(sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   statusLoading: (loading) => {
     dispatch(setLoading(loading));

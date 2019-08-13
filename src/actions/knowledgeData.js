@@ -1,16 +1,16 @@
 import { PATH, TYPE } from '../scripts/const';
 import { deleteData, postData, putData } from '../scripts/changeData';
 
-export function AddKnowledgeData(payload) {
+export function addKnowledgeData(payload) {
   return {
     type: TYPE.KNOWLEDGE_ADD_DATA,
     payload,
   };
 }
 
-export function RemoveKnowledgeData(id, statusLoading) {
+export function removeKnowledgeData(id, statusLoading) {
   return dispatch => {
-    dispatch(AddKnowledgeData);
+    dispatch(addKnowledgeData);
     return deleteData(PATH.KNOWLEDGE, id, statusLoading).then(() => {
       return {
         type: TYPE.KNOWLEDGE_REMOVE_DATA,
@@ -20,9 +20,9 @@ export function RemoveKnowledgeData(id, statusLoading) {
   };
 }
 
-export function CreateKnowledgeData(payload, statusLoading) {
+export function createKnowledgeData(payload, statusLoading) {
   return dispatch => {
-    dispatch(AddKnowledgeData);
+    dispatch(addKnowledgeData);
     return postData(PATH.KNOWLEDGE, payload, statusLoading).then(() => {
       return {
         type: TYPE.KNOWLEDGE_CREATE_DATA,
@@ -32,9 +32,9 @@ export function CreateKnowledgeData(payload, statusLoading) {
   };
 }
 
-export function ChangeKnowledgeData(id, state, payload, statusLoading) {
+export function changeKnowledgeData(id, state, payload, statusLoading) {
   return dispatch => {
-    dispatch(AddKnowledgeData);
+    dispatch(addKnowledgeData);
     return putData(PATH.KNOWLEDGE, id, payload, statusLoading).then(() => {
       return {
         type: TYPE.KNOWLEDGE_CHANGE_DATA,

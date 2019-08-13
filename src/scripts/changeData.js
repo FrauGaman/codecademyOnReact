@@ -3,12 +3,12 @@ import fetchData from './fetchData';
 
 export function changeData(options) {
   const base = `${BASE_PATH}${options.path}?`;
-  const sort = options.sortField && `_sort=${options.sortField}`;
-  const order = options.sortType && `&_order=${options.sortType}`;
-  const search = options.field && options.name && `&${options.field}_like=${options.name}`;
-  const filter = options.filterStr && `&${options.filterStr}`;
-  const page = options.pageNumber && `&_page=${options.pageNumber}`;
-  const limit = options.limitNumber && `&_limit=${options.limitNumber}`;
+  const sort = ((options.sortField !== undefined) && options.sortField && `_sort=${options.sortField}`) || '';
+  const order = ((options.sortType !== undefined) && options.sortType && `&_order=${options.sortType}`) || '';
+  const search = ((options.field !== undefined) && options.field && options.name && `&${options.field}_like=${options.name}`) || '';
+  const filter = ((options.filterStr !== undefined) && options.filterStr && `&${options.filterStr}`) || '';
+  const page = ((options.pageNumber !== undefined) && options.pageNumber && `&_page=${options.pageNumber}`) || '';
+  const limit = ((options.limitNumber !== undefined) && options.limitNumber && `&_limit=${options.limitNumber}`) || '';
 
   const url = `${base}${sort}${order}${search}${filter}${page}${limit}`;
 

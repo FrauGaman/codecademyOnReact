@@ -12,7 +12,7 @@ function CareerCourse({ careerResult, currentThemeId, currentLanguageId, knowled
   const careerArr = careerResult.filter(item => item.theme && item.theme.includes(currentThemeId));
   return (
     <div>
-      { !!(currentThemeId && !currentLanguageId) &&
+      { (currentThemeId && !currentLanguageId) &&
         <div>
           <div className="course__title">
             <h2>Career path</h2>

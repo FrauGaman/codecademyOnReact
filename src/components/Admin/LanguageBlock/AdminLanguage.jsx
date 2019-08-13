@@ -2,20 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import { PATH } from '../../../scripts/const';
-import {
-  AddLanguageData,
-  RemoveLanguageData,
-  CreateLanguageData,
-  ChangeLanguageData,
-} from '../../../actions/languageData';
 import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import LanguageTableTemplate from './LanguageTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
-import { changeData } from '../../../scripts/changeData';
 import ModalWindow from '../../ModalWindow';
 import LanguageModalInner from './LanguageModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import { removeData, createData, editData, findData } from './dispatchLanguage';
 
 function AdminLanguage({ languageStatus, removeData, createData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -156,66 +149,16 @@ const mapStateToProps = state => ({
 });
 const mapStateToDispatch = dispatch => ({
   removeData: (id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.LANGUAGE,
-      addData: (res) => dispatch(AddLanguageData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(RemoveLanguageData(id, statusLoading)).then(() => changeData(options));
+    removeData(id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   createData: (newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.LANGUAGE,
-      addData: (res) => dispatch(AddLanguageData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(CreateLanguageData(newData, statusLoading)).then(() => changeData(options));
+    createData(newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   editData: (id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.LANGUAGE,
-      addData: (res) => dispatch(AddLanguageData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(ChangeLanguageData(id, state, value, statusLoading)).then(() => changeData(options));
+    editData(id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   findData: (sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.LANGUAGE,
-      addData: (res) => dispatch(AddLanguageData(res)),
-      sortField: 'name',
-      sortType,
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    changeData(options);
+    findData(sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   statusLoading: (loading) => {
     dispatch(setLoading(loading));

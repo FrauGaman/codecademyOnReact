@@ -1,16 +1,16 @@
 import { PATH, TYPE } from '../scripts/const';
 import { deleteData, postData, putData } from '../scripts/changeData';
 
-export function AddThemeData(payload) {
+export function addThemeData(payload) {
   return {
     type: TYPE.THEME_ADD_DATA,
     payload,
   };
 }
 
-export function RemoveThemeData(id, statusLoading) {
+export function removeThemeData(id, statusLoading) {
   return dispatch => {
-    dispatch(AddThemeData);
+    dispatch(addThemeData);
     return deleteData(PATH.THEME, id, statusLoading).then(() => {
       return {
         type: TYPE.THEME_REMOVE_DATA,
@@ -20,9 +20,9 @@ export function RemoveThemeData(id, statusLoading) {
   };
 }
 
-export function CreateThemeData(payload, statusLoading) {
+export function createThemeData(payload, statusLoading) {
   return dispatch => {
-    dispatch(AddThemeData);
+    dispatch(addThemeData);
     return postData(PATH.THEME, payload, statusLoading).then(() => {
       return {
         type: TYPE.THEME_CREATE_DATA,
@@ -32,9 +32,9 @@ export function CreateThemeData(payload, statusLoading) {
   };
 }
 
-export function ChangeThemeData(id, state, payload, statusLoading) {
+export function changeThemeData(id, state, payload, statusLoading) {
   return dispatch => {
-    dispatch(AddThemeData);
+    dispatch(addThemeData);
     return putData(PATH.THEME, id, payload, statusLoading).then(() => {
       return {
         type: TYPE.THEME_CHANGE_DATA,

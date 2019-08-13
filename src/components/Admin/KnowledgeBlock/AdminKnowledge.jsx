@@ -2,20 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPristine } from 'redux-form';
-import { changeData } from '../../../scripts/changeData';
-import { PATH } from '../../../scripts/const';
-import {
-  AddKnowledgeData,
-  ChangeKnowledgeData,
-  CreateKnowledgeData,
-  RemoveKnowledgeData,
-} from '../../../actions/knowledgeData';
 import { setLoading, setDataStatusEmpty } from '../../../actions/dataStatus';
 import KnowledgeTableTemplate from './KnowledgeTableTemplate';
 import AdminBtn from '../AdminButton/AdminButton';
 import ModalWindow from '../../ModalWindow';
 import KnowledgeModalInner from './KnowledgeModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import { removeData, createData, editData, findData } from './dispatchKnowledge';
 
 function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
   const [modalShow, setModalShow] = useState(false);
@@ -115,7 +108,6 @@ function AdminKnowledge({ knowledgeStatus, removeData, createData, editData, pri
         </ModalWindow>
       </div>
     </div>
-
   );
 }
 
@@ -148,66 +140,16 @@ const mapStateToProps = state => ({
 
 const mapStateToDispatch = dispatch => ({
   removeData: (id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.KNOWLEDGE,
-      addData: (res) => dispatch(AddKnowledgeData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(RemoveKnowledgeData(id, statusLoading)).then(() => changeData(options));
+    removeData(id, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   createData: (newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.KNOWLEDGE,
-      addData: (res) => dispatch(AddKnowledgeData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(CreateKnowledgeData(newData, statusLoading)).then(() => changeData(options));
+    createData(newData, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   editData: (id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.KNOWLEDGE,
-      addData: (res) => dispatch(AddKnowledgeData(res)),
-      sortField: 'name',
-      sortType,
-      filterStr: '',
-      field: 'name',
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    dispatch(ChangeKnowledgeData(id, state, value, statusLoading)).then(() => changeData(options));
+    editData(id, state, value, sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   findData: (sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading) => {
-    const options = {
-      path: PATH.KNOWLEDGE,
-      addData: (res) => dispatch(AddKnowledgeData(res)),
-      sortField: 'name',
-      sortType,
-      name,
-      pageNumber,
-      limitNumber,
-      statusEmptyData,
-      statusLoading,
-    };
-    changeData(options);
+    findData(sortType, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch);
   },
   statusLoading: (loading) => {
     dispatch(setLoading(loading));
