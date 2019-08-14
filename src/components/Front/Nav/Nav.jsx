@@ -55,7 +55,7 @@ class Nav extends React.Component {
             </div>
             <div className="users__actions">
               <Additionally showSearch={this.showSearch} />
-              <Auth/>
+              <Auth setShowLogIn={this.props.setShowLogIn} setShowSignIn={this.props.setShowSignIn}/>
               <div className="menu__icon__box" onClick={this.showMenu}>
                 <OpenMenuIcon iconName={'openMenuIcon'}/>
               </div>

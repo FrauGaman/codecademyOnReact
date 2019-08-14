@@ -15,7 +15,7 @@ export function FormInput(props) {
   return (
     <div>
       <Form.Control
-        type="text"
+        type={ props.type }
         placeholder={props.placeholder}
         value={props.input.value}
         onChange={props.input.onChange}

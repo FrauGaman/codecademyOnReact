@@ -7,6 +7,7 @@ import themeTasks from './themeTasks';
 import languageTask from './languageTasks';
 import knowledgeTask from './knowledgeTask';
 import dataStatusTasks from './dataStatusTasks';
+import userStatusTasks from './userTasks';
 
 const rootReducer = combineReducers({
   careerTasks,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   languageTask,
   knowledgeTask,
   dataStatusTasks,
+  userStatusTasks,
   form: formReducer,
 });
 

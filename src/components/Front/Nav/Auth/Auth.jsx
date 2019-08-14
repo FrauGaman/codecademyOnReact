@@ -2,11 +2,11 @@ import React from 'react';
 import './auth.sass';
 import SignUpBtn from './SignUpBtn';
 
-function Auth() {
+function Auth({ setShowLogIn, setShowSignIn }) {
   return (
     <div>
-      <a href={null} className="logIn__btn">Log in</a>
-      <SignUpBtn signUpBtnClass={'signUp__btn'} />
+      <a href={null} className="logIn__btn" onClick={() => setShowLogIn(true)}>Log in</a>
+      <SignUpBtn setShowSignIn={setShowSignIn} signUpBtnClass={'signUp__btn'} />
     </div>
   )
 }

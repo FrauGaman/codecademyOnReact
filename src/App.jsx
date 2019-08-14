@@ -8,6 +8,9 @@ import { PATH } from './scripts/const';
 import getData from './scripts/getData';
 
 import './style/basic.sass';
+import LogInInnerModal from './components/Authorization/LogInModal/LoginInnerModal';
+import ModalWindow from './components/ModalWindow';
+import SignInInnerModal from './components/Authorization/SignInModal/SignInInner';
 
 function App({ children }) {
   const [menuState, setMenu] = useState([]);
@@ -16,6 +19,8 @@ function App({ children }) {
   const [footerNavState, setFooterNav] = useState([]);
   const [resourcesState, setResourses] = useState([]);
   const [initialize, setInitialize] = useState(false);
+  const [showLogIn, setShowLogIn] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
 
   const addDataMenu = (res) => {
     setMenu(res);
@@ -42,12 +47,44 @@ function App({ children }) {
     Promise.all([menu, theme, language, footerNav, resourses]).then(() => setInitialize(true));
   }, []);
 
+  const submitLogin = value => {
+    console.log(value);
+  };
+
+  const submitSignin = value => {
+    console.log(value)
+  };
+
   return (
     <React.Fragment>
       {
         initialize ?
           <div>
-            <Nav menu={menuState} />
+            {
+              showLogIn &&
+                <ModalWindow title={'Log in'} show={showLogIn} onHide={() => setShowLogIn(false)}>
+                  <LogInInnerModal
+                    onHide={() => setShowLogIn(false)}
+                    submitLogin={submitLogin}
+                    setShowLogIn={setShowLogIn}
+                    setShowSignIn={setShowSignIn}
+                    isModal
+                  />
+                </ModalWindow>
+            }
+            {
+              showSignIn &&
+              <ModalWindow title={'Sign in'} show={showSignIn} onHide={() => setShowSignIn(false)}>
+                <SignInInnerModal
+                  onHide={() => setShowSignIn(false)}
+                  submitSignin={submitSignin}
+                  setShowLogIn={setShowLogIn}
+                  setShowSignIn={setShowSignIn}
+                  isModal
+                />
+              </ModalWindow>
+            }
+            <Nav menu={menuState} setShowLogIn={setShowLogIn} setShowSignIn={setShowSignIn} />
             <Filter theme={themeState} language={languageState} />
             {children}
             <section className="footer">
