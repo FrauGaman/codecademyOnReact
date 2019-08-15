@@ -49,13 +49,13 @@ export function postData(path, payload, statusLoading, authURL) {
   let url;
   if (authURL) {
     url = `${authURL}`;
-  }else {
+  } else {
     url = `${BASE_PATH}${path}`;
   }
 
   const errFunc = err => {
     console.log(err);
-    statusLoading(true)
+    statusLoading(true);
   };
 
   statusLoading(false);

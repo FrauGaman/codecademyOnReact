@@ -59,7 +59,7 @@ export const createData = (newData, sortType, filterStr, name, pageNumber, limit
 	};
 	dispatch(createCoursesData(newData, statusLoading)).then(() => changeData(options));
 };
-//
+
 export const editData = (id, state, value, sortType, filterStr, name, pageNumber, limitNumber, statusEmptyData, statusLoading, dispatch) => {
 	const options = {
 		path: PATH.COURSESLIST,

@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const userStatusTasks = (state = { login: false, signup: false }, action) => {
+const userStatusTasks = (state = { login: false, signup: false, data: {} }, action) => {
 	switch (action.type) {
 		case TYPE.USER_IS_LOGIN:
 			return {

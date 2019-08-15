@@ -1,34 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import { reduxForm } from 'redux-form';
-import { postData } from '../../../scripts/changeData';
+import {changeData, postData} from '../../../scripts/changeData';
 import { connect } from 'react-redux';
 import { setLoading } from '../../../actions/dataStatus';
 import FieldSignUp from './FieldSignUp';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import { addUsersData, postUserData } from '../../../actions/userStatus';
 
-
-function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, userStatus, statusLoading, dataStatus }) {
+function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, userStatus, statusLoading, dataStatus, setUsersList }) {
 	const changeForm = () => {
 		setShowLogIn(true);
 		setShowSignUp(false);
 	};
 
-	console.log(dataStatus)
+	useEffect(() => {
+		statusLoading(true);
+	}, []);
 
 	const submitSignUp = value => {
 		const valueData = {
 			...value,
-			phone: '+61-2-1234 5678',
+			// phone: '+61-2-1234 5678',
 			organizationName: 'Some name',
+			address: "Embassy Of The Russian Federation, 78 Canberra Ave, Griffith ACT, Australia",
 			location: {
-				areaName: 'areaName',
-				stateName: 'stateName',
-				stateAbbreviation: 'stateAbbreviation',
+				areaName: '78 Canberra Ave',
+				stateName: 'Griffith',
+				stateAbbreviation: 'ACT',
 			},
+			verifyInfo: {
+				returnUrl: "/",
+			},
+			role: "USER",
 		};
-		postData('', valueData, statusLoading, 'https://dev.tribus.org/api/v0.7/users' );
+		postData('', valueData, statusLoading, 'http://localhost:3000/api/v0.7/users' );
 		setShowSignUp(false);
 	};
 

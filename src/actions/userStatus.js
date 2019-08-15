@@ -1,4 +1,5 @@
-import {TYPE} from '../scripts/const';
+import { TYPE } from '../scripts/const';
+import {postData} from '../scripts/changeData';
 
 export function userIsLogIn(payload) {
 	return {

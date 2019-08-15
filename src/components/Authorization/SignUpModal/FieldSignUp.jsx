@@ -15,20 +15,10 @@ function FieldSignUp() {
 				<Form.Label>Last Name</Form.Label>
 				<Field name="lastName" component={FormInput} type="text" placeholder="Last Name" validate={[requiredField, stringValidator]} />
 			</Form.Group>
-			<Row>
-				<Col>
-					<Form.Group>
-						<Form.Label>Email</Form.Label>
-						<Field name="email" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]} />
-					</Form.Group>
-				</Col>
-				<Col>
-					<Form.Group>
-						<Form.Label>Address</Form.Label>
-						<Field name="address" component={FormInput} type="text" placeholder="Address" validate={[requiredField, stringValidator]} />
-					</Form.Group>
-				</Col>
-			</Row>
+			<Form.Group>
+				<Form.Label>Email</Form.Label>
+				<Field name="email" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]} />
+			</Form.Group>
 			<Form.Group>
 				<Form.Label>Password</Form.Label>
 				<Row>
