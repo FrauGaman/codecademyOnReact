@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SignUpBtn({ signUpBtnClass, setShowSignIn }) {
+function SignUpBtn({ signUpBtnClass, setShowSignUp }) {
   return (
-    <button className={signUpBtnClass} onClick={() => setShowSignIn(true)}>Sign up</button>
+    <button className={signUpBtnClass} onClick={() => setShowSignUp(true)}>Sign up</button>
   );
 }
 SignUpBtn.propTypes = {

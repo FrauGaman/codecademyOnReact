@@ -3,6 +3,7 @@ import fetchData from './fetchData';
 
 export function changeData(options) {
   const base = `${BASE_PATH}${options.path}?`;
+  const authURL = `${options.authURL}`;
   const sort = ((options.sortField !== undefined) && options.sortField && `_sort=${options.sortField}`) || '';
   const order = ((options.sortType !== undefined) && options.sortType && `&_order=${options.sortType}`) || '';
   const search = ((options.field !== undefined) && options.field && options.name && `&${options.field}_like=${options.name}`) || '';
@@ -10,7 +11,12 @@ export function changeData(options) {
   const page = ((options.pageNumber !== undefined) && options.pageNumber && `&_page=${options.pageNumber}`) || '';
   const limit = ((options.limitNumber !== undefined) && options.limitNumber && `&_limit=${options.limitNumber}`) || '';
 
-  const url = `${base}${sort}${order}${search}${filter}${page}${limit}`;
+  let url = '';
+  if (options.authURL !== undefined && options.authURL !== false) {
+    url = `${authURL}`;
+  } else {
+    url = `${base}${sort}${order}${search}${filter}${page}${limit}`;
+  }
 
   options.statusLoading(false);
   options.statusEmptyData(false);
@@ -39,11 +45,22 @@ export function deleteData(path, id, statusLoading) {
   return fetchData({ url, success, fail, method: 'DELETE', statusLoading });
 }
 
-export function postData(path, payload, statusLoading) {
-  const url = `${BASE_PATH}${path}`;
+export function postData(path, payload, statusLoading, authURL) {
+  let url;
+  if (authURL) {
+    url = `${authURL}`;
+  }else {
+    url = `${BASE_PATH}${path}`;
+  }
+
+  const errFunc = err => {
+    console.log(err);
+    statusLoading(true)
+  };
+
   statusLoading(false);
   function success() { statusLoading(true); }
-  function fail(err){ console.log(err) }
+  function fail(err){ errFunc(err) }
   return fetchData({
     url,
     success,

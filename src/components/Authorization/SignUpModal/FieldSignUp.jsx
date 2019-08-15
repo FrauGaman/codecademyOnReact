@@ -4,7 +4,7 @@ import {Field} from 'redux-form';
 import {FormInput} from '../../Admin/ComponentsPieces/Forms/FromParts';
 import {requiredField, stringValidator} from '../../Admin/validator';
 
-function FieldsLogin() {
+function FieldSignUp() {
 	return (
 		<React.Fragment>
 			<Form.Group>
@@ -19,7 +19,7 @@ function FieldsLogin() {
 				<Col>
 					<Form.Group>
 						<Form.Label>Email</Form.Label>
-						<Field name="contact" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]} />
+						<Field name="email" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]} />
 					</Form.Group>
 				</Col>
 				<Col>
@@ -44,4 +44,4 @@ function FieldsLogin() {
 	);
 }
 
-export default FieldsLogin;
+export default FieldSignUp;

@@ -1,6 +1,6 @@
 import { TYPE } from '../scripts/const';
 
-const userStatusTasks = (state = { login: false, signin: false }, action) => {
+const userStatusTasks = (state = { login: false, signup: false }, action) => {
 	switch (action.type) {
 		case TYPE.USER_IS_LOGIN:
 			return {
@@ -10,7 +10,7 @@ const userStatusTasks = (state = { login: false, signin: false }, action) => {
 		case TYPE.USER_IS_SIGNIN:
 			return {
 				...state,
-				signin: action.payload,
+				signup: action.payload,
 			};
 		default:
 			return state;

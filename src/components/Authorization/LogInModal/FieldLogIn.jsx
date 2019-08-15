@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import {FormInput} from '../../Admin/ComponentsPieces/Forms/FromParts';
 import { requiredField, stringValidator } from '../../Admin/validator';
 
-function FieldsSignin() {
+function FieldLogIn() {
 	return (
 		<React.Fragment>
 			<Form.Group>
@@ -19,4 +19,4 @@ function FieldsSignin() {
 	);
 }
 
-export default FieldsSignin;
+export default FieldLogIn;

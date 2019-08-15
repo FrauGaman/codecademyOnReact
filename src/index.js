@@ -19,12 +19,19 @@ import AdminLanguage from './components/Admin/LanguageBlock/AdminLanguage';
 import AdminKnowledge from './components/Admin/KnowledgeBlock/AdminKnowledge';
 import NotFound from './components/Admin/404Admin';
 import NotFoundFront from './components/Front/404Front';
+import AuthPage from './components/Authorization/AuthPage';
+import LoginInnerModal from './components/Authorization/LogInModal/LoginInnerModal';
+import SignUpInnerModal from './components/Authorization/SignUpModal/SignUpInnerModal';
 
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
+        <Route path="/login" render={(props) => <AuthPage {...props}><LoginInnerModal /></AuthPage>} />
+        <Route path="/signup" render={(props) => <AuthPage {...props}><SignUpInnerModal /></AuthPage>} />
         <Route path="/admin">
+          {
+            !store.getState().userStatusTasks.login ?
           <AdminPanel>
             <Switch>
               <Route path="/admin/career" component={AdminCareer} />
@@ -42,6 +49,11 @@ ReactDOM.render((
               <Route component={NotFound} />
             </Switch>
           </AdminPanel>
+              :
+              <Route path="/admin" render={() => (
+                <Redirect to="/login" />
+              )} />
+          }
         </Route>
         <Route path="/">
           <App>

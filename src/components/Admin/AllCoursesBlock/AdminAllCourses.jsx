@@ -21,6 +21,8 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArr, setPageArr] = useState([]);
 
+  console.log(dataStatus.loading)
+
   useEffect(() => {
     findData(sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
   }, [sort, filter, search, pageNumber, limitNumber]);
