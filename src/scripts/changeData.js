@@ -93,3 +93,41 @@ export function putData(path, id, body, statusLoading) {
     statusLoading,
   });
 }
+
+export function getToken(authURL, payload, statusLoading, setErrorAuthData, setNotConfirm, setBlockedUser, setNotFoundData) {
+  const url = `${authURL}`;
+  const errFunc = err => {
+    console.log(err);
+    statusLoading(true);
+  };
+
+  function success(data) {
+    setErrorAuthData && setErrorAuthData(false);
+    setNotConfirm && setNotConfirm(false);
+    setBlockedUser && setBlockedUser(false);
+    setNotFoundData && setNotFoundData(false)
+    return data.json()
+      .then(res => {
+        localStorage.setItem('accessToken', res.data.accessToken);
+        localStorage.setItem('refreshToken', res.data.refreshToken);
+        localStorage.setItem('accessTokenExpire', res.data.accessTokenExpire);
+        return res;
+      });
+  }
+  function fail(err) {errFunc(err)}
+  return fetchData({
+    url,
+    success,
+    fail,
+    method: 'POST',
+    body: JSON.stringify({
+      ...payload,
+    }),
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    statusLoading,
+    setErrorAuthData,
+    setNotConfirm,
+    setBlockedUser,
+    setNotFoundData
+  });
+}

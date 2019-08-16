@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { Field } from 'redux-form';
-import {FormInput} from '../../Admin/ComponentsPieces/Forms/FromParts';
+import { FormInput } from '../../Admin/ComponentsPieces/Forms/FromParts';
 import { requiredField, stringValidator } from '../../Admin/validator';
 
 function FieldLogIn() {
@@ -9,7 +9,7 @@ function FieldLogIn() {
 		<React.Fragment>
 			<Form.Group>
 				<Form.Label>Email</Form.Label>
-				<Field name="contact" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]}  useFocus={true} />
+				<Field name="login" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]}  useFocus={true} />
 			</Form.Group>
 			<Form.Group>
 				<Form.Label>Password</Form.Label>

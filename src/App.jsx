@@ -11,8 +11,9 @@ import './style/basic.sass';
 import LogInInnerModal from './components/Authorization/LogInModal/LoginInnerModal';
 import ModalWindow from './components/ModalWindow';
 import SignUpInnerModal from './components/Authorization/SignUpModal/SignUpInnerModal';
+import {connect} from 'react-redux';
 
-function App({ children }) {
+function App({ children, userStatus }) {
   const [menuState, setMenu] = useState([]);
   const [themeState, setTheme] = useState([]);
   const [languageState, setLanguage] = useState([]);
@@ -45,6 +46,7 @@ function App({ children }) {
     const resourses = getData(PATH.SITENAVIGATION, addDataResourses);
     Promise.all([menu, theme, language, footerNav, resourses]).then(() => setInitialize(true));
   }, []);
+
 
   return (
     <React.Fragment>
@@ -91,4 +93,8 @@ function App({ children }) {
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  userStatus: state.userStatusTasks,
+});
+
+export default connect(mapStateToProps)(App);

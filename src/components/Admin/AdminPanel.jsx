@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import NavAdmin from './AdminNav/NavAdmin';
 import './adminPanel.sass';
 import AdminBurger from './AdminBurger/AdminBurger';
 import getData from '../../scripts/getData';
 import { PATH } from '../../scripts/const';
-import { connect } from 'react-redux';
 
-function AdminPanel({ children, userAuthStatus }) {
+function AdminPanel({ children, userStatus }) {
+  if (!userStatus.login) return <Redirect to="/login" />
+
   const [navList, setNavList] = useState([]);
   const addListData = (res) => {
     setNavList(res);
@@ -33,8 +36,7 @@ function AdminPanel({ children, userAuthStatus }) {
 }
 
 const mapStateToProps = state => ({
-  userAuthStatus: state.userStatusTasks,
+  userStatus: state.userStatusTasks,
 });
-
 
 export default connect(mapStateToProps)(AdminPanel);
