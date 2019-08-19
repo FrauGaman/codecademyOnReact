@@ -55,14 +55,14 @@ class Nav extends React.Component {
             </div>
             <div className="users__actions">
               <Additionally showSearch={this.showSearch} />
-              <Auth setShowLogIn={this.props.setShowLogIn} setShowSignUp={this.props.setShowSignUp}/>
+              <Auth setShowLogIn={this.props.setShowLogIn} setShowSignUp={this.props.setShowSignUp} userStatus={this.props.userStatus} userIsLogIn={this.props.userIsLogIn}/>
               <div className="menu__icon__box" onClick={this.showMenu}>
                 <OpenMenuIcon iconName={'openMenuIcon'}/>
               </div>
             </div>
           </div>
         </nav>
-        {this.state.isMenuShow && <BurgerMenu menu={this.props.menu} hideMenu={this.hideMenu} />}
+        {this.state.isMenuShow && <BurgerMenu menu={this.props.menu} hideMenu={this.hideMenu} setShowLogIn={this.props.setShowLogIn} setShowSignUp={this.props.setShowSignUp} />}
         {this.state.isSearchShow && <Search hideSearch={this.hideSearch} />}
       </React.Fragment>
     );

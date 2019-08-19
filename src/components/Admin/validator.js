@@ -3,13 +3,13 @@ export const requiredField = value => {
   return 'This field is required!';
 };
 
-export const setMaxLength = (maxLength) => value => {
+export const setMaxLength = maxLength => value => {
   if (value.length <= maxLength) return undefined;
   return `Max length is ${maxLength}`;
 };
 
-export const setMinLength = (minLength) => value => {
-  if(value.length >= minLength) return undefined;
+export const setMinLength = minLength => value => {
+  if (value.length >= minLength) return undefined;
   return `Min length is ${minLength}`;
 };
 
@@ -23,7 +23,7 @@ export const linkValidator = value => {
   return 'Link begins with / without spacing and contains only eng language';
 };
 
-export const match = matchName => (value, allValues) =>
-  value !== allValues[matchName]
-    ? `Passwords must match`
-    : undefined;
+export const match = matchName => (value, allValues) => {
+  if (value === allValues[matchName]) return undefined;
+  return 'Passwords must match';
+};

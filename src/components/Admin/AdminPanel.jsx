@@ -18,6 +18,7 @@ function AdminPanel({ children, userStatus }) {
     getData(PATH.ADMINNAV, addListData);
   }, []);
 
+
   return (
     <React.Fragment>
       <div className="admin__panel">

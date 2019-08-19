@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {connect} from 'react-redux';
 import Nav from './components/Front/Nav/Nav';
 import Filter from './components/Front/Filter/Filter';
 import Footer from './components/Front/Footer/Footer';
@@ -11,9 +12,10 @@ import './style/basic.sass';
 import LogInInnerModal from './components/Authorization/LogInModal/LoginInnerModal';
 import ModalWindow from './components/ModalWindow';
 import SignUpInnerModal from './components/Authorization/SignUpModal/SignUpInnerModal';
-import {connect} from 'react-redux';
+import ConfirmModal from './components/Authorization/SignUpModal/ConfirmModal';
+import userIsLogIn from './actions/userStatus';
 
-function App({ children, userStatus }) {
+function App({ children, userStatus, userIsLogIn }) {
   const [menuState, setMenu] = useState([]);
   const [themeState, setTheme] = useState([]);
   const [languageState, setLanguage] = useState([]);
@@ -22,6 +24,9 @@ function App({ children, userStatus }) {
   const [initialize, setInitialize] = useState(false);
   const [showLogIn, setShowLogIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [confirmAddress, setConfirmAddress] = useState(false);
+  const [formError, setFormError] = useState({});
+
   const addDataMenu = (res) => {
     setMenu(res);
   };
@@ -38,6 +43,16 @@ function App({ children, userStatus }) {
     setResourses(res);
   };
 
+  const closeLoginForm = () => {
+    setShowLogIn && setShowLogIn(false);
+    setFormError({});
+  };
+
+  const closeSignupForm = () => {
+    setShowSignUp && setShowSignUp(false);
+    setFormError({});
+  };
+
   useEffect(() => {
     const menu = getData(PATH.ITEMS, addDataMenu);
     const theme = getData(PATH.THEME, addDataTheme);
@@ -47,6 +62,9 @@ function App({ children, userStatus }) {
     Promise.all([menu, theme, language, footerNav, resourses]).then(() => setInitialize(true));
   }, []);
 
+  useEffect(() => {
+    userIsLogIn(localStorage.getItem('accessToken'));
+  }, []);
 
   return (
     <React.Fragment>
@@ -55,25 +73,34 @@ function App({ children, userStatus }) {
           <div>
             {
               showLogIn &&
-                <ModalWindow title={'Log in'} show={showLogIn} onHide={() => setShowLogIn(false)}>
+                <ModalWindow title={'Log in'} show={showLogIn} onHide={() => closeLoginForm()}>
                   <LogInInnerModal
-                    onHide={() => setShowLogIn(false)}
+                    onHide={() => closeLoginForm()}
                     setShowLogIn={setShowLogIn}
-                    setShowSignIn={setShowSignUp}
+                    setShowSignUp={setShowSignUp}
+                    setFormError={setFormError}
+                    formError={formError}
                   />
                 </ModalWindow>
             }
+            <ModalWindow show={confirmAddress} title="Сonfirmation required" onHide={() => setConfirmAddress(false)}>
+              <ConfirmModal />
+            </ModalWindow>
             {
               showSignUp &&
-              <ModalWindow title={'Sign up'} show={showSignUp} onHide={() => setShowSignUp(false)}>
+              <ModalWindow title={'Sign up'} show={showSignUp} onHide={() => closeSignupForm()}>
                 <SignUpInnerModal
-                  onHide={() => setShowSignUp(false)}
+                  onHide={() => closeSignupForm()}
                   setShowLogIn={setShowLogIn}
                   setShowSignUp={setShowSignUp}
+                  confirmAddress={confirmAddress}
+                  setConfirmAddress={setConfirmAddress}
+                  setFormError={setFormError}
+                  formError={formError}
                 />
               </ModalWindow>
             }
-            <Nav menu={menuState} setShowLogIn={setShowLogIn} setShowSignUp={setShowSignUp} />
+            <Nav menu={menuState} setShowLogIn={setShowLogIn} setShowSignUp={setShowSignUp} userStatus={userStatus} userIsLogIn={userIsLogIn} />
             <Filter theme={themeState} language={languageState} />
             {children}
             <section className="footer">
@@ -88,7 +115,6 @@ function App({ children, userStatus }) {
           :
           <Preloader />
       }
-
     </React.Fragment>
   );
 }
@@ -97,4 +123,10 @@ const mapStateToProps = state => ({
   userStatus: state.userStatusTasks,
 });
 
-export default connect(mapStateToProps)(App);
+const mapStateToDispatch = dispatch => ({
+  userIsLogIn: (token) => {
+    dispatch(userIsLogIn(token));
+  },
+});
+
+export default connect(mapStateToProps, mapStateToDispatch)(App);

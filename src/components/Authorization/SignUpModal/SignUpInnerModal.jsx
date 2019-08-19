@@ -1,20 +1,25 @@
-import React  from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { reduxForm } from 'redux-form';
-import { postData} from '../../../scripts/changeData';
-import { connect } from 'react-redux';
+import { postData } from '../../../scripts/changeData';
 import { setLoading } from '../../../actions/dataStatus';
 import FieldSignUp from './FieldSignUp';
 import PreloaderMini from '../../Preloader/PreloaderMini';
+import ModalWindow from '../../ModalWindow';
+import ConfirmModal from './ConfirmModal';
 
-function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, statusLoading, dataStatus }) {
+function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, statusLoading, dataStatus, confirmAddress, setConfirmAddress, setFormError, formError }) {
 	const changeForm = () => {
 		setShowLogIn(true);
 		setShowSignUp(false);
 	};
 
-	dataStatus.loading = true;
+	useEffect(() => {
+		statusLoading(true);
+	}, []);
 
 	const submitSignUp = value => {
 		const valueData = {
@@ -32,21 +37,37 @@ function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, s
 			},
 			role: 'USER',
 		};
-		postData('', valueData, statusLoading, 'http://localhost:3000/api/v0.7/users' );
-		if(setShowSignUp) {
-			setShowSignUp(false);
-		}
+		postData('', valueData, statusLoading, 'http://localhost:3000/api/v0.7/users', setFormError)
+			.then((res) => {
+				if (res !== undefined) {
+					setShowSignUp && setShowSignUp(false);
+					setConfirmAddress(true);
+				}
+			})
+			.then(() => {
+				if (setShowSignUp && Object.keys(formError).length) {
+					onHide;
+				}
+			});
 	};
 
 	return(
 		<React.Fragment>
+			{
+				!dataStatus.loading && <PreloaderMini />
+			}
+
+
 			<Form id="signInForm" onSubmit={handleSubmit(submitSignUp)} className="auth__page__form">
+				{
+					!!Object.keys(formError).length && <div className="error__auth">{formError.message}</div>
+				}
 				<FieldSignUp />
 				{
 					onHide ?
-						<a href={ null } onClick={() => changeForm()}>I have account</a>
+						<a href={ null } onClick={() => changeForm()} className="form__auth__link">I have account</a>
 						:
-						<NavLink to={'/login'}>I have account</NavLink>
+						<NavLink to={'/login'} className="form__auth__link">I have account</NavLink>
 				}
 				<div className="form__button">
 					{
@@ -57,16 +78,30 @@ function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, s
 				</div>
 			</Form>
 		</React.Fragment>
-
 	);
 }
+
+SignUpInnerModal.propTypes = {
+	handleSubmit: PropTypes.func,
+	onHide: PropTypes.func,
+	setShowLogIn: PropTypes.func,
+	setShowSignUp: PropTypes.func,
+	statusLoading: PropTypes.func,
+	dataStatus: PropTypes.shape({
+		loading: PropTypes.bool,
+		emptyData: PropTypes.bool,
+	}),
+	confirmAddress: PropTypes.bool,
+	setConfirmAddress: PropTypes.func,
+	setFormError: PropTypes.func,
+	formError: PropTypes.object,
+};
 
 SignUpInnerModal = reduxForm({
 	form: 'signIn',
 	enableReinitialize: true,
 	destroyOnUnmount: true,
 })(SignUpInnerModal);
-
 
 const mapStateToProps = state => ({
 	userStatus: state.userStatusTasks,
@@ -77,7 +112,6 @@ const mapStateToDispatch = dispatch => ({
 	statusLoading: (loading) => {
 		dispatch(setLoading(loading));
 	},
-
 });
 
 export default connect(mapStateToProps, mapStateToDispatch)(SignUpInnerModal);

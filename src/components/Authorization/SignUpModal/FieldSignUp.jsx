@@ -1,12 +1,13 @@
 import React from 'react';
-import {Col, Form, Row} from 'react-bootstrap';
-import {Field} from 'redux-form';
-import {FormInput} from '../../Admin/ComponentsPieces/Forms/FromParts';
-import {requiredField, stringValidator, match, setMinLength, setMaxLength} from '../../Admin/validator';
+import { Col, Form, Row } from 'react-bootstrap';
+import { Field } from 'redux-form';
+import { FormInput } from '../../Admin/ComponentsPieces/Forms/FromParts';
+import { requiredField, stringValidator, match, setMinLength, setMaxLength } from '../../Admin/validator';
 
 const minL = setMinLength(5);
 const maxL = setMaxLength(30);
 const maxLEmail = setMaxLength(250);
+const confirmPass = match('password');
 
 function FieldSignUp() {
 	return (
@@ -26,11 +27,11 @@ function FieldSignUp() {
 			<Form.Group>
 				<Form.Label>Password</Form.Label>
 				<Row>
-					<Col>
+					<Col md="6" xs="12">
 						<Field name="password" component={FormInput} type="password" placeholder="Password" validate={[requiredField, minL]} />
 					</Col>
-					<Col>
-						<Field name="confirmPassword" component={FormInput} type="password" placeholder="Confirm password" validate={[requiredField, match('password')]} />
+					<Col md="6" xs="12" className="confirm__pass">
+						<Field name="confirmPassword" component={FormInput} type="password" placeholder="Confirm password" validate={[requiredField, confirmPass]} />
 					</Col>
 				</Row>
 			</Form.Group>

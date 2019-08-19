@@ -20,8 +20,6 @@ import AdminKnowledge from './components/Admin/KnowledgeBlock/AdminKnowledge';
 import NotFound from './components/Admin/404Admin';
 import NotFoundFront from './components/Front/404Front';
 import LoginPage from './components/Authorization/LoginPage';
-import LoginInnerModal from './components/Authorization/LogInModal/LoginInnerModal';
-import SignUpInnerModal from './components/Authorization/SignUpModal/SignUpInnerModal';
 import SignUpPage from './components/Authorization/SignupPage';
 
 ReactDOM.render((

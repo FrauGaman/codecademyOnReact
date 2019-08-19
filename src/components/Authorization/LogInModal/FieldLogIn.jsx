@@ -9,7 +9,7 @@ function FieldLogIn() {
 		<React.Fragment>
 			<Form.Group>
 				<Form.Label>Email</Form.Label>
-				<Field name="login" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]}  useFocus={true} />
+				<Field name="login" component={FormInput} type="email" placeholder="Contact information" validate={[requiredField, stringValidator]} useFocus={true} />
 			</Form.Group>
 			<Form.Group>
 				<Form.Label>Password</Form.Label>

@@ -5,7 +5,7 @@ import SignUpBtn from '../Nav/Auth/SignUpBtn';
 import Icon from '../../Icons/Icons';
 import './burgerMenu.sass';
 
-function BurgerMenu({ menu, hideMenu }) {
+function BurgerMenu({ menu, hideMenu, setShowLogIn, setShowSignUp }) {
   return (
     <div className="burger__menu">
       <div className="burger__menu__content">
@@ -22,9 +22,9 @@ function BurgerMenu({ menu, hideMenu }) {
               <li key={id}><a href={URL} className="burger__menu__link">{linkName}</a></li>
           )}
         </ul>
-        <a href={null} className="burger__menu__link">Log in</a>
+        <a href={null} className="burger__menu__link" onClick={() => setShowLogIn(true)}>Log in</a>
         <UpgradeBtn />
-        <SignUpBtn signUpBtnClass={'signUp__btn signUp__btn__menu'} />
+        <SignUpBtn signUpBtnClass={'signUp__btn signUp__btn__menu'} setShowSignUp={setShowSignUp} />
       </div>
     </div>
   );
@@ -37,6 +37,8 @@ BurgerMenu.propTypes = {
     linkName: PropTypes.string,
   }))),
   hideMenu: PropTypes.func,
+  setShowLogIn: PropTypes.func,
+  setShowSignUp: PropTypes.func,
 };
 
 export default BurgerMenu;

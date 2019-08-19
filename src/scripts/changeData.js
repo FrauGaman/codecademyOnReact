@@ -45,7 +45,7 @@ export function deleteData(path, id, statusLoading) {
   return fetchData({ url, success, fail, method: 'DELETE', statusLoading });
 }
 
-export function postData(path, payload, statusLoading, authURL) {
+export function postData(path, payload, statusLoading, authURL, setFormError) {
   let url;
   if (authURL) {
     url = `${authURL}`;
@@ -59,7 +59,11 @@ export function postData(path, payload, statusLoading, authURL) {
   };
 
   statusLoading(false);
-  function success() { statusLoading(true); }
+  function success(data) {
+    statusLoading(true);
+    return data.json()
+      .then(res => res);
+  }
   function fail(err){ errFunc(err) }
   return fetchData({
     url,
@@ -72,6 +76,7 @@ export function postData(path, payload, statusLoading, authURL) {
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     statusLoading,
+    setFormError,
   });
 }
 
@@ -94,23 +99,23 @@ export function putData(path, id, body, statusLoading) {
   });
 }
 
-export function getToken(authURL, payload, statusLoading, setErrorAuthData, setNotConfirm, setBlockedUser, setNotFoundData) {
+export function getToken(authURL, payload, statusLoading, setFormError) {
   const url = `${authURL}`;
   const errFunc = err => {
     console.log(err);
     statusLoading(true);
   };
 
+  statusLoading(false);
   function success(data) {
-    setErrorAuthData && setErrorAuthData(false);
-    setNotConfirm && setNotConfirm(false);
-    setBlockedUser && setBlockedUser(false);
-    setNotFoundData && setNotFoundData(false)
+    statusLoading(true);
     return data.json()
       .then(res => {
         localStorage.setItem('accessToken', res.data.accessToken);
         localStorage.setItem('refreshToken', res.data.refreshToken);
         localStorage.setItem('accessTokenExpire', res.data.accessTokenExpire);
+        localStorage.setItem('userFirstName', res.data.authInfo.profile.user.firstName);
+        localStorage.setItem('userLastName', res.data.authInfo.profile.user.lastName);
         return res;
       });
   }
@@ -125,9 +130,6 @@ export function getToken(authURL, payload, statusLoading, setErrorAuthData, setN
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     statusLoading,
-    setErrorAuthData,
-    setNotConfirm,
-    setBlockedUser,
-    setNotFoundData
+    setFormError,
   });
 }

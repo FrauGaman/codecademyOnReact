@@ -4,10 +4,7 @@ function fetchData({
 	 fail,
 	statusEmptyData,
 	statusLoading,
-	setErrorAuthData,
-	setNotConfirm,
-	setBlockedUser,
-	setNotFoundData,
+	setFormError,
 	 method,
 	 body = null,
 	 headers = {Accept: 'application/json', 'Content-Type': 'application/json'},
@@ -22,21 +19,13 @@ function fetchData({
 			if (res.ok) {
 				return success(res);
 			} else {
+				statusLoading(true);
 				! statusEmptyData ?
 				res.json()
 					.then((res) => {
-						if(res.errors[0].code === 'sec.invalid_auth_data') {
-							setErrorAuthData && setErrorAuthData(true);
-						} else if (res.errors[0].code === 'sec.login_should_be_confirmed') {
-							setNotConfirm && setNotConfirm(true);
-						} else if (res.errors[0].code === 'sec.user_blocked') {
-							setBlockedUser && setBlockedUser(true);
-						} else if (res.errors[0].code === 'not_found') {
-							setNotFoundData && setNotFoundData(true);
-						}
+						setFormError && setFormError(res.errors[0]);
 					})
 				: statusEmptyData(true);
-				statusLoading(true);
 			}
 		})
 		.catch(err => {

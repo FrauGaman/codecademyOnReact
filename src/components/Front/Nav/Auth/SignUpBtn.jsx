@@ -8,5 +8,6 @@ function SignUpBtn({ signUpBtnClass, setShowSignUp }) {
 }
 SignUpBtn.propTypes = {
   signUpBtnClass: PropTypes.string,
-}
+  setShowSignUp: PropTypes.func,
+};
 export default SignUpBtn;
