@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
@@ -6,7 +6,11 @@ import './authPage.sass';
 import userIsLogIn from '../../actions/userStatus';
 import LogInInnerModal from './LogInModal/LoginInnerModal';
 
-function LoginPage({ title, userStatus }) {
+function LoginPage({ title, userStatus, userIsLogIn }) {
+
+	useEffect(() => {
+		userIsLogIn(localStorage.getItem('accessToken'));
+	}, []);
 
 	const [formError, setFormError] = useState({});
 	return (
@@ -31,6 +35,7 @@ LoginPage.propTypes = {
 	userStatus: PropTypes.shape({
 		login: PropTypes.bool,
 	}),
+	userIsLogIn: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

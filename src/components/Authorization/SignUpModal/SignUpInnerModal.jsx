@@ -8,13 +8,12 @@ import { postData } from '../../../scripts/changeData';
 import { setLoading } from '../../../actions/dataStatus';
 import FieldSignUp from './FieldSignUp';
 import PreloaderMini from '../../Preloader/PreloaderMini';
-import ModalWindow from '../../ModalWindow';
-import ConfirmModal from './ConfirmModal';
 
-function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, statusLoading, dataStatus, confirmAddress, setConfirmAddress, setFormError, formError }) {
+function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, statusLoading, dataStatus, setConfirmAddress, setFormError, formError }) {
 	const changeForm = () => {
 		setShowLogIn(true);
 		setShowSignUp(false);
+		setFormError({});
 	};
 
 	useEffect(() => {
@@ -56,8 +55,6 @@ function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, s
 			{
 				!dataStatus.loading && <PreloaderMini />
 			}
-
-
 			<Form id="signInForm" onSubmit={handleSubmit(submitSignUp)} className="auth__page__form">
 				{
 					!!Object.keys(formError).length && <div className="error__auth">{formError.message}</div>

@@ -8,6 +8,8 @@ nav
   background-color: #fff
   box-shadow: 1px 0 24px -17px $navShadowColor
   z-index: 800
+  @media screen and (max-width: 440px)
+    padding: 5px
   .nav__container
     max-width: $maxDisplayWidth
     display: flex
@@ -37,10 +39,7 @@ nav
       border-radius: 5px
     @media screen and (max-width: 960px)
       display: inline-block
-  .auth__box
-    display: flex
-    align-items: center
-    vertical-align: center
+
 
 
 

@@ -9,7 +9,7 @@
       "theme": [
         1
       ],
-      "language": [],
+      "language": null,
       "knowledge": [
         1,
         2,
@@ -62,7 +62,7 @@
         1,
         2
       ],
-      "language": [],
+      "language": null,
       "knowledge": [
         11,
         12,
@@ -273,12 +273,6 @@
       "name": "Java",
       "descr": "Java is among the most popular programming languages out there, thanks to its versatility and compatibility. Java is used for software development, mobile applications, and large systems development.",
       "link": "/java"
-    },
-    {
-      "id": 5,
-      "name": "SQL",
-      "descr": "We live in a data-driven world: people search through data to find insights to inform strategy, marketing, operations, and a plethora of other categories. There are a ton of businesses that use large, relational databases, which makes a basic understanding of SQL a great employable skill not only for data scientists but almost everyone.",
-      "link": "/sql"
     },
     {
       "id": 6,
@@ -503,10 +497,6 @@
     {
       "id": 14,
       "name": "React"
-    },
-    {
-      "id": 1565781473469,
-      "name": "привет"
     }
   ]
 }

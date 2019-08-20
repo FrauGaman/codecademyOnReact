@@ -8,7 +8,7 @@ import FieldLogIn from './FieldLogIn';
 import { getToken } from '../../../scripts/changeData';
 import { setLoading } from '../../../actions/dataStatus';
 import userIsLogIn from '../../../actions/userStatus';
-import '../authErrorsStyle.sass';
+import '../authStyle.sass';
 import PreloaderMini from '../../Preloader/PreloaderMini';
 
 function LogInInnerModal({
@@ -26,8 +26,8 @@ function LogInInnerModal({
 	const changeForm = () => {
 		setShowLogIn(false);
 		setShowSignUp(true);
+		setFormError({});
 	};
-
 	useEffect(() => {
 		statusLoading(true);
 		userIsLogIn(localStorage.getItem('accessToken'));

@@ -7,7 +7,7 @@ import SignUpInnerModal from './SignUpModal/SignUpInnerModal';
 import ModalWindow from '../ModalWindow';
 import ConfirmModal from './SignUpModal/ConfirmModal';
 
-function SignUpPage({ title, show, onHide }) {
+function SignUpPage({ title }) {
 	const [confirmAddress, setConfirmAddress] = useState(false);
 	const [formError, setFormError] = useState({});
 	return (

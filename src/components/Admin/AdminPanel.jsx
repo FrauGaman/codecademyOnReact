@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import NavAdmin from './AdminNav/NavAdmin';
 import './adminPanel.sass';
 import AdminBurger from './AdminBurger/AdminBurger';
 import getData from '../../scripts/getData';
 import { PATH } from '../../scripts/const';
 
-function AdminPanel({ children, userStatus }) {
-  if (!userStatus.login) return <Redirect to="/login" />
+function AdminPanel({ children }) {
+  const login = !!localStorage.getItem('accessToken');
+  if (!login) return <Redirect to="/login" />;
 
   const [navList, setNavList] = useState([]);
   const addListData = (res) => {
@@ -18,6 +18,9 @@ function AdminPanel({ children, userStatus }) {
     getData(PATH.ADMINNAV, addListData);
   }, []);
 
+  const clear = () => {
+    localStorage.clear();
+  };
 
   return (
     <React.Fragment>
@@ -28,6 +31,9 @@ function AdminPanel({ children, userStatus }) {
         <div className="admin__nav__burger">
           <AdminBurger navList={navList} />
         </div>
+        {
+          <div onClick={() => clear()} className="clear__storage__box"><NavLink className="clear__storage__link" to={'/login'}>Log out</NavLink></div>
+        }
         <div className="admin__panel__content">
           {children}
         </div>
@@ -36,8 +42,4 @@ function AdminPanel({ children, userStatus }) {
   );
 }
 
-const mapStateToProps = state => ({
-  userStatus: state.userStatusTasks,
-});
-
-export default connect(mapStateToProps)(AdminPanel);
+export default AdminPanel;

@@ -10,7 +10,23 @@ import CareerModalInner from './CareerModalInner';
 import PreloaderMini from '../../Preloader/PreloaderMini';
 import { getThemeData, getLanguageData, getKnowledgeData, removeData, createData, editData, findData } from './dispatchCareer';
 
-function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, getThemeData, getLanguageData, getKnowledgeData, createData, removeData, editData, pristine, findData, dataStatus, statusLoading, statusEmptyData }) {
+function AdminCareer({
+   careerStatus,
+   themeList,
+   languageList,
+   knowledgeList,
+   getThemeData,
+   getLanguageData,
+   getKnowledgeData,
+   createData,
+   removeData,
+   editData,
+   pristine,
+   findData,
+   dataStatus,
+   statusLoading,
+   statusEmptyData
+}) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const [initial, setInitial] = useState([]);
@@ -85,9 +101,9 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
   };
 
   const showEditForm = (id) => {
-    const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name}});
-    const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name}});
-    const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name, }});
+    const themeOptions = themeList.data && themeList.data.map(item => { return { value: item.id, label: item.name }});
+    const languageOptions = languageList.data && languageList.data.map(item => { return { value: item.id, label: item.name }});
+    const knowledgeOptions = knowledgeList.data && knowledgeList.data.map(item => { return { value: item.id, label: item.name }});
     let careerData = JSON.stringify(careerStatus.data);
     careerData = JSON.parse(careerData);
     let arrTheme = [];
@@ -109,7 +125,7 @@ function AdminCareer({ careerStatus, themeList, languageList, knowledgeList, get
       if (item.id === id) {
         languageOptions.map(elem => {
           item.language && item.language.map(inst => {
-            if(elem.value === inst) {
+            if (elem.value === inst) {
               arrLang.push(elem);
             }
           });

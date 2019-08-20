@@ -88,7 +88,6 @@ function AdminAllCourses({ allCoursesStatus, themeList, languageList, getThemeDa
     allCoursesData = JSON.parse(allCoursesData);
     let arrTheme = [];
     let arrLang = [];
-
     allCoursesData.map(item => {
       if (item.id === id) {
         themeOptions.map(elem => {

@@ -74,7 +74,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
       const valueData = {
         ...value,
         theme: (value.theme && (value.theme !== []) && value.theme.map(item => item !== null)) && value.theme.map(item => +item.value),
-        language: (value.language && (value.language) !== [] && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
+        language: (value.language && (value.language !== []) && value.language.map(item => item !== null)) && value.language.map(item => +item.value),
       };
       editData(initial.id, skillStatus, valueData, sort, filter, search, pageNumber, limitNumber, statusEmptyData, statusLoading);
       setEditModalShow(false);
@@ -88,7 +88,6 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
     skillData = JSON.parse(skillData);
     let arrTheme = [];
     let arrLang = [];
-
     skillData.map(item => {
       if (item.id === id) {
         themeOptions.map(elem => {
@@ -105,7 +104,7 @@ function AdminSkill({ skillStatus, themeList, languageList, getThemeData, getLan
       if (item.id === id) {
         languageOptions.map(elem => {
           item.language && item.language.map(inst => {
-            if(elem.value === inst) {
+            if (elem.value === inst) {
               arrLang.push(elem);
             }
           });

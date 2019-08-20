@@ -26,13 +26,12 @@ function Search({ hideSearch }) {
             <h5 className="popular__title">Popular Searches</h5>
             <ul className="search__list">
               {
-                searchState.length ?
+                !!searchState.length &&
                   searchState.map(({title = 'TitlePlug'}) =>
                     <li key={title}>
                       <button>{title}</button>
                     </li>
                   )
-                : <div className="plug__block__mini"> <hr/> Now this field is in work <hr/> </div>
               }
             </ul>
           </div>

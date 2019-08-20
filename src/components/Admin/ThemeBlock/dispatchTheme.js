@@ -57,6 +57,7 @@ export const findData = (sortType, name, pageNumber, limitNumber, statusEmptyDat
 		sortField: 'name',
 		sortType,
 		name,
+		field: 'name',
 		pageNumber,
 		limitNumber,
 		statusEmptyData,

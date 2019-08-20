@@ -9,6 +9,8 @@
   @media screen and (max-width: 375px)
     margin-left: 7px
     font-size: $miniFontSize
+  @media screen and (max-width: 440px)
+    padding: 0
 .signUp__btn
   margin-left: 38px
   width: 96px
@@ -37,3 +39,31 @@
     font-size: $miniFontSize
     &__menu
       width: 100%
+
+.auth__box
+  display: flex
+  align-items: center
+  vertical-align: center
+  @media screen and (max-width: 440px)
+    flex-direction: column
+  @media screen and (max-width: 400px)
+    flex-direction: row
+    margin-top: 5px
+  .user__login__box
+    display: inline-block
+    margin-left: 20px
+    text-align: center
+    .user__login
+      width: 60px
+      height: 60px
+      @media screen and (max-width: 500px)
+        width: 40px
+        height: 40px
+    .user__login__name
+      display: inline-block
+      margin-left: 15px
+      @media screen and (max-width: 960px)
+        margin-right: 15px
+      @media screen and (max-width: 500px)
+        display: block
+

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Nav from './components/Front/Nav/Nav';
 import Filter from './components/Front/Filter/Filter';
@@ -118,6 +119,11 @@ function App({ children, userStatus, userIsLogIn }) {
     </React.Fragment>
   );
 }
+
+App.propTypes = {
+  userStatus: PropTypes.object,
+  userIsLogIn: PropTypes.func,
+};
 
 const mapStateToProps = state => ({
   userStatus: state.userStatusTasks,

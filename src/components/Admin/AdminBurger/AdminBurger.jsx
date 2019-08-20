@@ -7,15 +7,13 @@ function AdminBurger({ navList }) {
   const [showAdminBurger, setAdminBurger] = useState('mobMenu');
   const [showAdminBurgerContent, setAdminBurgerContent] = useState('admin__burger__menu');
   const changeButtonClassName = () => {
-    showAdminBurger === 'mobMenu' ? setAdminBurger(' mobMenu mobMenu_active') : setAdminBurger('mobMenu')
+    showAdminBurger === 'mobMenu' ? setAdminBurger(' mobMenu mobMenu_active') : setAdminBurger('mobMenu');
     showAdminBurgerContent === 'admin__burger__menu' ? setAdminBurgerContent('admin__burger__menu admin__burger__menu_active') : setAdminBurgerContent('admin__burger__menu');
   };
-
   const hideBurger = () => {
     setAdminBurger('mobMenu');
     setAdminBurgerContent('admin__burger__menu');
   };
-
   return (
     <div className="admin__burger">
       <a href="#menu" className={showAdminBurger} onClick={() => changeButtonClassName()}>
