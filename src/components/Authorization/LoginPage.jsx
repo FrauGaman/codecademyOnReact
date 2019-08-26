@@ -6,11 +6,16 @@ import './authPage.sass';
 import userIsLogIn from '../../actions/userStatus';
 import LogInInnerModal from './LogInModal/LoginInnerModal';
 
-function LoginPage({ title, userStatus, userIsLogIn }) {
+function LoginPage({ title, userStatus, userIsLogIn, history, match }) {
 
 	useEffect(() => {
 		userIsLogIn(localStorage.getItem('accessToken'));
 	}, []);
+
+	const saveHistory = () => {
+		return history.push(match.url)
+	};
+	console.log(history);
 
 	const [formError, setFormError] = useState({});
 	return (
@@ -22,6 +27,7 @@ function LoginPage({ title, userStatus, userIsLogIn }) {
 					<div  className="auth__page">
 						<h3 className="auth__page__title">{title}</h3>
 						<LogInInnerModal setFormError={setFormError} formError={formError} />
+						<button onClick={() => saveHistory()}>lololo</button>
 					</div>
 				)
 			)}

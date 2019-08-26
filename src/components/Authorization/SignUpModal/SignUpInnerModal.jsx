@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
-import { reduxForm } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import { postData } from '../../../scripts/changeData';
 import { setLoading } from '../../../actions/dataStatus';
 import FieldSignUp from './FieldSignUp';
@@ -20,7 +20,7 @@ function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, s
 		statusLoading(true);
 	}, []);
 
-	const submitSignUp = value => {
+	const submitSignUp = (value, dispatch) => {
 		const valueData = {
 			...value,
 			// phone: '+61-2-1234 5678',
@@ -44,6 +44,7 @@ function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, s
 				}
 			})
 			.then(() => {
+				dispatch(reset('signUp'));
 				if (setShowSignUp && Object.keys(formError).length) {
 					onHide;
 				}
@@ -55,7 +56,7 @@ function SignUpInnerModal({ handleSubmit, onHide, setShowLogIn, setShowSignUp, s
 			{
 				!dataStatus.loading && <PreloaderMini />
 			}
-			<Form id="signInForm" onSubmit={handleSubmit(submitSignUp)} className="auth__page__form">
+			<Form id="signUpForm" onSubmit={handleSubmit(submitSignUp)} className="auth__page__form">
 				{
 					!!Object.keys(formError).length && <div className="error__auth">{formError.message}</div>
 				}
@@ -95,7 +96,7 @@ SignUpInnerModal.propTypes = {
 };
 
 SignUpInnerModal = reduxForm({
-	form: 'signIn',
+	form: 'signUp',
 	enableReinitialize: true,
 	destroyOnUnmount: true,
 })(SignUpInnerModal);

@@ -21,7 +21,7 @@ function AdminBurger({ navList }) {
       </a>
       <div className={showAdminBurgerContent}>
         <ul className="menu__link__container">
-          {!!navList.length &&
+          {navList.length &&
             navList.map(({ title = 'titlePlug', link = 'linkPlug' }) =>
               <li key={title} className="admin__burger__li"><NavLink to={`/admin${link}`} className="admin__burger__link" onClick={() => hideBurger()}>{title}</NavLink></li>
             )
