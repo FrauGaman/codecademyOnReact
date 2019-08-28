@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
@@ -6,28 +6,23 @@ import './authPage.sass';
 import userIsLogIn from '../../actions/userStatus';
 import LogInInnerModal from './LogInModal/LoginInnerModal';
 
-function LoginPage({ title, userStatus, userIsLogIn, history, match }) {
+function LoginPage({ title, userStatus, userIsLogIn, location }) {
 
 	useEffect(() => {
 		userIsLogIn(localStorage.getItem('accessToken'));
 	}, []);
-
-	const saveHistory = () => {
-		return history.push(match.url)
-	};
-	console.log(history);
 
 	const [formError, setFormError] = useState({});
 	return (
 		<React.Fragment>
 			<Route exact path="/login" render={() => (
 				userStatus.login ? (
-					<Redirect to="/admin/career" />
-				) : (
+					location.state ?	<Redirect to={location.state.from} />	:	<Redirect to='/' />
+					)
+					: (
 					<div  className="auth__page">
 						<h3 className="auth__page__title">{title}</h3>
 						<LogInInnerModal setFormError={setFormError} formError={formError} />
-						<button onClick={() => saveHistory()}>lololo</button>
 					</div>
 				)
 			)}
@@ -42,6 +37,7 @@ LoginPage.propTypes = {
 		login: PropTypes.bool,
 	}),
 	userIsLogIn: PropTypes.func,
+	location: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

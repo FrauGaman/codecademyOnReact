@@ -8,7 +8,10 @@ import { PATH } from '../../scripts/const';
 
 function AdminPanel({ children }) {
   const login = !!localStorage.getItem('accessToken');
-  if (!login) return <Redirect to="/login" />;
+  if(!login) return <Redirect to={{
+    pathname: '/login',
+    state: {from: window.location.pathname},
+  }}/>;
 
   const [navList, setNavList] = useState([]);
   const addListData = (res) => {
@@ -32,7 +35,9 @@ function AdminPanel({ children }) {
           <AdminBurger navList={navList} />
         </div>
         {
-          <div onClick={() => clear()} className="clear__storage__box"><NavLink className="clear__storage__link" to={'/login'}>Log out</NavLink></div>
+          <div onClick={() => clear()} className="clear__storage__box">
+            <NavLink className="clear__storage__link" to='/login'>Log out</NavLink>
+          </div>
         }
         <div className="admin__panel__content">
           {children}
