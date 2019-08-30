@@ -32,7 +32,10 @@ function AdminPanel({ children }) {
           <NavAdmin navList={navList} />
         </div>
         <div className="admin__nav__burger">
-          <AdminBurger navList={navList} />
+          {
+            (navList.length !== 0) && <AdminBurger navList={navList} />
+          }
+
         </div>
         {
           <div onClick={() => clear()} className="clear__storage__box">
