@@ -2,6 +2,10 @@ Mini application with react.js. Codecademy clone.
 =====================
 Getting started
 -----------------------------------
+####Install JSON Server
+```javascript
+npm install -g json-server
+```
 ####Start JSON Server
 ```javascript
 npm run server

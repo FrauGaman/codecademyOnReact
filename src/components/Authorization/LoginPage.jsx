@@ -7,6 +7,7 @@ import userIsLogIn from '../../actions/userStatus';
 import LogInInnerModal from './LogInModal/LoginInnerModal';
 
 function LoginPage({ title, userStatus, userIsLogIn, location }) {
+	console.log(userIsLogIn)
 
 	useEffect(() => {
 		userIsLogIn(localStorage.getItem('accessToken'));

@@ -36,7 +36,7 @@ function AdminPanel({ children }) {
         </div>
         {
           <div onClick={() => clear()} className="clear__storage__box">
-            <NavLink className="clear__storage__link" to='/login'>Log out</NavLink>
+            <NavLink className="clear__storage__link" to={{pathname: '/login', state: {from: '/'}}}>Log out</NavLink>
           </div>
         }
         <div className="admin__panel__content">
