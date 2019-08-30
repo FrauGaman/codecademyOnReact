@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { PATH } from '../../../scripts/const';
 import './adminBurger.sass';
 
 function AdminBurger({ navList }) {
@@ -23,7 +24,7 @@ function AdminBurger({ navList }) {
         <ul className="menu__link__container">
           {navList.length &&
             navList.map(({ title = 'titlePlug', link = 'linkPlug' }) =>
-              <li key={title} className="admin__burger__li"><NavLink to={`/admin${link}`} className="admin__burger__link" onClick={() => hideBurger()}>{title}</NavLink></li>
+              <li key={title} className="admin__burger__li"><NavLink to={`${PATH.ADMIN}${link}`} className="admin__burger__link" onClick={() => hideBurger()}>{title}</NavLink></li>
             )
           }
         </ul>

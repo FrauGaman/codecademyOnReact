@@ -5,9 +5,9 @@ import { Route, Redirect } from 'react-router-dom';
 import './authPage.sass';
 import userIsLogIn from '../../actions/userStatus';
 import LogInInnerModal from './LogInModal/LoginInnerModal';
+import { PATH } from '../../scripts/const';
 
 function LoginPage({ title, userStatus, userIsLogIn, location }) {
-	console.log(userIsLogIn)
 
 	useEffect(() => {
 		userIsLogIn(localStorage.getItem('accessToken'));
@@ -16,9 +16,9 @@ function LoginPage({ title, userStatus, userIsLogIn, location }) {
 	const [formError, setFormError] = useState({});
 	return (
 		<React.Fragment>
-			<Route exact path="/login" render={() => (
+			<Route exact path={`${PATH.LOGIN}`} render={() => (
 				userStatus.login ? (
-					location.state ?	<Redirect to={location.state.from} />	:	<Redirect to='/' />
+					location.state ? <Redirect to={location.state.from} />	:	<Redirect to={`${PATH.FIRST}`} />
 					)
 					: (
 					<div  className="auth__page">

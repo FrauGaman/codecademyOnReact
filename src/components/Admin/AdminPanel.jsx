@@ -9,8 +9,8 @@ import { PATH } from '../../scripts/const';
 function AdminPanel({ children }) {
   const login = !!localStorage.getItem('accessToken');
   if(!login) return <Redirect to={{
-    pathname: '/login',
-    state: {from: window.location.pathname},
+    pathname: `${PATH.LOGIN}`,
+    state: { from: window.location.pathname },
   }}/>;
 
   const [navList, setNavList] = useState([]);
@@ -36,7 +36,7 @@ function AdminPanel({ children }) {
         </div>
         {
           <div onClick={() => clear()} className="clear__storage__box">
-            <NavLink className="clear__storage__link" to={{pathname: '/login', state: {from: '/'}}}>Log out</NavLink>
+            <NavLink className="clear__storage__link" to={{pathname: `${PATH.LOGIN}`, state: {from: `${PATH.FIRST}`}}}>Log out</NavLink>
           </div>
         }
         <div className="admin__panel__content">

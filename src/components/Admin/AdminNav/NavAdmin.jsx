@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { PATH } from '../../../scripts/const';
 import './navAdmin.sass';
 
 function NavAdmin({ navList }) {
@@ -9,7 +10,7 @@ function NavAdmin({ navList }) {
       <ul className="menu__link__container">
         {!!navList.length &&
           navList.map(({ title = 'titlePlug', link = 'linkPlug' }) =>
-            <li key={title}><NavLink to={`/admin${link}`}>{title}</NavLink></li>
+            <li key={title}><NavLink to={`${PATH.ADMIN}${link}`}>{title}</NavLink></li>
           )
         }
       </ul>

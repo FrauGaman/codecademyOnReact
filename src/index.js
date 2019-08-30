@@ -8,6 +8,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import { PATH } from './scripts/const';
 
 import FullCatalogPage from './components/Front/FullCatalogPage';
 import AdminPanel from './components/Admin/AdminPanel';
@@ -26,22 +27,22 @@ ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path="/login" render={(props) => <LoginPage {...props} title={'Log in'} />} />
-        <Route path="/signup" render={(props) => <SignUpPage {...props} title={'Sign up'} />} />
-        <Route path="/admin">
+        <Route path={`${PATH.LOGIN}`} render={(props) => <LoginPage {...props} title={'Log in'} />} />
+        <Route path={`${PATH.SIGNUP}`} render={(props) => <SignUpPage {...props} title={'Sign up'} />} />
+        <Route path={`${PATH.ADMIN}`}>
           <AdminPanel>
             <Switch>
-              <Route path="/admin/career" component={AdminCareer} />
-              <Route path="/admin/skill" component={AdminSkill} />
-              <Route path="/admin/allcourses" component={AdminAllCourses} />
-              <Route path="/admin/subject" component={AdminTheme} />
-              <Route path="/admin/language" component={AdminLanguage} />
-              <Route path="/admin/knowledge" component={AdminKnowledge} />
-              <Route exact path="/admin" render={() => (
-                <Redirect to="/admin/career" />
+              <Route path={`${PATH.ADMIN}${PATH.CAREER}`} component={AdminCareer} />
+              <Route path={`${PATH.ADMIN}${PATH.SKILL}`} component={AdminSkill} />
+              <Route path={`${PATH.ADMIN}${PATH.ALLCOURSES}`} component={AdminAllCourses} />
+              <Route path={`${PATH.ADMIN}${PATH.SUBJECT}`} component={AdminTheme} />
+              <Route path={`${PATH.ADMIN}${PATH.LANGUAGE}`} component={AdminLanguage} />
+              <Route path={`${PATH.ADMIN}${PATH.KNOWLEDGE}`} component={AdminKnowledge} />
+              <Route exact path={`${PATH.ADMIN}`} render={() => (
+                <Redirect to={`${PATH.ADMIN}${PATH.CAREER}`} />
               )} />
-              <Route path="*/linkPlug" render={() => (
-                <Redirect to="/admin/career" />
+              <Route path={`*${PATH.LINKPLUG}`} render={() => (
+                <Redirect to={`${PATH.ADMIN}${PATH.CAREER}`} />
               )} />
               <Route component={NotFound} />
             </Switch>
@@ -50,13 +51,13 @@ ReactDOM.render((
         <Route path="/">
           <App>
             <Switch>
-              <Route exact path="/theme/:link" component={FullCatalogPage} />
-              <Route exact path="/language/:linkLang" component={FullCatalogPage} />
+              <Route exact path={`${PATH.THEME}/:link`} component={FullCatalogPage} />
+              <Route exact path={`${PATH.LANGUAGE}/:linkLang`} component={FullCatalogPage} />
               <Route exact path="/" render={() => (
-                <Redirect to="/theme/all" />
+                <Redirect to={`${PATH.THEME}${PATH.MAIN}`} />
               )} />
-              <Route path="*/linkPlug" render={() => (
-                <Redirect to="/theme/all" />
+              <Route path={`*${PATH.LINKPLUG}`} render={() => (
+                <Redirect to={`${PATH.THEME}${PATH.MAINFILTER}`} />
               )} />
               <Route component={NotFoundFront} />
             </Switch>

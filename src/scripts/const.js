@@ -11,6 +11,16 @@ export const PATH = {
   THEME: '/theme',
   ADMINNAV: '/adminNav',
   KNOWLEDGE: '/knowledge',
+  ADMIN: '/admin',
+  CAREER: '/career',
+  SKILL: '/skill',
+  ALLCOURSES: '/allcourses',
+  SUBJECT: '/subject',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  MAIN: '/all',
+  LINKPLUG: '/linkPlug',
+  FIRST: '/',
 };
 
 export const TYPE = {
@@ -52,3 +62,4 @@ export const TYPE = {
 
   LOCATION_LAST: 'LOCATION_LAST',
 };
+

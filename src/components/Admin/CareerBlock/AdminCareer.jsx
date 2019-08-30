@@ -25,7 +25,7 @@ function AdminCareer({
    findData,
    dataStatus,
    statusLoading,
-   statusEmptyData
+   statusEmptyData,
 }) {
   const [modalShow, setModalShow] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
